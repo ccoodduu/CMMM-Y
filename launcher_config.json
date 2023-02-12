@@ -1,0 +1,13 @@
+{
+  "packNames": {
+    "darwin": "Build-StandaloneOSX.zip",
+    "win32": "Build-StandaloneWindows64.zip",
+    "linux": "Build-StandaloneLinux64.zip"
+  },
+  "executableNames": {
+    "darwin": "StandaloneOSX.app",
+    "win32": "StandaloneWindows64.exe",
+    "linux": "StandaloneLinux64"
+  },
+  "releaseSources": ["latest_commit", "latest_tag"]
+}
