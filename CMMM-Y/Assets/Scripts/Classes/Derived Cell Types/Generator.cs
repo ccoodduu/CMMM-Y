@@ -8,7 +8,7 @@ public class Generator : TrackedCell
         int offsetX = 0;
         int offsetY = 0;
 
-        switch (this.getDirection())
+        switch (this.GetDirection())
         {
             case (Direction_e.RIGHT):
                 offsetX += 1;
@@ -44,7 +44,7 @@ public class Generator : TrackedCell
         int offsetX = 0;
         int offsetY = 0;
 
-        switch (this.getDirection())
+        switch (this.GetDirection())
         {
             case (Direction_e.RIGHT):
                 offsetX += 1;
@@ -78,7 +78,7 @@ public class Generator : TrackedCell
             //if (CellFunctions.cellGrid[(int)this.position.x + offsetX, (int)this.position.y + offsetY].cellType == CellType_e.TRASH)
             //    return;
 
-            (bool, bool) pushResult = CellFunctions.cellGrid[(int)this.position.x + offsetX, (int)this.position.y + offsetY].Push(this.getDirection(), 1);
+            (bool, bool) pushResult = CellFunctions.cellGrid[(int)this.position.x + offsetX, (int)this.position.y + offsetY].Push(this.GetDirection(), 1);
             if (pushResult.Item2 || !pushResult.Item1)
                 return;
         }
@@ -88,7 +88,7 @@ public class Generator : TrackedCell
         Cell newCell = GridManager.instance.SpawnCell(
             refrenceCell.cellType,
             new Vector2((int)this.position.x + offsetX, (int)this.position.y + offsetY),
-            refrenceCell.getDirection(),
+            refrenceCell.GetDirection(),
             true
             );
         newCell.oldPosition = this.position;

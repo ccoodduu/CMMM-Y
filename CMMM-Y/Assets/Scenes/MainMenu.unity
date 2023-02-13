@@ -949,7 +949,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Mystic Mod
+  m_Text: Mystic Mod - Y
 --- !u!222 &943636852
 CanvasRenderer:
   m_ObjectHideFlags: 0

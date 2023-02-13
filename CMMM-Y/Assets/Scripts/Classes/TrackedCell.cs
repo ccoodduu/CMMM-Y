@@ -28,7 +28,7 @@ public class TrackedCell : Cell
         queuedForPositionSorting = true;
 
         trackedCellNode.List.Remove(trackedCellNode);
-        CellFunctions.trackedCellPositionUpdateQueue[CellFunctions.GetSteppedCellId(cellType), (int)this.getDirection()].AddLast(trackedCellNode);
+        CellFunctions.trackedCellPositionUpdateQueue[CellFunctions.GetSteppedCellId(cellType), (int)this.GetDirection()].AddLast(trackedCellNode);
     }
 
     //Base.Step() should always be called first in derived classes to mantain suppressed functionality
@@ -37,7 +37,7 @@ public class TrackedCell : Cell
     }
 
     public uint GetDistanceFromFacingEdge() {
-        switch (this.getDirection())
+        switch (this.GetDirection())
         {
             case (Direction_e.RIGHT):
                 return (uint)(CellFunctions.gridWidth - this.position.x - 1);
@@ -57,7 +57,7 @@ public class TrackedCell : Cell
     {
         (bool, bool) pushResult = base.Push(dir, bias);
         if (pushResult.Item1 && !pushResult.Item2) {
-            if ((dir == this.getDirection() || dir == (Direction_e)(((int)this.getDirection() + 2) % 4))  && !deleted) {
+            if ((dir == this.GetDirection() || dir == (Direction_e)(((int)this.GetDirection() + 2) % 4))  && !deleted) {
                 this.queueForPositionSorting();
             }
         }
@@ -102,7 +102,7 @@ public class TrackedCell : Cell
         if (trackedCellNode == null)
         {
             trackedCellNode = CellFunctions.trackedCells
-                [CellFunctions.GetSteppedCellId(this.cellType), (int)this.getDirection()]
+                [CellFunctions.GetSteppedCellId(this.cellType), (int)this.GetDirection()]
                 [this.GetDistanceFromFacingEdge()].AddLast(this);
         }
         else

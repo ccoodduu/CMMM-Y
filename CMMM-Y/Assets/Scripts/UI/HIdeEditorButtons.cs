@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HIdeEditorButtons : MonoBehaviour
+public class HideEditorButtons : MonoBehaviour
 {
     public void Start()
     {

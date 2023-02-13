@@ -27,11 +27,11 @@ public class Cell : MonoBehaviour
     public bool animate = true;
 
     //Converts the cells current rotation to a direction enum for easier use.
-    public Direction_e getDirection() {
+    public Direction_e GetDirection() {
         return (Direction_e)(rotation % 4);
     }
 
-    public void setPosition(Vector2 newPos) {
+    public void SetPosition(Vector2 newPos) {
         if (deleted)
             return;
         CellFunctions.cellGrid[(int)position.x, (int)position.y] = null;
@@ -39,7 +39,7 @@ public class Cell : MonoBehaviour
         this.position = newPos;
     }
 
-    public void setPosition(int x, int y)
+    public void SetPosition(int x, int y)
     {
         if (deleted)
             return;
@@ -108,7 +108,7 @@ public class Cell : MonoBehaviour
 
         if (CellFunctions.cellGrid[targetX, targetY] == null)
         {
-            this.setPosition(targetX, targetY);
+            this.SetPosition(targetX, targetY);
             return (true, false);
         }
         (bool, bool) pushResult = CellFunctions.cellGrid[targetX, targetY].Push(dir, bias);
@@ -120,7 +120,7 @@ public class Cell : MonoBehaviour
         }
         if (pushResult.Item1)
         {
-            this.setPosition(targetX, targetY);
+            this.SetPosition(targetX, targetY);
             return (true, false);
         }
         return (false, false);

@@ -104,7 +104,7 @@ public class PlacementManager : MonoBehaviour
 
             if (CellFunctions.cellGrid[x, y] != null)
             {
-                if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].getDirection() != (Direction_e)dir) {
+                if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].GetDirection() != (Direction_e)dir) {
                     CellFunctions.cellGrid[x, y].Delete(true);
                 }
                 else return;

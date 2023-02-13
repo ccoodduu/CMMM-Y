@@ -9,7 +9,7 @@ public class Save : MonoBehaviour
 
     public void Awake()
     {
-        saveText.gameObject.SetActive(false);
+        saveText.SetActive(false);
     }
 
     private string EncodeInt(int num)
@@ -32,7 +32,12 @@ public class Save : MonoBehaviour
 
     public void SaveString(Vector2Int topLeft, Vector2Int bottomRight)
     {
-        int format = PlayerPrefs.GetInt("ExportFormat", 2) + 1;
+        var level = Level.FromCurrent();
+        var save = new V1Format().Encode(level);
+        Debug.Log(level.ToString());
+		Debug.Log(save);    
+
+		int format = PlayerPrefs.GetInt("ExportFormat", 2) + 1;
         StringBuilder output = new StringBuilder();
         output.Append("V" + format + ";");
 

@@ -244,7 +244,7 @@ public class GridManager : MonoBehaviour
 
             cell.queuedForRotationSorting = false;
             cell.trackedCellNode.List.Remove(cell.trackedCellNode);
-            CellFunctions.trackedCellPositionUpdateQueue[steppedCellId, (int)cell.getDirection()].AddLast(cell.trackedCellNode);
+            CellFunctions.trackedCellPositionUpdateQueue[steppedCellId, (int)cell.GetDirection()].AddLast(cell.trackedCellNode);
         }
     }
 
