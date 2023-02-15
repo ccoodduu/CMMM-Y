@@ -48,6 +48,9 @@ namespace load
 
         public static bool Load(string str)
         {
+            var level = FormatManager.instance.selectedFormat.Decode(str);
+            level.LoadToGrid();
+            return true;
             if (!debounce)
             {
                 initDict();

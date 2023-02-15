@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public abstract class SaveFormat
 {
@@ -165,9 +167,111 @@ public class V3Format : SaveFormat
 		return output;
 	}
 
+	private static int DecodeString(string str)
+	{
+		int output = 0;
+		foreach (char c in str)
+		{
+			output *= 74;
+			output += cellKey.IndexOf(c);
+		}
+		return output;
+	}
+
+	private static bool IsPlaceable(int c)
+	{
+		return c % 2 == 1;
+	}
+
 	public override Level Decode(string code)
 	{
-		throw new System.NotImplementedException();
+		string[] arguments = code.Split(';');
+
+		var size = new Vector2Int(DecodeString(arguments[1]), DecodeString(arguments[2]));
+		var cells = new List<SavedCell>();
+		var placeable = new bool[size.x * size.y];
+		string name = arguments[5];
+
+		int[] cellDataHistory = new int[size.x * size.y];
+		int offset;
+		int length;
+		int dataIndex = 0;
+		int gridIndex = 0;
+		string temp;
+
+		string cellString = arguments[3];
+		while (dataIndex < cellString.Length)
+		{
+			if (cellString[dataIndex] == ')' || cellString[dataIndex] == '(')
+			{
+				if (cellString[dataIndex] == ')')
+				{
+					dataIndex += 2;
+					offset = cellKey.IndexOf(cellString[dataIndex - 1]);
+					length = cellKey.IndexOf(cellString[dataIndex]);
+
+				}
+				else
+				{
+					dataIndex++;
+					temp = "";
+					while (cellString[dataIndex] != ')' && cellString[dataIndex] != '(')
+					{
+						temp += cellString[dataIndex];
+						dataIndex++;
+					}
+					offset = DecodeString(temp);
+					if (cellString[dataIndex] == ')')
+					{
+						dataIndex++;
+						length = cellKey.IndexOf(cellString[dataIndex]);
+					}
+					else
+					{
+						dataIndex++;
+						temp = "";
+						while (cellString[dataIndex] != ')')
+						{
+							temp += cellString[dataIndex];
+							dataIndex++;
+						}
+						length = DecodeString(temp);
+					}
+				}
+				for (int i = 0; i < length; i++)
+				{
+					var c = cellDataHistory[gridIndex - offset - 1];
+					placeable[i] = c % 2 == 1;
+					if (c >= 72) continue;
+
+					cells.Add(new SavedCell()
+					{
+						cellType = (CellType_e)((c / 2) % 9),
+						position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
+						rotation = (c / 18),
+					});
+
+					cellDataHistory[gridIndex] = c;
+					gridIndex++;
+				}
+			}
+			else
+			{
+				var c = cellKey.IndexOf(cellString[dataIndex]);
+				cells.Add(new SavedCell()
+				{
+					cellType = (CellType_e)((c / 2) % 9),
+					position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
+					rotation = (c / 18),
+				});
+				cellDataHistory[gridIndex] = c;
+				gridIndex++;
+			}
+
+			dataIndex++;
+		}
+
+		return new Level(name, size, cells.ToArray(), placeable);
 	}
 
 	public override string Encode(Level level)

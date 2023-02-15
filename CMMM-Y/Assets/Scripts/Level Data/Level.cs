@@ -22,6 +22,7 @@ public class Level
 	{
 		throw new NotImplementedException();
 	}
+
 	public static Level FromCurrent()
 	{
 		var gridCells = CellFunctions.cellList;
@@ -50,6 +51,11 @@ public class Level
 		}
 
 		return new Level("", new Vector2Int(width, height), cells.ToArray(), placable);
+	}
+
+	public void LoadToGrid()
+	{
+		throw new NotImplementedException();
 	}
 }
 
