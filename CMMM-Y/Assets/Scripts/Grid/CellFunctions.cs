@@ -31,7 +31,7 @@ public static class CellFunctions
 
     //An disctionary defining the specialized ID's used in sorting, for tracked and 
     public static Dictionary<CellType_e, int> steppedCellIdDictionary = new Dictionary<CellType_e, int>();
-
+    
     public static int gridWidth = 1;
     public static int gridHeight = 1;
     //Used to check which cell might be at location x, y.
@@ -46,7 +46,7 @@ public static class CellFunctions
     //Cells that need to be updated but not in a specific order.
     //tickedCellList[CellType];
     public static LinkedList<Cell>[] tickedCellList;
-
+    
     //Cells that need to be updated but in a specific order (Depending on direction).
     //trackedCells[TrackedCell ID][Direction, Distince];
     //public static LinkedList<Cell>[][,] trackedCells;

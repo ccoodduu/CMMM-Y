@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -19,7 +22,59 @@ public class EmojiFormat : SaveFormat
 
 	public override Level Decode(string code)
 	{
-		throw new System.NotImplementedException();
+		string[] arguments = code.Split(';');
+
+		var cellString = arguments[1];
+		var lines = cellString.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
+		var emojis = lines.Select(x => string.Join(":,:", x.Split(new[] { "::" }, StringSplitOptions.None)).Split(',')).ToArray();
+
+		var size = new Vector2Int(emojis[0].Length, emojis.Length);
+		var placeable = new bool[size.x * size.y];
+		var cells = new List<SavedCell>();
+		string tutorialText = arguments[2];
+		string name = arguments[3];
+
+		for (int y = 0; y < size.x; y++)
+		{
+			for (int x = 0; x < size.y; x++)
+			{
+				var position = new Vector2Int(x, y);
+				var emoji = emojis[y][x];
+
+				if (emoji == ":bg_placeable:")
+				{
+					placeable[x + y * size.y] = true;
+				}
+				else if (emoji != ":bg_default:")
+				{
+					SavedCell cell;
+					switch (emoji)
+					{
+						case ":generator_right:": cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 0, position = position }; break;
+						case ":generator_down:": cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 1, position = position }; break;
+						case ":generator_left:": cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 2, position = position }; break;
+						case ":generator_up:": cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 3, position = position }; break;
+						case ":mover_right:": cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 0, position = position }; break;
+						case ":mover_down:": cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 1, position = position }; break;
+						case ":mover_left:": cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 2, position = position }; break;
+						case ":mover_up:": cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 3, position = position }; break;
+						case ":slide_horizontal:": cell = new SavedCell() { cellType = CellType_e.SLIDE, rotation = 0, position = position }; break;
+						case ":slide_vertical:": cell = new SavedCell() { cellType = CellType_e.SLIDE, rotation = 1, position = position }; break;
+						case ":wall:": cell = new SavedCell() { cellType = CellType_e.WALL, rotation = 0, position = position }; break;
+						case ":push:": cell = new SavedCell() { cellType = CellType_e.BLOCK, rotation = 0, position = position }; break;
+						case ":enemy:": cell = new SavedCell() { cellType = CellType_e.ENEMY, rotation = 0, position = position }; break;
+						case ":trash:": cell = new SavedCell() { cellType = CellType_e.TRASH, rotation = 0, position = position }; break;
+						case ":rotator_cw:": cell = new SavedCell() { cellType = CellType_e.CWROTATER, rotation = 0, position = position }; break;
+						case ":rotator_ccw:": cell = new SavedCell() { cellType = CellType_e.CCWROTATER, rotation = 0, position = position }; break;
+
+						default: throw new ArgumentException("Not a Cell Machine emoji");
+					}
+					cells.Add(cell);
+				}
+			}
+		}
+
+		return new Level(name, size, cells.ToArray(), placeable, tutorialText);
 	}
 
 	public override string Encode(Level level)
@@ -88,7 +143,7 @@ public class ReadableFormat : SaveFormat
 
 	public override Level Decode(string code)
 	{
-		throw new System.NotImplementedException();
+		throw new NotImplementedException();
 	}
 
 	public override string Encode(Level level)
@@ -376,10 +431,96 @@ public class V2Format : SaveFormat
 		}
 		return output;
 	}
+	private static int DecodeString(string str)
+	{
+		int output = 0;
+		foreach (char c in str)
+		{
+			output *= 74;
+			output += cellKey.IndexOf(c);
+		}
+		return output;
+	}
 
 	public override Level Decode(string code)
 	{
-		throw new System.NotImplementedException();
+		string[] arguments = code.Split(';');
+
+		var size = new Vector2Int(DecodeString(arguments[1]), DecodeString(arguments[2]));
+		var cells = new List<SavedCell>();
+		var placeable = new bool[size.x * size.y];
+		string tutorialText = arguments[4];
+		string name = arguments[5];
+
+		int length;
+		int dataIndex = 0;
+		int gridIndex = 0;
+		string temp;
+
+		string cellString = arguments[3];
+
+		int cellData;
+		while (dataIndex < arguments[3].Length)
+		{
+			if (arguments[3][dataIndex] == ')' || arguments[3][dataIndex] == '(')
+			{
+
+				cellData = cellKey.IndexOf(cellString[dataIndex - 1]);
+				if (arguments[3][dataIndex] == ')')
+				{
+					dataIndex++;
+					length = cellKey.IndexOf(cellString[dataIndex]);
+				}
+				else
+				{
+					dataIndex++;
+					temp = "";
+					while (arguments[3][dataIndex] != ')')
+					{
+						temp += arguments[3][dataIndex];
+						dataIndex++;
+					}
+					length = DecodeString(temp);
+				}
+
+				if (cellData != 72)
+				{
+					for (int i = 0; i < length; i++)
+					{
+						placeable[gridIndex + i] = cellData % 2 == 1;
+						if (cellData < 72)
+						{
+							cells.Add(new SavedCell()
+							{
+								cellType = (CellType_e)((cellData / 2) % 9),
+								position = new Vector2Int((gridIndex + i) % size.x, (gridIndex + i) / size.x),
+								rotation = (cellData / 18),
+							});
+						}
+					}
+				}
+				gridIndex += length;
+			}
+			else
+			{
+				var c = cellKey.IndexOf(cellString[dataIndex]);
+				placeable[gridIndex] = c % 2 == 1;
+				if (c < 72)
+				{
+					cells.Add(new SavedCell()
+					{
+						cellType = (CellType_e)((c / 2) % 9),
+						position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
+						rotation = (c / 18),
+					});
+				}
+				gridIndex++;
+			}
+			dataIndex++;
+
+		}
+
+		return new Level(name, size, cells.ToArray(), placeable, tutorialText);
 	}
 
 	public override string Encode(Level level)
@@ -436,7 +577,40 @@ public class V1Format : SaveFormat
 
 	public override Level Decode(string code)
 	{
-		throw new System.NotImplementedException();
+		string[] arguments = code.Split(';');
+
+		var size = new Vector2Int(int.Parse(arguments[1]), int.Parse(arguments[2]));
+		var cells = new List<SavedCell>();
+		var placeable = new bool[size.x * size.y];
+		string tutorialText = arguments[5];
+		string name = arguments[6];
+
+		string[] placementCellLocationsStr = arguments[3].Split(',');
+		if (placementCellLocationsStr[0] != "")
+		{
+			foreach (string str in placementCellLocationsStr)
+			{
+				int x = int.Parse(str.Split('.')[0]);
+				int y = int.Parse(str.Split('.')[1]);
+				placeable[x + y * size.x] = true;
+			}
+		}
+
+		string[] cellStr = arguments[4].Split(',');
+		if (cellStr[0] != "")
+		{
+			foreach (string str in cellStr)
+			{
+				string[] data = str.Split('.');
+				cells.Add(new SavedCell()
+				{
+					cellType = (CellType_e)int.Parse(data[0]),
+					position = new Vector2Int(int.Parse(data[2]), int.Parse(data[3])),
+					rotation = int.Parse(data[1]),
+				});
+			}
+		}
+		return new Level(name, size, cells.ToArray(), placeable, tutorialText);
 	}
 
 	public override string Encode(Level level)

@@ -37,7 +37,7 @@ public class PlayMenu : MonoBehaviour
 
         var str = GUIUtility.systemCopyBuffer;
 		var formatName = str.Split(';')[0];
-		var format = FormatManager.formats.First(f => f.FormatName.ToLower() == formatName.ToLower());
+		var format = FormatManager.formats.FirstOrDefault(f => f.FormatName.ToLower() == formatName.ToLower());
 
 		if (format != null)
         {

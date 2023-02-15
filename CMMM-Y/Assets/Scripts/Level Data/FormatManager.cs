@@ -6,7 +6,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public static class FormatManager
 {
-    private static string selectedFormatName = "V3";
+    private static string selectedFormatName = "V2";
 	private static SaveFormat selectedFormat;
 	public static SaveFormat[] formats = { new V1Format(), new V2Format(), new V3Format(), new EmojiFormat(), new ReadableFormat() };
 
