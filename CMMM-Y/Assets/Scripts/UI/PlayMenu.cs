@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class PlayMenu : MonoBehaviour
 {
     public GameObject errorCard;
 
-    string convertString(string oldFormat)
+    string ConvertString(string oldFormat)
     {
         string[] components = oldFormat.Split(';');
 
@@ -33,15 +34,20 @@ public class PlayMenu : MonoBehaviour
     public void LoadLevel()
     {
         GridManager.currentLevel = 999;
-        if (GUIUtility.systemCopyBuffer.StartsWith("V"))
+
+        var str = GUIUtility.systemCopyBuffer;
+		var formatName = str.Split(';')[0];
+		var format = FormatManager.formats.First(f => f.FormatName.ToLower() == formatName.ToLower());
+
+		if (format != null)
         {
-            GridManager.loadString = GUIUtility.systemCopyBuffer;
+            GridManager.loadString = str;
         }
         else
         {
             try
             {
-                GridManager.loadString = convertString(GUIUtility.systemCopyBuffer);
+                GridManager.loadString = ConvertString(str);
             }
             catch
             {
