@@ -11,7 +11,7 @@ namespace load
         private static Dictionary<char, int> decode = new Dictionary<char, int>();
         private static bool debounce;
 
-        private static void initDict()
+        private static void InitDict()
         {
             for (int i = 0; i < 74; i++)
             {
@@ -48,12 +48,16 @@ namespace load
 
         public static bool Load(string str)
         {
-            var level = FormatManager.instance.selectedFormat.Decode(str);
-            level.LoadToGrid();
+            var format = FormatManager.SelectedFormat;
+			var level = format.Decode(str);
+            Debug.Log(level);
+			Debug.Log(level.Name);
+			level.LoadToGrid();
+
             return true;
             if (!debounce)
             {
-                initDict();
+                InitDict();
                 debounce = true;
             }
 

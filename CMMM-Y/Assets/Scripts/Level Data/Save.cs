@@ -34,7 +34,6 @@ public class Save : MonoBehaviour
     {
         var level = Level.FromCurrent();
         var save = new V1Format().Encode(level);
-        Debug.Log(level.ToString());
 		Debug.Log(save);    
 
 		int format = PlayerPrefs.GetInt("ExportFormat", 2) + 1;

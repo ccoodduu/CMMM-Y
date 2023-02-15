@@ -77,7 +77,7 @@ public class EmojiFormat : SaveFormat
 			output.Append("\n");
 		}
 
-		output.Append(";" + level.Name + ";");
+		output.Append(";" + level.TutorialText + ";" + level.Name);
 		return output.ToString();
 	}
 }
@@ -143,7 +143,7 @@ public class ReadableFormat : SaveFormat
 			output.Append("\n");
 		}
 
-		output.Append(";" + level.Name + ";");
+		output.Append(";" + level.TutorialText + ";" + level.Name);
 		return output.ToString();
 	}
 }
@@ -178,11 +178,6 @@ public class V3Format : SaveFormat
 		return output;
 	}
 
-	private static bool IsPlaceable(int c)
-	{
-		return c % 2 == 1;
-	}
-
 	public override Level Decode(string code)
 	{
 		string[] arguments = code.Split(';');
@@ -190,6 +185,7 @@ public class V3Format : SaveFormat
 		var size = new Vector2Int(DecodeString(arguments[1]), DecodeString(arguments[2]));
 		var cells = new List<SavedCell>();
 		var placeable = new bool[size.x * size.y];
+		string tutorialText = arguments[4];
 		string name = arguments[5];
 
 		int[] cellDataHistory = new int[size.x * size.y];
@@ -241,15 +237,16 @@ public class V3Format : SaveFormat
 				for (int i = 0; i < length; i++)
 				{
 					var c = cellDataHistory[gridIndex - offset - 1];
-					placeable[i] = c % 2 == 1;
-					if (c >= 72) continue;
-
-					cells.Add(new SavedCell()
+					placeable[gridIndex] = c % 2 == 1;
+					if (c < 72)
 					{
-						cellType = (CellType_e)((c / 2) % 9),
-						position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
-						rotation = (c / 18),
-					});
+						cells.Add(new SavedCell()
+						{
+							cellType = (CellType_e)((c / 2) % 9),
+							position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
+							rotation = (c / 18),
+						});
+					}
 
 					cellDataHistory[gridIndex] = c;
 					gridIndex++;
@@ -258,12 +255,17 @@ public class V3Format : SaveFormat
 			else
 			{
 				var c = cellKey.IndexOf(cellString[dataIndex]);
-				cells.Add(new SavedCell()
+				placeable[gridIndex] = c % 2 == 1;
+				if (c < 72)
 				{
-					cellType = (CellType_e)((c / 2) % 9),
-					position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
-					rotation = (c / 18),
-				});
+					cells.Add(new SavedCell()
+					{
+						cellType = (CellType_e)((c / 2) % 9),
+						position = new Vector2Int(gridIndex % size.x, gridIndex / size.x),
+						rotation = (c / 18),
+					});
+				}
+
 				cellDataHistory[gridIndex] = c;
 				gridIndex++;
 			}
@@ -271,7 +273,7 @@ public class V3Format : SaveFormat
 			dataIndex++;
 		}
 
-		return new Level(name, size, cells.ToArray(), placeable);
+		return new Level(name, size, cells.ToArray(), placeable, tutorialText);
 	}
 
 	public override string Encode(Level level)
@@ -348,10 +350,9 @@ public class V3Format : SaveFormat
 			else
 				output.Append(cellKey[cellData[dataIndex]]);
 
-			maxMatchLength = 0;
 			dataIndex += 1;
 		}
-		output.Append(";" + level.Name + ";");
+		output.Append(";" + level.TutorialText + ";" + level.Name);
 		return output.ToString();
 	}
 }
@@ -424,7 +425,7 @@ public class V2Format : SaveFormat
 			}
 			dataIndex++;
 		}
-		output.Append(";" + level.Name + ";");
+		output.Append(";" + level.TutorialText + ";" + level.Name);
 		return output.ToString();
 	}
 }
@@ -449,7 +450,7 @@ public class V1Format : SaveFormat
 		{
 			for (int x = 0; x < level.Size.x; x++)
 			{
-				if (level.Placeable[x+y*level.Size.x])
+				if (level.Placeable[x + y * level.Size.x])
 				{
 					if (debounce)
 						output.Append(",");
@@ -468,7 +469,7 @@ public class V1Format : SaveFormat
 			debounce = true;
 			output.Append((int)cell.cellType + "." + cell.rotation + "." + cell.position.x + "." + cell.position.y);
 		}
-		output.Append(";" + level.Name + ";");
+		output.Append(";" + level.TutorialText + ";" + level.Name);
 		return output.ToString();
 	}
 }

@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
     public GameObject stepCountGO;
 
     private int stepCount = 0;
-    private void setStepCount(int value)
+    private void SetStepCount(int value)
     {
         stepCountGO.GetComponent<Text>().text = value.ToString();
         stepCount = value;
@@ -273,7 +273,7 @@ public class GridManager : MonoBehaviour
         cellUpdateIndex = 0;
         rotationUpdateIndex = 0;
 
-        setStepCount(0);
+        SetStepCount(0);
     }
     
     private void printGrid()
@@ -321,7 +321,7 @@ public class GridManager : MonoBehaviour
         }
         if (timeSinceLastUpdate > animationLength && (playSimulation || stepSimulation)) {
 
-            setStepCount(stepCount + 1);
+            SetStepCount(stepCount + 1);
 
             timeSinceLastUpdate = 0;
             stepSimulation = false;

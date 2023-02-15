@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class FormatManager : MonoBehaviour
+public static class FormatManager
 {
-    [SerializeField] private string selectedFormatName;
-    public SaveFormat selectedFormat;
-    public SaveFormat[] formats;
+    private static string selectedFormatName = "V3";
+	private static SaveFormat selectedFormat;
+	public static SaveFormat[] formats = { new V1Format(), new V2Format(), new V3Format(), new EmojiFormat(), new ReadableFormat() };
 
-    public static FormatManager instance;
-
-	private void Start()
-	{
-        if (instance == null) return;
-		instance = this; 
-    }
-	
-	public string SelectedFormatName
+    public static string SelectedFormatName
     {
-        get => selectedFormatName; set
+        get => selectedFormatName ?? selectedFormat.FormatName; 
+        set
         {
             selectedFormatName = value;
             selectedFormat = formats.First(f => f.FormatName == value);
         } 
     }
-    public string[] FormatNames { get => formats.Select(format => format.FormatName).ToArray(); }
+	public static SaveFormat SelectedFormat
+	{
+		get => selectedFormat ?? formats.First(f => f.FormatName == selectedFormatName);
+		set
+		{
+			selectedFormat = value;
+			selectedFormatName = value.FormatName;
+		}
+	}
+	public static string[] FormatNames { get => formats.Select(format => format.FormatName).ToArray(); }
 }

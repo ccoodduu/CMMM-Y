@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class Level
@@ -8,14 +9,15 @@ public class Level
 	public Vector2Int Size { get; private set; }
 	public SavedCell[] Cells { get; private set; }
 	public bool[] Placeable { get; private set; }
+	public string TutorialText { get; private set; }
 
-
-	public Level(string name, Vector2Int size, SavedCell[] cells, bool[] placeable)
+	public Level(string name, Vector2Int size, SavedCell[] cells, bool[] placeable, string tutorialText)
 	{
 		Name = name;
 		Size = size;
 		Cells = cells;
 		Placeable = placeable;
+		TutorialText = tutorialText;
 	}
 
 	public static Level FromSelection()
@@ -39,7 +41,7 @@ public class Level
 
 		int width = CellFunctions.gridWidth;
 		int height = CellFunctions.gridHeight;
-			
+
 		var placable = new bool[width * height];
 
 		for (int y = 0; y < height; y++)
@@ -50,12 +52,35 @@ public class Level
 			}
 		}
 
-		return new Level("", new Vector2Int(width, height), cells.ToArray(), placable);
+		var tutorialText = GameObject.Find("TutorialText").GetComponent<TextMeshProUGUI>().text;
+
+		return new Level("Unnamed", new Vector2Int(width, height), cells.ToArray(), placable, tutorialText);
 	}
 
 	public void LoadToGrid()
 	{
-		throw new NotImplementedException();
+		CellFunctions.gridWidth = Size.x;
+		CellFunctions.gridHeight = Size.y;
+		GridManager.instance.InitGridSize();
+
+		for (int i = 0; i < Placeable.Length; i++)
+		{
+			var place = Placeable[i];
+			if (!place) continue;
+			var x = i % Size.x;
+			var y = i / Size.x;
+
+			GridManager.instance.tilemap.SetTile(new Vector3Int(x, y, 0), GridManager.instance.placebleTile);
+		}
+
+		for (int i = 0; i < Cells.Length; i++)
+		{
+			var cell = Cells[i];
+
+			GridManager.instance.SpawnCell(cell.cellType, cell.position, (Direction_e)cell.rotation, false);
+		}
+
+		GameObject.Find("TutorialText").GetComponent<TextMeshProUGUI>().text = TutorialText;
 	}
 }
 
@@ -65,3 +90,4 @@ public struct SavedCell
 	public Vector2Int position;
 	public int rotation;
 }
+
