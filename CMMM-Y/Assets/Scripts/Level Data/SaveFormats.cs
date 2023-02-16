@@ -24,9 +24,9 @@ public class EmojiFormat : SaveFormat
 	{
 		string[] arguments = code.Split(';');
 
-		var cellString = arguments[1];
-		var lines = cellString.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
-		var emojis = lines.Select(x => string.Join(":,:", x.Split(new[] { "::" }, StringSplitOptions.None)).Split(',')).ToArray();
+		var cellString = string.Join("", arguments[1].Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)); // Remove Spaces
+		var lines = cellString.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries); // Split at newlines
+		var emojis = lines.Select(x => string.Join(":,:", x.Split(new[] { "::" }, StringSplitOptions.None)).Split(',')).ToArray(); // Split each line into emoji string array
 
 		var size = new Vector2Int(emojis[0].Length, emojis.Length);
 		var placeable = new bool[size.x * size.y];
