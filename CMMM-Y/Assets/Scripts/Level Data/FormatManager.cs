@@ -1,30 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public static class FormatManager
 {
-    private static string selectedFormatName = "Readable";
-	private static SaveFormat selectedFormat;
 	public static SaveFormat[] formats = { new V1Format(), new V2Format(), new V3Format(), new EmojiFormat(), new ReadableFormat() };
 
     public static string SelectedFormatName
     {
-        get => selectedFormatName ?? selectedFormat.FormatName; 
-        set
-        {
-            selectedFormatName = value;
-            selectedFormat = formats.First(f => f.FormatName == value);
-        } 
+        get => SelectedFormat.FormatName; 
     }
 	public static SaveFormat SelectedFormat
 	{
-		get => selectedFormat ?? formats.First(f => f.FormatName == selectedFormatName);
-		set
-		{
-			selectedFormat = value;
-			selectedFormatName = value.FormatName;
-		}
+		get => formats[PlayerPrefs.GetInt("ExportFormat", 2)];
+
 	}
 	public static string[] FormatNames { get => formats.Select(format => format.FormatName).ToArray(); }
 }

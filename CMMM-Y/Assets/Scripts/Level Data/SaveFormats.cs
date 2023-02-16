@@ -142,7 +142,7 @@ public class ReadableFormat : SaveFormat
 	{
 		string[] arguments = code.Split(';');
 
-		var cellString = arguments[1]; // Remove Spaces
+		var cellString = arguments[1];
 		var lines = cellString.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries); // Split at newlines
 		var chars = lines.Select(x => x.ToCharArray()).ToArray(); // Split each line into char array
 
