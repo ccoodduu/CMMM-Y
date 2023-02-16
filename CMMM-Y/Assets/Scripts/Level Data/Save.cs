@@ -33,7 +33,7 @@ public class Save : MonoBehaviour
     public void SaveString(Vector2Int topLeft, Vector2Int bottomRight)
     {
         var level = Level.FromCurrent();
-        var save = new V1Format().Encode(level);
+        var save = FormatManager.SelectedFormat.Encode(level);
 		Debug.Log(save);    
 
 		int format = PlayerPrefs.GetInt("ExportFormat", 2) + 1;

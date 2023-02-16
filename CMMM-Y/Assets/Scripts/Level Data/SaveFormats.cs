@@ -34,16 +34,16 @@ public class EmojiFormat : SaveFormat
 		string tutorialText = arguments[2];
 		string name = arguments[3];
 
-		for (int y = 0; y < size.x; y++)
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int x = 0; x < size.y; x++)
+			for (int x = 0; x < size.x; x++)
 			{
-				var position = new Vector2Int(x, y);
+				var position = new Vector2Int(x, size.y-y-1);
 				var emoji = emojis[y][x];
 
 				if (emoji == ":bg_placeable:")
 				{
-					placeable[x + y * size.y] = true;
+					placeable[position.x + position.y * size.x] = true;
 				}
 				else if (emoji != ":bg_default:")
 				{
