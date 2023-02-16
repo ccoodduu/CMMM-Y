@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public static class FormatManager
 {
-    private static string selectedFormatName = "Emoji";
+    private static string selectedFormatName = "Readable";
 	private static SaveFormat selectedFormat;
 	public static SaveFormat[] formats = { new V1Format(), new V2Format(), new V3Format(), new EmojiFormat(), new ReadableFormat() };
 

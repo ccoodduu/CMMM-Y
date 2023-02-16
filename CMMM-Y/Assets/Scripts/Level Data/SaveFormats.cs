@@ -5,9 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Playables;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public abstract class SaveFormat
 {
@@ -143,7 +140,55 @@ public class ReadableFormat : SaveFormat
 
 	public override Level Decode(string code)
 	{
-		throw new NotImplementedException();
+		string[] arguments = code.Split(';');
+
+		var cellString = arguments[1]; // Remove Spaces
+		var lines = cellString.Split(new[] { "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries); // Split at newlines
+		var chars = lines.Select(x => x.ToCharArray()).ToArray(); // Split each line into char array
+
+		var size = new Vector2Int(chars[0].Length, chars.Length);
+		var placeable = new bool[size.x * size.y];
+		var cells = new List<SavedCell>();
+		string tutorialText = arguments[2];
+		string name = arguments[3];
+
+		for (int y = 0; y < size.y; y++)
+		{
+			for (int x = 0; x < size.x; x++)
+			{
+				var position = new Vector2Int(x, size.y - y - 1);
+				var chr = chars[y][x];
+
+				if (chr != ' ')
+				{
+					SavedCell cell;
+					switch (chr)
+					{
+						case '1': cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 0, position = position }; break;
+						case '2': cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 1, position = position }; break;
+						case '3': cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 2, position = position }; break;
+						case '4': cell = new SavedCell() { cellType = CellType_e.GENERATOR, rotation = 3, position = position }; break;
+						case '>': cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 0, position = position }; break;
+						case 'v': cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 1, position = position }; break;
+						case '<': cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 2, position = position }; break;
+						case '^': cell = new SavedCell() { cellType = CellType_e.MOVER, rotation = 3, position = position }; break;
+						case '-': cell = new SavedCell() { cellType = CellType_e.SLIDE, rotation = 0, position = position }; break;
+						case '|': cell = new SavedCell() { cellType = CellType_e.SLIDE, rotation = 1, position = position }; break;
+						case '#': cell = new SavedCell() { cellType = CellType_e.WALL, rotation = 0, position = position }; break;
+						case '+': cell = new SavedCell() { cellType = CellType_e.BLOCK, rotation = 0, position = position }; break;
+						case 'e': cell = new SavedCell() { cellType = CellType_e.ENEMY, rotation = 0, position = position }; break;
+						case 'x': cell = new SavedCell() { cellType = CellType_e.TRASH, rotation = 0, position = position }; break;
+						case 'r': cell = new SavedCell() { cellType = CellType_e.CWROTATER, rotation = 0, position = position }; break;
+						case 'l': cell = new SavedCell() { cellType = CellType_e.CCWROTATER, rotation = 0, position = position }; break;
+
+						default: throw new ArgumentException("Not a valid char");
+					}
+					cells.Add(cell);
+				}
+			}
+		}
+
+		return new Level(name, size, cells.ToArray(), placeable, tutorialText);
 	}
 
 	public override string Encode(Level level)
