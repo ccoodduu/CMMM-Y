@@ -1,25 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsSlider : MonoBehaviour
 {
-    public GameObject sliderValueDisplay;
-    public string playerPrefString;
-    public string sliderType;
+	public GameObject sliderValueDisplay;
+	public string playerPrefString;
+	public string sliderType;
 
-    void Start()
-    {
-        this.GetComponent<Slider>().value = PlayerPrefs.GetFloat(playerPrefString);
-        if (sliderType == "Volume") sliderValueDisplay.GetComponent<Text>().text = Mathf.Round(PlayerPrefs.GetFloat(playerPrefString) * 100f) + "%";
-        if (sliderType == "Speed") sliderValueDisplay.GetComponent<Text>().text = PlayerPrefs.GetFloat(playerPrefString) + "x";
-    }
+	private TMP_Text valueText;
 
-    public void updateSlider(float val)
-    {
-        PlayerPrefs.SetFloat(playerPrefString, val);
-        if (sliderType == "Volume") sliderValueDisplay.GetComponent<Text>().text = Mathf.Round(val * 100f) + "%";
-        if (sliderType == "Speed") sliderValueDisplay.GetComponent<Text>().text = val + "x";
-    }
+	void Start()
+	{
+		valueText = sliderValueDisplay.GetComponent<TMP_Text>();
+		var value = PlayerPrefs.GetFloat(playerPrefString);
+
+		GetComponent<Slider>().value = value;
+		UpdateSlider(value);
+	}
+
+	public void UpdateSlider(float val)
+	{
+		PlayerPrefs.SetFloat(playerPrefString, val);
+
+		MusicManager.instance.UpdateVolume();
+
+		if (sliderType == "Volume") valueText.text = Mathf.Round(val * 100f) + "%";
+		if (sliderType == "Speed") valueText.text = Mathf.Round(val * 10f) / 10f + "x";
+	}
 }

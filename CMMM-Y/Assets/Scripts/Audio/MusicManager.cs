@@ -8,22 +8,20 @@ public class MusicManager : MonoBehaviour
     public AudioSource fadeIn;
     public AudioSource looping;
 
-    static bool debounce;
+    public static MusicManager instance;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        if (debounce) 
+        if (instance != null) 
         {
             Destroy(gameObject);
             return;
         }
-        debounce = true;
+		instance = this;
         DontDestroyOnLoad(gameObject);
 
-
-
+        // Init volumes
         if (!PlayerPrefs.HasKey("Music Volume"))
         {
             PlayerPrefs.SetFloat("Music Volume", 1f);
@@ -34,20 +32,20 @@ public class MusicManager : MonoBehaviour
             PlayerPrefs.SetFloat("FX Volume", 1f);
         }
 
+        UpdateVolume();
 
-        fadeIn.volume = PlayerPrefs.GetFloat("Music Volume");
-        looping.volume = PlayerPrefs.GetFloat("Music Volume");
-
-        fadeIn.Play();
+        // Start music
+		fadeIn.Play();
         looping.PlayScheduled(AudioSettings.dspTime + fadeIn.clip.length);
         looping.loop = true;
     }
 
-    public void volumeUpdate(float vol)
+    public void UpdateVolume()
     {
-        fadeIn.volume = vol;
+        var vol = PlayerPrefs.GetFloat("Music Volume");
+
+		fadeIn.volume = vol;
         looping.volume = vol;
-        PlayerPrefs.SetFloat("Music Volume", vol);
     }
 
 }

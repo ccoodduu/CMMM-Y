@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class AdjustMusicVolume : MonoBehaviour
 {
-    private GameObject Music;
-    public void updateVolume(float vol)
+    public void UpdateVolume(float vol)
     {
-        Music = GameObject.FindGameObjectWithTag("Music");
-        if (Music)
-        {
-            Music.GetComponent<MusicManager>().volumeUpdate(vol);
-        }
+		PlayerPrefs.SetFloat("Music Volume", vol);
+        MusicManager.instance.UpdateVolume();
     }
-    
 }
