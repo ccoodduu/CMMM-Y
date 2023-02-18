@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,20 +8,15 @@ public class DropdownSetting : MonoBehaviour
 {
     public string playerPrefString;
     public int defaultValue = 0;
-    Dropdown dropdown;
 
     void Start()
     {
-        dropdown = gameObject.GetComponent<Dropdown>();
+        var dropdown = gameObject.GetComponent<TMP_Dropdown>();
         dropdown.value = PlayerPrefs.GetInt(playerPrefString, defaultValue);
-        dropdown.onValueChanged.AddListener(delegate
-        {
-            DropdownValueChanged(dropdown);
-        });
     }
 
-    void DropdownValueChanged(Dropdown change)
+    public void DropdownValueChanged(int value)
     {
-        PlayerPrefs.SetInt(playerPrefString, change.value);
+        PlayerPrefs.SetInt(playerPrefString, value);
     }
 }
