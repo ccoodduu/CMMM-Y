@@ -25,7 +25,7 @@ public class SettingsSlider : MonoBehaviour
 	{
 		PlayerPrefs.SetFloat(playerPrefString, val);
 
-		MusicManager.instance.UpdateVolume();
+		if (playerPrefString == "Music Volume") MusicManager.instance.UpdateVolume();
 
 		if (sliderType == "Volume") valueText.text = Mathf.Round(val * 100f) + "%";
 		if (sliderType == "Speed") valueText.text = Mathf.Round(val * 10f) / 10f + "x";
