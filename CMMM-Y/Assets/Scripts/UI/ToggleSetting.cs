@@ -7,19 +7,16 @@ public class ToggleSetting : MonoBehaviour
 {
     public bool defaultSetting;
     public string playerPrefString;
-    Toggle m_Toggle;
+    Toggle toggle;
 
     void Start()
     {
-        m_Toggle = GetComponent<Toggle>();
-        m_Toggle.isOn = PlayerPrefs.GetInt(playerPrefString, defaultSetting ? 1 : 0) == 1;
-        m_Toggle.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_Toggle);
-        });
+        toggle = GetComponent<Toggle>();
+        toggle.isOn = PlayerPrefs.GetInt(playerPrefString, defaultSetting ? 1 : 0) == 1;
     }
 
-    void ToggleValueChanged(Toggle change)
+    public void ToggleValueChanged(bool value)
     {
-        PlayerPrefs.SetInt(playerPrefString, m_Toggle.isOn ? 1 : 0);
+        PlayerPrefs.SetInt(playerPrefString, value ? 1 : 0);
     }
 }
