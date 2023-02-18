@@ -44,12 +44,14 @@ public class ControlOption : MonoBehaviour
 			}
 		}
 
-		if (keyPressed is KeyCode.None || keyPressed is KeyCode.Escape)
+		if (keyPressed is KeyCode.None)
 		{
 			SetLabel();
 			StopCoroutine(WaitForKeypress());
 			yield break;
 		}
+
+		if (keyPressed is KeyCode.Escape) keyPressed = KeyCode.None;
 
 		ControlsManager.SetKeyForControl(control, keyPressed);
 		SetLabel();

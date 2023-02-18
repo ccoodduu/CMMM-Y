@@ -173,7 +173,7 @@ public class SelectTool : MonoBehaviour
     void Update()
     {
         // if you select an area or if you use the paste hotkey
-        if ((Input.GetKey("left ctrl") && Input.GetMouseButtonDown(0)) || Input.GetKeyDown("v"))
+        if ((Input.GetKey(ControlsManager.GetKeyForControl("Select")) && Input.GetMouseButtonDown(0)) || Input.GetKeyDown(ControlsManager.GetKeyForControl("Paste")))
             if (GridManager.mode == Mode_e.EDITOR)
                 selectButton.GetComponent<EditorButtons>().switchTool();
 
@@ -181,7 +181,7 @@ public class SelectTool : MonoBehaviour
 
         if (GridManager.tool == Tool_e.SELECT)
         {
-            if (Input.GetKeyDown("v"))
+            if (Input.GetKeyDown(ControlsManager.GetKeyForControl("Paste")))
                 state = State_e.PREVIEW;
             if (Input.GetMouseButtonDown(0))
             {
@@ -238,53 +238,54 @@ public class SelectTool : MonoBehaviour
             }
             else
             {
-                //area has been selected
+				//area has been 
+                var doStackSelection = Input.GetKey(ControlsManager.GetKeyForControl("StackSelection"));
 
-                if (PlayerPrefs.GetInt("Selection Toolbox", 1) != 0)
+				if (PlayerPrefs.GetInt("Selection Toolbox", 1) != 0)
                 {
                     toolbox.SetActive(true);
                     toolbox.transform.position = Camera.main.WorldToScreenPoint(toolboxPos);
                 }
 
-                if (Input.GetKeyDown("delete"))
+                if (Input.GetKeyDown(ControlsManager.GetKeyForControl("Delete")))
                 {
                     Delete();
                 }
-                else if (Input.GetKeyDown("c"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("Copy")))
                 {
                     Copy();
                 }
-                else if (Input.GetKeyDown("x"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("Cut")))
                 {
                     Cut();
                 }
 
-                else if (Input.GetKeyDown("up"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("SelectionUp")))
                 {
-                    Vector2Int offset = new Vector2Int(0, Input.GetKey("left ctrl") ? (max.y + 1) - min.y : 1);
+                    Vector2Int offset = new Vector2Int(0, doStackSelection ? (max.y + 1) - min.y : 1);
                     if (max.y + offset.y < CellFunctions.gridHeight)
-                        Stack(offset, !Input.GetKey("left ctrl"));
+                        Stack(offset, !doStackSelection);
                 }
 
-                else if (Input.GetKeyDown("down"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("SelectionDown")))
                 {
-                    Vector2Int offset = new Vector2Int(0, Input.GetKey("left ctrl") ? min.y - (max.y + 1) : -1);
+                    Vector2Int offset = new Vector2Int(0, doStackSelection ? min.y - (max.y + 1) : -1);
                     if (min.y + offset.y >= 0)
-                        Stack(offset, !Input.GetKey("left ctrl"));
+                        Stack(offset, !doStackSelection);
                 }
 
-                else if (Input.GetKeyDown("right"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("SelectionRight")))
                 {
-                    Vector2Int offset = new Vector2Int(Input.GetKey("left ctrl") ? (max.x + 1) - min.x : 1, 0);
+                    Vector2Int offset = new Vector2Int(doStackSelection ? (max.x + 1) - min.x : 1, 0);
                     if (max.x + offset.x < CellFunctions.gridHeight)
-                        Stack(offset, !Input.GetKey("left ctrl"));
+                        Stack(offset, !doStackSelection);
                 }
 
-                else if (Input.GetKeyDown("left"))
+                else if (Input.GetKeyDown(ControlsManager.GetKeyForControl("SelectionLeft")))
                 {
-                    Vector2Int offset = new Vector2Int(Input.GetKey("left ctrl") ? min.x - (max.x + 1) : -1, 0);
+                    Vector2Int offset = new Vector2Int(doStackSelection ? min.x - (max.x + 1) : -1, 0);
                     if (min.x + offset.x >= 0)
-                        Stack(offset, !Input.GetKey("left ctrl"));
+                        Stack(offset, !doStackSelection);
                 }
             }
 
@@ -313,9 +314,9 @@ public class SelectTool : MonoBehaviour
                 state = State_e.IDLE;
             }
 
-            if (Input.GetKeyDown("q"))
+            if (Input.GetKeyDown(ControlsManager.GetKeyForControl("RotateCCW")))
                 RotateClipboard(copyOffset, true);
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown(ControlsManager.GetKeyForControl("RotateCW")))
                 RotateClipboard(copyOffset, false);
         }
         else
