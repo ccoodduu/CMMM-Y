@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c7314687e4a465aacd25ba704371a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderValueDisplay: {fileID: 3672715642896320334}
+  sliderValueText: {fileID: 3672715642896320332}
   playerPrefString: 
   sliderType: 
 --- !u!1 &3672715644031554617

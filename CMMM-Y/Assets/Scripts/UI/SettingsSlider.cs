@@ -6,15 +6,12 @@ using UnityEngine.UI;
 
 public class SettingsSlider : MonoBehaviour
 {
-	public GameObject sliderValueDisplay;
+	public TMP_Text sliderValueText;
 	public string playerPrefString;
 	public string sliderType;
 
-	private TMP_Text valueText;
-
 	void Start()
 	{
-		valueText = sliderValueDisplay.GetComponent<TMP_Text>();
 		var value = PlayerPrefs.GetFloat(playerPrefString);
 
 		GetComponent<Slider>().value = value;
@@ -27,7 +24,7 @@ public class SettingsSlider : MonoBehaviour
 
 		if (playerPrefString == "Music Volume") MusicManager.instance.UpdateVolume();
 
-		if (sliderType == "Volume") valueText.text = Mathf.Round(val * 100f) + "%";
-		if (sliderType == "Speed") valueText.text = Mathf.Round(val * 10f) / 10f + "x";
+		if (sliderType == "Volume") sliderValueText.text = Mathf.Round(val * 100f) + "%";
+		if (sliderType == "Speed") sliderValueText.text = Mathf.Round(val * 10f) / 10f + "x";
 	}
 }
