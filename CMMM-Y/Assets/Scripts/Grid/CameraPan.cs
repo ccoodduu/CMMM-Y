@@ -8,6 +8,8 @@ public class CameraPan : MonoBehaviour
 	private float orthographicSize;
 	private Vector2 position;
 
+	private Vector2 previousMousePosition;
+
 	private void Start()
 	{
 		instance = this;
@@ -19,6 +21,8 @@ public class CameraPan : MonoBehaviour
 		Pan();
 
 		ApplyPosition();
+
+		previousMousePosition = Input.mousePosition;
 	}
 
 	public void PositionCamera()
@@ -41,7 +45,7 @@ public class CameraPan : MonoBehaviour
 
 		var camSize = new Vector2(orthographicSize * 2 * Camera.main.aspect, orthographicSize * 2);
 
-		var addSize = camSize*amount;
+		var addSize = camSize * amount;
 
 		orthographicSize += addSize.y;
 		if (orthographicSize < 0.5)
@@ -52,7 +56,7 @@ public class CameraPan : MonoBehaviour
 			{
 				Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-				var diffrence = position-mousePos;
+				var diffrence = position - mousePos;
 
 				position += 2 * amount * diffrence;
 			}
@@ -61,12 +65,20 @@ public class CameraPan : MonoBehaviour
 
 	private void Pan()
 	{
-		var speed = (Input.GetKey(ControlsManager.GetKeyForControl("FastPan")) ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * Time.deltaTime;
+		var speed = (Input.GetKey(ControlsManager.GetKeyForControl("FastPan")) ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * 2f * Time.deltaTime;
 
 		if (Input.GetKey(ControlsManager.GetKeyForControl("Up"))) position += Vector2.up * speed;
 		if (Input.GetKey(ControlsManager.GetKeyForControl("Down"))) position += Vector2.down * speed;
 		if (Input.GetKey(ControlsManager.GetKeyForControl("Left"))) position += Vector2.left * speed;
 		if (Input.GetKey(ControlsManager.GetKeyForControl("Right"))) position += Vector2.right * speed;
+
+		if (Input.GetKey(ControlsManager.GetKeyForControl("Pan")))
+		{
+			Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Vector2 previousWorldPos = Camera.main.ScreenToWorldPoint(previousMousePosition);
+
+			position += previousWorldPos - worldPos;
+		}
 	}
 
 	public static CameraPan instance;
