@@ -9,7 +9,7 @@ public class TextureLoader : MonoBehaviour
     public Sprite[] texturables;
     public static Dictionary<string, Sprite> textures = new Dictionary<string, Sprite>();
 
-    private static TextureLoader i;
+    private static TextureLoader instance;
 
     private static void validateFiles()
     {
@@ -23,7 +23,7 @@ public class TextureLoader : MonoBehaviour
             Directory.CreateDirectory(Application.dataPath + "/texturepacks/Default");
         }
 
-        foreach (Sprite sprite in TextureLoader.i.texturables)
+        foreach (Sprite sprite in TextureLoader.instance.texturables)
         {
             if (!File.Exists(Application.dataPath + "/texturepacks/Default/" + sprite.name + ".png"))
             {
@@ -41,7 +41,7 @@ public class TextureLoader : MonoBehaviour
     {
         validateFiles();
 
-        foreach (Sprite sprite in TextureLoader.i.texturables)
+        foreach (Sprite sprite in TextureLoader.instance.texturables)
         {
             if (File.Exists(string.Concat(new string[]
             {
@@ -64,7 +64,7 @@ public class TextureLoader : MonoBehaviour
                 }));
                 if (array2.Length != 0)
                 {
-                    Texture2D texture2D = Object.Instantiate<Texture2D>(TextureLoader.i.texturables[0].texture);
+                    Texture2D texture2D = Object.Instantiate<Texture2D>(TextureLoader.instance.texturables[0].texture);
                     texture2D.LoadImage(array2);
                     Sprite sprite2 = Sprite.Create(texture2D, new Rect(0f, 0f, (float)texture2D.width, (float)texture2D.height), new Vector2(0.5f, 0.5f), (float)((texture2D.width > texture2D.height) ? texture2D.width : texture2D.height));
                     sprite2.name = "Sprite";
@@ -88,7 +88,7 @@ public class TextureLoader : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        TextureLoader.i = this;
+        TextureLoader.instance = this;
 
         validateFiles();
 

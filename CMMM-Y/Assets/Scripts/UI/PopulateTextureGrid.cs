@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AssemblyCSharp.Assets.Assets.Scripts.Enums;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +31,7 @@ public class PopulateTextureGrid : MonoBehaviour
             GameObject textureCardImg = textureCard.transform.GetChild(3).gameObject;
             GameObject textureCardPath = textureCard.transform.GetChild(4).gameObject;
 
-            textureCardPath.GetComponent<Text>().text = text.Split('/').Last() + "/";
+            textureCardPath.GetComponent<TMP_Text>().text = text.Split('/').Last() + "/";
 
             string currentPack = PlayerPrefs.GetString("Texture", "Default");
 
@@ -41,18 +42,18 @@ public class PopulateTextureGrid : MonoBehaviour
 
                 if (texturePackData.title == "Default" && (text.Split('/').Last() != "Default")) { Destroy(textureCard); continue; }
 
-                textureCardTitle.GetComponent<Text>().text = texturePackData.title;
+                textureCardTitle.GetComponent<TMP_Text>().text = texturePackData.title;
                 if (currentPack == text.Split('/').Last())
                 {
                     textureCardBG.SetActive(true);
                     textureCard.transform.SetAsFirstSibling();
                 }
 
-                textureCardDesc.GetComponent<Text>().text = texturePackData.desc;
+                textureCardDesc.GetComponent<TMP_Text>().text = texturePackData.desc;
             }
             catch
             {
-                textureCardTitle.GetComponent<Text>().text = text.Split(new char[] {
+                textureCardTitle.GetComponent<TMP_Text>().text = text.Split(new char[] {
                     '/'
                 })[text.Split(new char[] {
                     '/'
@@ -64,7 +65,7 @@ public class PopulateTextureGrid : MonoBehaviour
                     textureCard.transform.SetAsFirstSibling();
                 }
 
-                textureCardDesc.GetComponent<Text>().text = "";
+                textureCardDesc.GetComponent<TMP_Text>().text = "";
             }
 
             // try to load pack image, default to no image

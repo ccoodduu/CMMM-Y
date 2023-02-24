@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &285822239 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7088292149909188084, guid: 75c05fdf9e1908c4db1fc4968339291b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1867006026}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &347428040
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,6 +379,7 @@ GameObject:
   - component: {fileID: 612348369}
   - component: {fileID: 612348368}
   - component: {fileID: 612348367}
+  - component: {fileID: 612348370}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -411,7 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 285822239}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &612348369
@@ -428,6 +435,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &612348370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612348366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0696878e7ff5ff04684980e2eb30785d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &714776778
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +801,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2726065520012870594, guid: 1afbdae5a73f8e84b87f28a70339d794,
+        type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2726065520012870594, guid: 1afbdae5a73f8e84b87f28a70339d794,
+        type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2726065520605141808, guid: 1afbdae5a73f8e84b87f28a70339d794,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -990,6 +1019,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1360959492}
     m_Modifications:
+    - target: {fileID: 4081857718825591794, guid: 75c05fdf9e1908c4db1fc4968339291b,
+        type: 3}
+      propertyPath: m_text
+      value: Back
+      objectReference: {fileID: 0}
     - target: {fileID: 7088292149909188084, guid: 75c05fdf9e1908c4db1fc4968339291b,
         type: 3}
       propertyPath: m_Name

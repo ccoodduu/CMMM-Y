@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class CreateLevel : MonoBehaviour
 {
-    public InputField width;
-    public InputField height;
+    public TMP_InputField width;
+    public TMP_InputField height;
     public void Create() {
         GridManager.currentLevel = 999;
         if (width.text != "" && height.text != "")
