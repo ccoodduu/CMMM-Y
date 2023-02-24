@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EditorButtons : MonoBehaviour
 {
     public Tool_e tool;
-    public bool Animate;
+    public bool animate;
     public KeyCode keybind;
 
     private void Update()
@@ -17,7 +17,7 @@ public class EditorButtons : MonoBehaviour
 
     public void switchTool() {
         GridManager.tool = tool;
-        foreach (Transform button in PlacementManager.i.Buttons) {
+        foreach (Transform button in PlacementManager.instance.Buttons) {
             button.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
         }
         this.GetComponent<Image>().color = new Color(1, 1, 1, 1);

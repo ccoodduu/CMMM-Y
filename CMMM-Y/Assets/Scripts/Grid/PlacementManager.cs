@@ -8,7 +8,7 @@ public class PlacementManager : MonoBehaviour
     Direction_e oldDir;
     Direction_e dir;
 
-    public static PlacementManager i;
+    public static PlacementManager instance;
 
     float animationTime = 0;
     readonly float animationDuration = .1f;
@@ -20,7 +20,7 @@ public class PlacementManager : MonoBehaviour
 
     private void Awake()
     {
-        i = this;
+        instance = this;
     }
 
     private void Start()
@@ -60,7 +60,7 @@ public class PlacementManager : MonoBehaviour
         
 
         foreach (Transform transform in Buttons) {
-            if(transform.GetComponent<EditorButtons>().Animate)
+            if(transform.GetComponent<EditorButtons>().animate)
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, (int)oldDir * -90), Quaternion.Euler(0, 0, (int)dir * -90), animationTime / animationDuration);
         }
 

@@ -79,10 +79,20 @@ public class DragManager : MonoBehaviour
             selectedCell.transform.position = new Vector3(mousePos.x - .5f, mousePos.y - .5f, -5);
         }
 
-        if (EventSystem.current.IsPointerOverGameObject() || (GridManager.tool != Tool_e.DRAG && GridManager.mode == Mode_e.EDITOR))
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+			if (Input.GetMouseButtonUp(0) && inDrag) CancelDrag();
+			return;
+		}
+        if ((GridManager.tool != Tool_e.DRAG && GridManager.mode == Mode_e.EDITOR))
+        {
+			if (inDrag) CancelDrag();
             return;
+		}
         if (!GridManager.clean)
+        {
             return;
+        }
 
         if (Input.GetMouseButtonDown(0)) {
             StartDrag();
