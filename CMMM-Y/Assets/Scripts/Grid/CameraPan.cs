@@ -17,7 +17,7 @@ public class CameraPan : MonoBehaviour
 
 	public void Update()
 	{
-		Zoom(-Input.mouseScrollDelta.y * Time.deltaTime);
+		Zoom(-Input.mouseScrollDelta.y * PlayerPrefs.GetFloat("ZoomSensitivity", 1f) * Time.deltaTime);
 		Pan();
 
 		ApplyPosition();
