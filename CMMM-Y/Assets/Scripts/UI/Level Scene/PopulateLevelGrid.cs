@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PopulateLevelGrid : MonoBehaviour
 
@@ -22,11 +23,12 @@ public class PopulateLevelGrid : MonoBehaviour
 
         for (int i = 0; i < GameLevels.levels.Length; i++)
         {
-            newObj = (GameObject)Instantiate(prefab, transform);
-            newObj.GetComponentInChildren<Text>().text = (i + 1) + "";
+            newObj = Instantiate(prefab, transform);
+            TMP_Text text = newObj.GetComponentInChildren<TMP_Text>();
+            text.text = (i + 1) + "";
             if (PlayerPrefs.GetInt("Level" + i, 0) == 1)
             {
-                newObj.GetComponentInChildren<Text>().color = new Color32(159, 162, 243, 255);
+                text.color = new Color32(159, 162, 243, 255);
             }
 
             int levelToLoad = i;
