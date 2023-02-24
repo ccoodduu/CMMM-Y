@@ -19,6 +19,7 @@ public static class ControlsManager
 		{"Down", KeyCode.S },
 		{"Left", KeyCode.A },
 		{"Right", KeyCode.D },
+		{"FastPan", KeyCode.LeftControl },
 		{"RotateCW", KeyCode.E },
 		{"RotateCCW", KeyCode.Q },
 		{"Select", KeyCode.LeftControl },
@@ -31,7 +32,7 @@ public static class ControlsManager
 		{"SelectionDown", KeyCode.DownArrow },
 		{"SelectionLeft", KeyCode.LeftArrow },
 		{"SelectionRight", KeyCode.RightArrow },
-
+		{"Pan", KeyCode.Mouse2 },
 	};
 
 	public static void SetKeyForControl(string control, KeyCode key)
