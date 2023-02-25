@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +9,15 @@ using UnityEngine.UI;
 
 public class NoNegativity : MonoBehaviour
 {
-    // Start is called before the first frame update
+	private TMP_InputField numberInput;
     void Start()
     {
-        numberInput = GetComponent<InputField> ();
+        numberInput = GetComponent<TMP_InputField>();
+        numberInput.onValueChanged.AddListener(ValueChanged);
     }
-
-    public InputField numberInput;
 
     public void ValueChanged(string txt)
     {
-        
         if (txt == "-")
         {
             numberInput.text = "";
