@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 
 public static class ControlsManager
@@ -13,7 +14,7 @@ public static class ControlsManager
 		return keyCode.ToString();
 	}
 
-	public static Dictionary<string, KeyCode[]> deafultValues = new Dictionary<string, KeyCode[]>()
+	public static readonly Dictionary<string, KeyCode[]> defaultControls = new Dictionary<string, KeyCode[]>()
 	{
 		{"Up", new KeyCode[]{ KeyCode.W} },
 		{"Down", new KeyCode[]{ KeyCode.S} },
@@ -22,12 +23,12 @@ public static class ControlsManager
 		{"FastPan", new KeyCode[]{ KeyCode.LeftControl} },
 		{"RotateCW", new KeyCode[]{ KeyCode.E} },
 		{"RotateCCW", new KeyCode[]{ KeyCode.Q} },
-		{"Select", new KeyCode[]{ KeyCode.LeftControl} },
+		{"Select", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
 		{"Paste", new KeyCode[]{ KeyCode.V} },
 		{"Copy", new KeyCode[]{ KeyCode.C} },
 		{"Cut", new KeyCode[]{ KeyCode.X} },
 		{"Delete", new KeyCode[]{ KeyCode.Delete} },
-		{"StackSelection", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0} },
+		{"StackSelection", new KeyCode[]{ KeyCode.LeftControl} },
 		{"SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
 		{"SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
 		{"SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
@@ -64,27 +65,34 @@ public static class ControlsManager
 	public static void SetKeyForControl(string controlName, int index, KeyCode key)
 	{
 		var control = GetControl(controlName);
-		control.Keycodes[index] = key;
-		SetControl(controlName, control);
+		Control newControl;
+		if (key is KeyCode.None && control.Keycodes.Length > 1)
+		{
+			var list = control.Keycodes.ToList();
+			list.RemoveAt(index);
+			newControl = new Control(list.ToArray());
+		}
+		else
+		{
+			var list = control.Keycodes.ToList();
+			list[index] = key;
+			newControl = new Control(list.ToArray());
+		}
+
+		SetControl(controlName, newControl);
 	}
 
-	//public static KeyCode GetKeyForControl(string controlName)
-	//{
-	//	var controlArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
+	public static void AddKeyToControl(string controlName, KeyCode key)
+	{
+		var control = GetControl(controlName);
 
-	//	for (int i = 0; i < controlArray.Length; i++)
-	//	{
-	//		string c = controlArray[i];
-	//		if (c.StartsWith(controlName + ":"))
-	//		{
-	//			KeyCode keyCode = (KeyCode)int.Parse(c.Split(':')[1]);
-	//			return keyCode;
-	//		}
-	//	}
+		var list = control.Keycodes.ToList();
+		list.Add(key);
 
-	//	SetKeyForControl(controlName, deafultValues[controlName]);
-	//	return deafultValues[controlName];
-	//}
+		Control newControl = new Control(list.ToArray());
+
+		SetControl(controlName, newControl);
+	}
 
 	public static Control GetControl(string controlName)
 	{
@@ -99,9 +107,44 @@ public static class ControlsManager
 			}
 		}
 
-		var control = new Control(deafultValues[controlName]);
+		var control = new Control(defaultControls[controlName]);
 		SetControl(controlName, control);
-		return new Control(deafultValues[controlName]);
+		return new Control(defaultControls[controlName]);
+	}
+
+	public static bool IsDefault(string controlName)
+	{
+		var control = GetControl(controlName);
+		var defaultControl = new Control(defaultControls[controlName]);
+
+		return control.ToSaveString() == defaultControl.ToSaveString();
+	}
+
+	public static void ResetAll()
+	{
+		PlayerPrefs.SetString(playerPrefsControls, "");
+	}
+
+	public static void Reset(string controlName)
+	{
+		var oldControls = PlayerPrefs.GetString(playerPrefsControls, "");
+		var controlArray = oldControls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+		var newControls = "";
+		for (int i = 0; i < controlArray.Length; i++)
+		{
+			string c = controlArray[i];
+			if (c.StartsWith(controlName + ":"))
+			{
+				var list = controlArray.ToList();
+				list.RemoveAt(i);
+				newControls = string.Join(",", list.ToArray());
+				break;
+			}
+		}
+
+		PlayerPrefs.SetString(playerPrefsControls, newControls);
+		Debug.Log(newControls);
 	}
 }
 
