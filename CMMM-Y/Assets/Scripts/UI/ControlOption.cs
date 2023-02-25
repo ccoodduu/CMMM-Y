@@ -16,8 +16,8 @@ public class ControlOption : MonoBehaviour
 
 	private void SetLabel()
 	{
-		var currentKey = ControlsManager.GetKeyForControl(control);
-		keyLabel.text = ControlsManager.GetDisplayName(currentKey);
+		var currentControl = ControlsManager.GetControl(control);
+		keyLabel.text = ControlsManager.GetDisplayName(currentControl.Keycodes[0]);
 	} 
 
 	public void ChangeKey()
@@ -53,7 +53,7 @@ public class ControlOption : MonoBehaviour
 
 		if (keyPressed is KeyCode.Escape) keyPressed = KeyCode.None;
 
-		ControlsManager.SetKeyForControl(control, keyPressed);
+		ControlsManager.SetKeyForControl(control, 0, keyPressed);
 		SetLabel();
 	}
 }

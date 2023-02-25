@@ -36,7 +36,7 @@ public class PlacementManager : MonoBehaviour
         animationTime += Time.deltaTime;
 
         #region Animation and rotating
-        if (Input.GetKeyDown(ControlsManager.GetKeyForControl("RotateCCW")) && GridManager.tool != Tool_e.SELECT) {
+        if (ControlsManager.GetControl("RotateCCW").GetDown() && GridManager.tool != Tool_e.SELECT) {
             animationTime = 0;
             if ((int)dir == 0)
             {
@@ -46,7 +46,7 @@ public class PlacementManager : MonoBehaviour
                 dir = (Direction_e)((int)dir - 1);
             }
         }
-        if (Input.GetKeyDown(ControlsManager.GetKeyForControl("RotateCW")) && GridManager.tool != Tool_e.SELECT) {
+        if (ControlsManager.GetControl("RotateCW").GetDown() && GridManager.tool != Tool_e.SELECT) {
             animationTime = 0;
             if ((int)dir == 3)
             {

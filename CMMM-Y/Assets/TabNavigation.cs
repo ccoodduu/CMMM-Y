@@ -12,6 +12,7 @@ public class TabNavigation : MonoBehaviour
 		system = EventSystem.current;
 
 	}
+	// TODO: Fix in LevelSelect and TextureSelect
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Tab))

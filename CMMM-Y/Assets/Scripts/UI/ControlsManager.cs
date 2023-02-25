@@ -13,29 +13,29 @@ public static class ControlsManager
 		return keyCode.ToString();
 	}
 
-	public static Dictionary<string, KeyCode> deafultValues = new Dictionary<string, KeyCode>()
+	public static Dictionary<string, KeyCode[]> deafultValues = new Dictionary<string, KeyCode[]>()
 	{
-		{"Up", KeyCode.W },
-		{"Down", KeyCode.S },
-		{"Left", KeyCode.A },
-		{"Right", KeyCode.D },
-		{"FastPan", KeyCode.LeftControl },
-		{"RotateCW", KeyCode.E },
-		{"RotateCCW", KeyCode.Q },
-		{"Select", KeyCode.LeftControl },
-		{"Paste", KeyCode.V },
-		{"Copy", KeyCode.C },
-		{"Cut", KeyCode.X },
-		{"Delete", KeyCode.Delete },
-		{"StackSelection", KeyCode.LeftControl },
-		{"SelectionUp", KeyCode.UpArrow },
-		{"SelectionDown", KeyCode.DownArrow },
-		{"SelectionLeft", KeyCode.LeftArrow },
-		{"SelectionRight", KeyCode.RightArrow },
-		{"Pan", KeyCode.Mouse2 },
+		{"Up", new KeyCode[]{ KeyCode.W} },
+		{"Down", new KeyCode[]{ KeyCode.S} },
+		{"Left", new KeyCode[]{ KeyCode.A} },
+		{"Right", new KeyCode[]{ KeyCode.D} },
+		{"FastPan", new KeyCode[]{ KeyCode.LeftControl} },
+		{"RotateCW", new KeyCode[]{ KeyCode.E} },
+		{"RotateCCW", new KeyCode[]{ KeyCode.Q} },
+		{"Select", new KeyCode[]{ KeyCode.LeftControl} },
+		{"Paste", new KeyCode[]{ KeyCode.V} },
+		{"Copy", new KeyCode[]{ KeyCode.C} },
+		{"Cut", new KeyCode[]{ KeyCode.X} },
+		{"Delete", new KeyCode[]{ KeyCode.Delete} },
+		{"StackSelection", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0} },
+		{"SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
+		{"SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
+		{"SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
+		{"SelectionRight", new KeyCode[]{ KeyCode.RightArrow} },
+		{"Pan", new KeyCode[]{ KeyCode.Mouse2} },
 	};
 
-	public static void SetKeyForControl(string control, KeyCode key)
+	public static void SetControl(string controlName, Control control)
 	{
 		var oldControls = PlayerPrefs.GetString(playerPrefsControls, "");
 		var controlArray = oldControls.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -44,9 +44,9 @@ public static class ControlsManager
 		for (int i = 0; i < controlArray.Length; i++)
 		{
 			string c = controlArray[i];
-			if (c.StartsWith(control + ":"))
+			if (c.StartsWith(controlName + ":"))
 			{
-				controlArray[i] = control + ":" + (int)key;
+				controlArray[i] = controlName + ":" + control.ToSaveString();
 				newControls = string.Join(",", controlArray);
 				break;
 			}
@@ -54,28 +54,113 @@ public static class ControlsManager
 		if (newControls == "")
 		{
 			var controlList = controlArray.ToList();
-			controlList.Add(control + ":" + (int)key);
+			controlList.Add(controlName + ":" + control.ToSaveString());
 			newControls = string.Join(",", controlList);
 		}
 		PlayerPrefs.SetString(playerPrefsControls, newControls);
 		Debug.Log(newControls);
 	}
 
-	public static KeyCode GetKeyForControl(string control)
+	public static void SetKeyForControl(string controlName, int index, KeyCode key)
+	{
+		var control = GetControl(controlName);
+		control.Keycodes[index] = key;
+		SetControl(controlName, control);
+	}
+
+	//public static KeyCode GetKeyForControl(string controlName)
+	//{
+	//	var controlArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
+
+	//	for (int i = 0; i < controlArray.Length; i++)
+	//	{
+	//		string c = controlArray[i];
+	//		if (c.StartsWith(controlName + ":"))
+	//		{
+	//			KeyCode keyCode = (KeyCode)int.Parse(c.Split(':')[1]);
+	//			return keyCode;
+	//		}
+	//	}
+
+	//	SetKeyForControl(controlName, deafultValues[controlName]);
+	//	return deafultValues[controlName];
+	//}
+
+	public static Control GetControl(string controlName)
 	{
 		var controlArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
 
 		for (int i = 0; i < controlArray.Length; i++)
 		{
 			string c = controlArray[i];
-			if (c.StartsWith(control + ":"))
+			if (c.StartsWith(controlName + ":"))
 			{
-				KeyCode keyCode = (KeyCode)int.Parse(c.Split(':')[1]);
-				return keyCode;
+				return new Control(c.Split(':')[1]);
 			}
 		}
 
-		SetKeyForControl(control, deafultValues[control]);
-		return deafultValues[control];
+		var control = new Control(deafultValues[controlName]);
+		SetControl(controlName, control);
+		return new Control(deafultValues[controlName]);
+	}
+}
+
+public class Control
+{
+	public KeyCode[] Keycodes { get; }
+
+	public Control(KeyCode[] keycodes)
+	{
+		this.Keycodes = keycodes;
+	}
+
+	public Control(KeyCode keycodes)
+	{
+		this.Keycodes = new KeyCode[] { keycodes };
+	}
+
+	public Control(string control)
+	{
+		var keys = control.Split('&');
+		this.Keycodes = keys.Select((key) => (KeyCode)int.Parse(key)).ToArray();
+	}
+
+	public string ToSaveString()
+	{
+		return string.Join("&", Keycodes.Select(key => ((int)key).ToString()));
+	}
+
+	public bool Get()
+	{
+		foreach (KeyCode keyCode in Keycodes)
+		{
+			if (!Input.GetKey(keyCode)) return false;
+		}
+		return true;
+	}
+
+	public bool GetDown()
+	{
+		foreach (KeyCode keyCode in Keycodes)
+		{
+			if (!Input.GetKey(keyCode)) return false;
+		}
+		foreach (KeyCode keyCode in Keycodes)
+		{
+			if (Input.GetKeyDown(keyCode)) return true;
+		}
+		return false;
+	}
+
+	public bool GetUp()
+	{
+		foreach (KeyCode keyCode in Keycodes)
+		{
+			if (!Input.GetKey(keyCode))
+			{
+				if (!Input.GetKeyUp(keyCode)) return false;
+			}
+		}
+		return true;
 	}
 }

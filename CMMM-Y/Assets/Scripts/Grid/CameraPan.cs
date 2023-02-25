@@ -65,14 +65,14 @@ public class CameraPan : MonoBehaviour
 
 	private void Pan()
 	{
-		var speed = (Input.GetKey(ControlsManager.GetKeyForControl("FastPan")) ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * 2f * Time.deltaTime;
+		var speed = (ControlsManager.GetControl("FastPan").Get() ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * 2f * Time.deltaTime;
 
-		if (Input.GetKey(ControlsManager.GetKeyForControl("Up"))) position += Vector2.up * speed;
-		if (Input.GetKey(ControlsManager.GetKeyForControl("Down"))) position += Vector2.down * speed;
-		if (Input.GetKey(ControlsManager.GetKeyForControl("Left"))) position += Vector2.left * speed;
-		if (Input.GetKey(ControlsManager.GetKeyForControl("Right"))) position += Vector2.right * speed;
+		if (ControlsManager.GetControl("Up").Get()) position += Vector2.up * speed;
+		if (ControlsManager.GetControl("Down").Get()) position += Vector2.down * speed;
+		if (ControlsManager.GetControl("Left").Get()) position += Vector2.left * speed;
+		if (ControlsManager.GetControl("Right").Get()) position += Vector2.right * speed;
 
-		if (Input.GetKey(ControlsManager.GetKeyForControl("Pan")))
+		if (ControlsManager.GetControl("Pan").Get())
 		{
 			Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			Vector2 previousWorldPos = Camera.main.ScreenToWorldPoint(previousMousePosition);
