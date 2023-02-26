@@ -19,6 +19,12 @@ public class TabNavigation : MonoBehaviour
 		{
 			Selectable next = null;
 
+			if (system.currentSelectedGameObject == null)
+			{
+				system.SetSelectedGameObject(system.firstSelectedGameObject, new BaseEventData(system));
+				return;
+			}
+
 			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
 			{
 				if (next == null) next = system.currentSelectedGameObject.GetComponent<Selectable>().FindSelectableOnLeft();
