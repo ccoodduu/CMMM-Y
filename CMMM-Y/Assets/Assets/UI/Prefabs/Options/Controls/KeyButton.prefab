@@ -114,6 +114,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}

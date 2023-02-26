@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 1171039104689479020}
   - component: {fileID: 3833281368114000194}
   - component: {fileID: 1171039104689479017}
+  - component: {fileID: -8426763777828164820}
   m_Layer: 5
   m_Name: DropdownOption
   m_TagString: Untagged
@@ -632,6 +633,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefString: 
   defaultValue: 0
+--- !u!114 &-8426763777828164820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171039104689478807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e689edf7ae274d347b0fdfca545c8da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectables:
+  - index: 0
+    selectable: {fileID: 3833281368114000194}
 --- !u!1 &1767958500709031271
 GameObject:
   m_ObjectHideFlags: 0

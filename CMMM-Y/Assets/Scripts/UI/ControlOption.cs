@@ -18,9 +18,12 @@ public class ControlOption : MonoBehaviour
 
 	public Transform buttonContainer;
 
+	private TabNavigationComponent tabNavigationComponent;
+
 	void Start()
 	{
 		keyLabels = new List<TMP_Text>();
+		tabNavigationComponent = gameObject.GetComponent<TabNavigationComponent>();
 		SetLabels();
 	}
 
@@ -56,7 +59,10 @@ public class ControlOption : MonoBehaviour
 
 		var gameObject = Instantiate(buttonPrefab, buttonContainer);
 
-		gameObject.GetComponent<Button>().onClick.AddListener(delegate { ChangeKey(index); });
+		var button = gameObject.GetComponent<Button>();
+		button.onClick.AddListener(delegate { ChangeKey(index); });
+		tabNavigationComponent.AddStart(button);
+
 		keyLabels.Add(gameObject.GetComponentInChildren<TMP_Text>());
 
 		SetLabel(index);
@@ -66,9 +72,13 @@ public class ControlOption : MonoBehaviour
 	{
 		for (int i = buttonContainer.childCount - 1; i >= 0; i--)
 		{
-			Destroy(buttonContainer.GetChild(i).gameObject);
+			var gameObject = buttonContainer.GetChild(i).gameObject;
+			tabNavigationComponent.Remove(gameObject.GetComponent<Selectable>());
+
+			Destroy(gameObject);
 		}
 		keyLabels.Clear();
+		
 		SetLabels();
 	}
 
