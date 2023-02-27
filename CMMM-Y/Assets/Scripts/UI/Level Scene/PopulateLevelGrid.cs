@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 using TMPro;
 
 public class PopulateLevelGrid : MonoBehaviour
-
-// populates the level select grid
-
 {
     public GameObject prefab;
+    public Color completedColor;
 
     void Start()
     {
@@ -28,7 +26,7 @@ public class PopulateLevelGrid : MonoBehaviour
             text.text = (i + 1) + "";
             if (PlayerPrefs.GetInt("Level" + i, 0) == 1)
             {
-                text.color = new Color32(159, 162, 243, 255);
+                text.color = completedColor;
             }
 
             int levelToLoad = i;

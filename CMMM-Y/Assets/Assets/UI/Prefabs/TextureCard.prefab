@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 1987872492747825958}
   - component: {fileID: 8252278911282052759}
   - component: {fileID: 1921046552427339724}
+  - component: {fileID: 733661691080785943}
   m_Layer: 5
   m_Name: TextureCard
   m_TagString: Untagged
@@ -414,9 +415,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.62352943, g: 0.63529414, b: 0.95294124, a: 1}
+    m_PressedColor: {r: 0.42352945, g: 0.4431373, b: 0.9490197, a: 1}
+    m_SelectedColor: {r: 0.70980394, g: 0.72156864, b: 0.9803922, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -432,7 +433,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 2400315846998602085}
+  m_TargetGraphic: {fileID: 106281165593646336}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -461,6 +462,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathText: {fileID: 1589246021414755074}
   background: {fileID: 2400315846998602085}
+--- !u!114 &733661691080785943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387375605761207853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e689edf7ae274d347b0fdfca545c8da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectables:
+  - index: 0
+    selectable: {fileID: 8252278911282052759}
 --- !u!1 &7760964475394881099
 GameObject:
   m_ObjectHideFlags: 0

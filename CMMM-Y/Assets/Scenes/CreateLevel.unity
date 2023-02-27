@@ -260,8 +260,23 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_Navigation.m_Mode
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnUp
+      value: 
+      objectReference: {fileID: 1577280547}
+    - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnDown
+      value: 
+      objectReference: {fileID: 694362149}
+    - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnLeft
+      value: 
+      objectReference: {fileID: 694362149}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -347,7 +362,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 1577280547}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088292149909188086, guid: 75c05fdf9e1908c4db1fc4968339291b,
+        type: 3}
+      propertyPath: m_Navigation.m_SelectOnRight
+      value: 
+      objectReference: {fileID: 1126621701}
     - target: {fileID: 7088292149909188086, guid: 75c05fdf9e1908c4db1fc4968339291b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -460,6 +480,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75c05fdf9e1908c4db1fc4968339291b, type: 3}
+--- !u!114 &694362149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7088292149909188086, guid: 75c05fdf9e1908c4db1fc4968339291b,
+    type: 3}
+  m_PrefabInstance: {fileID: 694362148}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &734933983
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,6 +747,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1126621702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126621698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e689edf7ae274d347b0fdfca545c8da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectables:
+  - index: 0
+    selectable: {fileID: 1126621701}
 --- !u!1 &1132995648
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +841,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0696878e7ff5ff04684980e2eb30785d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cycle: []
+  doCycle: 0
+  UIContainer: {fileID: 1954876134}
 --- !u!1 &1577280545 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1168978595688762247, guid: 8478e3443759d6240ac58d501f7f228c,
@@ -986,7 +1036,6 @@ GameObject:
   - component: {fileID: 1954876138}
   - component: {fileID: 1954876137}
   - component: {fileID: 1954876136}
-  - component: {fileID: 1954876135}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -994,18 +1043,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1954876135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954876134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54d06a15fa81f04a8dd4e740e4f5107, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1954876136
 MonoBehaviour:
   m_ObjectHideFlags: 0

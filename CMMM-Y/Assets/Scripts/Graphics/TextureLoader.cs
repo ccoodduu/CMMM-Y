@@ -11,7 +11,7 @@ public class TextureLoader : MonoBehaviour
 
     private static TextureLoader instance;
 
-    private static void validateFiles()
+    private static void ValidateFiles()
     {
         if (!Directory.Exists(Application.dataPath + "/texturepacks"))
         {
@@ -39,7 +39,7 @@ public class TextureLoader : MonoBehaviour
 
     public static void LoadTextureSet(string folderName)
     {
-        validateFiles();
+        ValidateFiles();
 
         foreach (Sprite sprite in TextureLoader.instance.texturables)
         {
@@ -90,7 +90,7 @@ public class TextureLoader : MonoBehaviour
     {
         TextureLoader.instance = this;
 
-        validateFiles();
+        ValidateFiles();
 
         TextureLoader.LoadTextureSet(PlayerPrefs.GetString("Texture", "Default"));
     }
