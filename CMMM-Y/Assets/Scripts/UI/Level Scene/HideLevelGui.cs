@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class HideLevelGui : MonoBehaviour
 {
-    public GameObject go;
-
-    [SerializeField]
-    private KeyCode key = KeyCode.F1;
+    public GameObject canvas;
 
     private bool visible = true;
 
     void Update()
     {
-        if (Input.GetKeyDown(key))
+        if (ControlsManager.GetControl("HideUI").GetDown())
         {
             visible = !visible;
-            go.SetActive(visible);
+            canvas.SetActive(visible);
         }
     }
 }

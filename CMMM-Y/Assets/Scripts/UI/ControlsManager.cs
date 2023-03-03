@@ -34,6 +34,8 @@ public static class ControlsManager
 		{"SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
 		{"SelectionRight", new KeyCode[]{ KeyCode.RightArrow} },
 		{"Pan", new KeyCode[]{ KeyCode.Mouse2} },
+		{"HideUI", new KeyCode[]{ KeyCode.F1} },
+
 	};
 
 	public static void SetControl(string controlName, Control control)
