@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using System;
 using static load.LoadString;
+using TMPro;
 
 public class GridManager : MonoBehaviour
 {
@@ -47,12 +48,12 @@ public class GridManager : MonoBehaviour
 
     public GameObject tutorialText;
 
-    public GameObject stepCountGO;
+    public GameObject stepCountGameObject;
 
     private int stepCount = 0;
     private void SetStepCount(int value)
     {
-        stepCountGO.GetComponent<Text>().text = value.ToString();
+        stepCountGameObject.GetComponent<TMP_Text>().text = value.ToString();
         stepCount = value;
     }
 

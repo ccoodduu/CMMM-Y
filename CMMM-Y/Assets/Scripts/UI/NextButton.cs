@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Next : MonoBehaviour
+public class NextButton : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         this.gameObject.SetActive(false);
     }
 
-    public void clicked() {
+    public void GoToNextLevel() {
         if (GridManager.currentLevel >= GameLevels.levels.Length)
         {
             SceneManager.LoadScene("MainMenu");

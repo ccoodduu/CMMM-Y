@@ -7,7 +7,6 @@ public class ExitOrSave : MonoBehaviour
 {
     public GameObject confirmationScreen;
 
-
     public void Clicked() {
         if (GridManager.hasSaved || GridManager.mode != Mode_e.EDITOR)
         {

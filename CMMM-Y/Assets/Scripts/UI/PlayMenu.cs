@@ -54,9 +54,9 @@ public class PlayMenu : MonoBehaviour
                 errorCard.GetComponent<CanvasGroup>().alpha = 1;
                 errorCard.GetComponentInChildren<Text>().text = "Your clipboard doesn't contain a valid level!";
 
-                CanvasGroup canvGroup = errorCard.GetComponent<CanvasGroup>();
+                CanvasGroup canvasGroup = errorCard.GetComponent<CanvasGroup>();
 
-                StartCoroutine(PauseThenFadeOut(canvGroup, canvGroup.alpha, 0));
+                StartCoroutine(PauseThenFadeOut(canvasGroup, canvasGroup.alpha, 0));
                 return;
             }
         }

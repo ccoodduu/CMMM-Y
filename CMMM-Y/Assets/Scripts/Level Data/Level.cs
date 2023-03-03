@@ -57,6 +57,11 @@ public class Level
 		return new Level("Unnamed", new Vector2Int(width, height), cells.ToArray(), placable, tutorialText);
 	}
 
+	public Level Crop(Vector2Int topLeft, Vector2Int buttomRight)
+	{
+		throw new NotImplementedException();
+	}
+
 	public void LoadToGrid()
 	{
 		CellFunctions.gridWidth = Size.x;

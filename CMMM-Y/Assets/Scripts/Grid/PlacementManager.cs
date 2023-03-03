@@ -16,7 +16,7 @@ public class PlacementManager : MonoBehaviour
     bool backgroundTileToggle = false;
     bool backgroundTileDebounce = false;
 
-    public Transform[] Buttons;
+    public Transform[] buttons;
 
     private void Awake()
     {
@@ -59,7 +59,7 @@ public class PlacementManager : MonoBehaviour
         }
         
 
-        foreach (Transform transform in Buttons) {
+        foreach (Transform transform in buttons) {
             if(transform.GetComponent<EditorButtons>().animate)
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, (int)oldDir * -90), Quaternion.Euler(0, 0, (int)dir * -90), animationTime / animationDuration);
         }

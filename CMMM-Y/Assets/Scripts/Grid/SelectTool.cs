@@ -167,7 +167,7 @@ public class SelectTool : MonoBehaviour
 
 	public void SaveCells()
 	{
-		GetComponent<Save>().SaveString(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
+		GetComponent<Save>().SaveLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
 	}
 
 	void Update()

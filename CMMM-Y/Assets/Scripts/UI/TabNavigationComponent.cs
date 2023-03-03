@@ -18,7 +18,7 @@ public class TabNavigationComponent : MonoBehaviour
 
 	public void RemoveDestroyed()
 	{
-		selectables.RemoveAll(s=>s.selectable == null);
+		selectables.RemoveAll(s => s.selectable == null);
 	}
 
 	public void Remove(Selectable selectable)
