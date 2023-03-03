@@ -276,28 +276,6 @@ public class GridManager : MonoBehaviour
 
         SetStepCount(0);
     }
-    
-    private void printGrid()
-    {
-        string printVal = "";
-        for (int a = CellFunctions.gridHeight - 1; a >= 0 ; a--)
-        {
-            for (int b = 0; b < CellFunctions.gridWidth; b++)
-            {
-                if (CellFunctions.cellGrid[b, a] == null)
-                {
-                    printVal += "-";
-                }
-                else
-                {
-                    printVal += (int)CellFunctions.cellGrid[b, a].cellType;
-                }
-            }
-            printVal += "\n";
-        }
-        print(printVal);
-    }
-
 
     private void Update()
     {

@@ -62,7 +62,6 @@ public static class ControlsManager
 			newControls = string.Join(",", controlList);
 		}
 		PlayerPrefs.SetString(playerPrefsControls, newControls);
-		Debug.Log(newControls);
 	}
 
 	public static void SetKeyForControl(string controlName, int index, KeyCode key)
@@ -147,7 +146,6 @@ public static class ControlsManager
 		}
 
 		PlayerPrefs.SetString(playerPrefsControls, newControls);
-		Debug.Log(newControls);
 	}
 }
 
