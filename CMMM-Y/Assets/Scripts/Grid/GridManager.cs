@@ -327,7 +327,7 @@ public class GridManager : MonoBehaviour
             timeSinceLastUpdate = 0;
             stepSimulation = false;
             clean = false;
-            MSPT = System.DateTime.Now.Ticks;
+            MSPT = System.DateTime.Now.Millisecond;
             foreach (Cell cell in CellFunctions.cellList)
             {
                 cell.oldPosition = cell.position;
@@ -381,7 +381,7 @@ public class GridManager : MonoBehaviour
                 if(mode == Mode_e.LEVEL)
                     nextButton.SetActive(true);
             }
-            MSPT = System.DateTime.Now.Ticks - MSPT;
+            MSPT = System.DateTime.Now.Millisecond - MSPT;
         }
     }
 }

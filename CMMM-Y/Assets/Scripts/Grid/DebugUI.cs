@@ -16,9 +16,8 @@ public class DebugUI : MonoBehaviour
     {
         smoothTime += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.BackQuote))
+        if (ControlsManager.GetControl("Debug").GetDown())
         {
-            print("A");
             show = !show;
         }
     }

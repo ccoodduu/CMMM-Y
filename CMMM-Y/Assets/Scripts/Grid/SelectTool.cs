@@ -178,9 +178,6 @@ public class SelectTool : MonoBehaviour
 				selectButton.GetComponent<EditorButtons>().switchTool();
 
 		//State Management
-
-		print(state);
-
 		if (GridManager.tool == Tool_e.SELECT)
 		{
 			if (ControlsManager.GetControl("Paste").GetDown())
