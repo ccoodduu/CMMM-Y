@@ -977,41 +977,40 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Use WASD to move the view.
+  m_text: '<u>Welcome to the Editor!</u>
 
 
-    LMB to place cells or paste selection.
-
-    RMB
-    to delete cells or cancel selection or cancel paste.
+    You can view and change all controls
+    in the settings.
 
 
-    Q+E To rotate cells
-    or selectins.
+
+    <u>Here are some of the default controls:</u>
 
 
-    Keys 1-9 to quick select blocks
+    Use
+    WASD or Middle Mouse Button to move the view.
 
 
-    Ctrl + drag to quick
-    select, C to copy, X to cut, V to paste, del to delete selection.
+    LMB to place cells or place
+    selection.
+
+    RMB to delete cells or cancel selection.
 
 
-    Arrow
-    Keys to move a selection in the given direction. Ctrl + Arrow Keys to stack a
-    selection in the given direction
+    Q+E To rotate
+    cells or selection.
 
 
-    Hold space to highlight draggable cells
-    (Enable always fade drag in settings to always show this.)
+
+    The Select Tool is used for copy, paste, move, delete
+    and crop.
+
+    The Drag Tool is used to drag cells around.
 
 
     Enable Sub-Ticking
-    to update one cell type per generation.
-
-
-    Push space while the simulation
-    is running to pause.'
+    in pause menu to update one cell type per step.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 55b5131ca55e33e4fbf0c19f948b2de7, type: 2}
   m_sharedMaterial: {fileID: -7432167489678264697, guid: 55b5131ca55e33e4fbf0c19f948b2de7,
@@ -1039,7 +1038,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.3
+  m_fontSize: 12.95
   m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2515,7 +2514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &702181117
 RectTransform:
   m_ObjectHideFlags: 0

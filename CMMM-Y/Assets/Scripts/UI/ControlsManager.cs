@@ -57,9 +57,9 @@ public static class ControlsManager
 		{ "PlaceCell", new KeyCode[]{ KeyCode.Mouse0 } },
 		{ "DragCell", new KeyCode[]{ KeyCode.Mouse0 } },
 		{ "DeleteCell", new KeyCode[]{ KeyCode.Mouse1 } },
-		{ "PlayPause", new KeyCode[]{ KeyCode.C } },
-		{ "Reset", new KeyCode[]{ KeyCode.X } },
-		{ "Step", new KeyCode[]{ KeyCode.V } },
+		{ "PlayPause", new KeyCode[]{ KeyCode.F5 } },
+		{ "Reset", new KeyCode[]{ KeyCode.F6 } },
+		{ "Step", new KeyCode[]{ KeyCode.F7 } },
 		{ "Save", new KeyCode[]{ KeyCode.F2 } },
 		{ "SaveSelection", new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 } },
 	};
