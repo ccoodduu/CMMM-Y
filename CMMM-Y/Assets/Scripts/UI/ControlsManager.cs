@@ -25,7 +25,9 @@ public static class ControlsManager
 		{ "FastPan", new KeyCode[]{ KeyCode.LeftControl} },
 		{ "RotateCW", new KeyCode[]{ KeyCode.E} },
 		{ "RotateCCW", new KeyCode[]{ KeyCode.Q} },
-		{ "Select", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
+		{ "BeginSelect", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
+		{ "Select", new KeyCode[]{ KeyCode.Mouse0 } },
+		{ "CancelSelection", new KeyCode[]{ KeyCode.Mouse1 } },
 		{ "Paste", new KeyCode[]{ KeyCode.V} },
 		{ "Copy", new KeyCode[]{ KeyCode.C} },
 		{ "Cut", new KeyCode[]{ KeyCode.X} },
@@ -51,6 +53,9 @@ public static class ControlsManager
 		{ "Placeable", new KeyCode[]{ KeyCode.Alpha0} },
 		{ "SelectTool", new KeyCode[]{ KeyCode.None} },
 		{ "DragTool", new KeyCode[]{ KeyCode.None } },
+		{ "PlaceCell", new KeyCode[]{ KeyCode.Mouse0 } },
+		{ "DragCell", new KeyCode[]{ KeyCode.Mouse0 } },
+		{ "DeleteCell", new KeyCode[]{ KeyCode.Mouse1 } },
 	};
 
 	public static void SetControl(string controlName, Control control)
@@ -218,13 +223,18 @@ public class Control
 
 	public bool GetUp()
 	{
+		bool isReleased = false;
 		foreach (KeyCode keyCode in Keycodes)
 		{
-			if (!Input.GetKey(keyCode))
+			if (Input.GetKeyUp(keyCode)) isReleased = true;
+
+			if (!(Input.GetKey(keyCode) || Input.GetKeyUp(keyCode)))
 			{
-				if (!Input.GetKeyUp(keyCode)) return false;
+				return false;
 			}
 		}
+		if (!isReleased) return false;
+
 		return true;
 	}
 }

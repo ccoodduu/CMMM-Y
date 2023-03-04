@@ -74,7 +74,7 @@ public class PlacementManager : MonoBehaviour
         int x = Mathf.FloorToInt(worldPoint.x + .5f);
         int y = Mathf.FloorToInt(worldPoint.y + .5f);
 
-        if (Input.GetMouseButton(0)) {
+        if (ControlsManager.GetControl("PlaceCell").Get()) {
 
             if (!GridManager.clean)
                 return;
@@ -115,7 +115,7 @@ public class PlacementManager : MonoBehaviour
             GridManager.hasSaved = false;
         }
 
-        if (Input.GetMouseButton(1) && GridManager.tool != Tool_e.SELECT)
+        if (ControlsManager.GetControl("DeleteCell").Get() && GridManager.tool != Tool_e.SELECT)
         {
             if (!GridManager.clean)
                 return;
@@ -132,7 +132,7 @@ public class PlacementManager : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (ControlsManager.GetControl("PlaceCell").GetUp()) {
             backgroundTileDebounce = false;
         }
     }

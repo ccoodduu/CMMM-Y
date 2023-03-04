@@ -73,15 +73,15 @@ public class DragManager : MonoBehaviour
     void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)) + new Vector3(.5f,.5f,0);
+		Control control = ControlsManager.GetControl("DragCell");
 
-
-        if (inDrag) {
+		if (inDrag) {
             selectedCell.transform.position = new Vector3(mousePos.x - .5f, mousePos.y - .5f, -5);
         }
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
-			if (Input.GetMouseButtonUp(0) && inDrag) CancelDrag();
+            if (control.GetUp() && inDrag) CancelDrag();
 			return;
 		}
         if ((GridManager.tool != Tool_e.DRAG && GridManager.mode == Mode_e.EDITOR))
@@ -91,13 +91,14 @@ public class DragManager : MonoBehaviour
 		}
         if (!GridManager.clean)
         {
-            return;
+			if (inDrag) CancelDrag();
+			return;
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (control.GetDown()) {
             StartDrag();
         }
-        if (Input.GetMouseButtonUp(0) && inDrag && selectedCell != null)
+        if (control.GetUp() && inDrag && selectedCell != null)
         {
             EndDrag();
         }

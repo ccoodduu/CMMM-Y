@@ -173,7 +173,7 @@ public class SelectTool : MonoBehaviour
 	void Update()
 	{
 		// if you select an area or if you use the paste hotkey
-		if (ControlsManager.GetControl("Select").GetDown() || ControlsManager.GetControl("Paste").GetDown())
+		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown())
 			if (GridManager.mode == Mode_e.EDITOR)
 				selectButton.GetComponent<EditorButtons>().SwitchTool();
 
@@ -182,7 +182,7 @@ public class SelectTool : MonoBehaviour
 		{
 			if (ControlsManager.GetControl("Paste").GetDown())
 				state = State_e.PREVIEW;
-			if (Input.GetMouseButtonDown(0))
+			if (ControlsManager.GetControl("Select").GetDown())
 			{
 				if (state == State_e.IDLE && !EventSystem.current.IsPointerOverGameObject())
 					state = State_e.SELECT;
@@ -195,10 +195,10 @@ public class SelectTool : MonoBehaviour
 		{
 			//if (state != State_e.PREVIEW && ("q") || "e")))
 			//    moveButton.GetComponent<EditorButtons>().switchTool();
-			if (state == State_e.IDLE && Input.GetMouseButtonDown(1))
+			if (state == State_e.IDLE && ControlsManager.GetControl("CancelSelection").GetDown())
 				moveButton.GetComponent<EditorButtons>().SwitchTool();
 		}
-		if (!GridManager.clean || Input.GetMouseButton(1))
+		if (!GridManager.clean || ControlsManager.GetControl("CancelSelection").Get())
 			state = State_e.IDLE;
 
 		//End of State Management
@@ -218,11 +218,11 @@ public class SelectTool : MonoBehaviour
 
 		if (state == State_e.SELECT)
 		{
-			if (Input.GetMouseButton(0))
+			if (ControlsManager.GetControl("Select").Get())
 			{
 				if (!EventSystem.current.IsPointerOverGameObject())
 				{
-					if (Input.GetMouseButtonDown(0))
+					if (ControlsManager.GetControl("Select").GetDown())
 					{
 						initialPos = ClampedMousePos();
 						sprRend.enabled = true;
@@ -305,9 +305,8 @@ public class SelectTool : MonoBehaviour
 				cell.transform.position = cell.position;
 			}
 
-			if (Input.GetMouseButtonDown(0))
+			if (ControlsManager.GetControl("PlaceCell").GetDown() && !EventSystem.current.IsPointerOverGameObject())
 			{
-				//TODO: make sure the mouse isn't over a button
 				AudioManager.i.PlaySound(GameAssets.i.place);
 				PasteClipboard();
 				state = State_e.IDLE;
