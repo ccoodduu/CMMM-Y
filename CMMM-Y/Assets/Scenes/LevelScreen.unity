@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1764,7 +1764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 3
   animate: 1
-  keybind: 50
+  controlName: Mover
 --- !u!114 &404558750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2265,7 +2265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 9
   animate: 0
-  keybind: 0
+  controlName: DragTool
 --- !u!114 &486249577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,7 +2745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 1
   animate: 1
-  keybind: 51
+  controlName: RotatorCW
 --- !u!114 &726879532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 2
   animate: 1
-  keybind: 52
+  controlName: RotatorCCW
 --- !u!114 &809996771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3311,7 +3311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 11
   animate: 0
-  keybind: 0
+  controlName: SelectTool
 --- !u!114 &836680738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4463,7 +4463,6 @@ GameObject:
   - component: {fileID: 1297628428}
   - component: {fileID: 1297628427}
   - component: {fileID: 1297628431}
-  - component: {fileID: 1297628430}
   - component: {fileID: 1297628432}
   - component: {fileID: 1297628433}
   m_Layer: 5
@@ -4583,21 +4582,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297628424}
   m_CullTransparentMesh: 0
---- !u!114 &1297628430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297628424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5425da595dbabf14992bbfccb690ae84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tool: 0
-  animate: 0
-  keybind: 0
 --- !u!114 &1297628431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4612,7 +4596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 8
   animate: 1
-  keybind: 56
+  controlName: Trash
 --- !u!114 &1297628432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5448,7 +5432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 0
   animate: 1
-  keybind: 49
+  controlName: Generator
 --- !u!114 &1441991017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5818,7 +5802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 5
   animate: 1
-  keybind: 53
+  controlName: Push
 --- !u!114 &1510357270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6001,7 +5985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 10
   animate: 0
-  keybind: 48
+  controlName: Placeable
 --- !u!114 &1555977690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6980,7 +6964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 6
   animate: 0
-  keybind: 57
+  controlName: Immobile
 --- !u!114 &1817291159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7151,7 +7135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 7
   animate: 1
-  keybind: 55
+  controlName: Enemy
 --- !u!114 &1821162745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7192,7 +7176,7 @@ GameObject:
   - component: {fileID: 1891788666}
   - component: {fileID: 1891788667}
   m_Layer: 5
-  m_Name: PUSH
+  m_Name: SLIDE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7322,7 +7306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tool: 4
   animate: 1
-  keybind: 54
+  controlName: Slide
 --- !u!114 &1891788666
 MonoBehaviour:
   m_ObjectHideFlags: 0

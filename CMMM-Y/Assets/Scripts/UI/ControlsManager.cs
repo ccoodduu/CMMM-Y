@@ -11,33 +11,46 @@ public static class ControlsManager
 
 	public static string GetDisplayName(KeyCode keyCode)
 	{
-		return keyCode.ToString();
+		var name = keyCode.ToString();
+		if (name.StartsWith("Alpha")) name = name.Substring(5);
+		return name;
 	}
 
 	public static readonly Dictionary<string, KeyCode[]> defaultControls = new Dictionary<string, KeyCode[]>()
 	{
-		{"Up", new KeyCode[]{ KeyCode.W} },
-		{"Down", new KeyCode[]{ KeyCode.S} },
-		{"Left", new KeyCode[]{ KeyCode.A} },
-		{"Right", new KeyCode[]{ KeyCode.D} },
-		{"FastPan", new KeyCode[]{ KeyCode.LeftControl} },
-		{"RotateCW", new KeyCode[]{ KeyCode.E} },
-		{"RotateCCW", new KeyCode[]{ KeyCode.Q} },
-		{"Select", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
-		{"Paste", new KeyCode[]{ KeyCode.V} },
-		{"Copy", new KeyCode[]{ KeyCode.C} },
-		{"Cut", new KeyCode[]{ KeyCode.X} },
-		{"Delete", new KeyCode[]{ KeyCode.Delete} },
-		{"StackSelection", new KeyCode[]{ KeyCode.LeftControl} },
-		{"SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
-		{"SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
-		{"SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
-		{"SelectionRight", new KeyCode[]{ KeyCode.RightArrow} },
-		{"Pan", new KeyCode[]{ KeyCode.Mouse2} },
-		{"HideUI", new KeyCode[]{ KeyCode.F1} },
-		{"Debug", new KeyCode[]{ KeyCode.F3} },
-		{"HighlightMoveable", new KeyCode[]{ KeyCode.Space} },
-
+		{ "Up", new KeyCode[]{ KeyCode.W} },
+		{ "Down", new KeyCode[]{ KeyCode.S} },
+		{ "Left", new KeyCode[]{ KeyCode.A} },
+		{ "Right", new KeyCode[]{ KeyCode.D} },
+		{ "FastPan", new KeyCode[]{ KeyCode.LeftControl} },
+		{ "RotateCW", new KeyCode[]{ KeyCode.E} },
+		{ "RotateCCW", new KeyCode[]{ KeyCode.Q} },
+		{ "Select", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
+		{ "Paste", new KeyCode[]{ KeyCode.V} },
+		{ "Copy", new KeyCode[]{ KeyCode.C} },
+		{ "Cut", new KeyCode[]{ KeyCode.X} },
+		{ "Delete", new KeyCode[]{ KeyCode.Delete} },
+		{ "StackSelection", new KeyCode[]{ KeyCode.LeftControl} },
+		{ "SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
+		{ "SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
+		{ "SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
+		{ "SelectionRight", new KeyCode[]{ KeyCode.RightArrow} },
+		{ "Pan", new KeyCode[]{ KeyCode.Mouse2} },
+		{ "HideUI", new KeyCode[]{ KeyCode.F1} },
+		{ "Debug", new KeyCode[]{ KeyCode.F3} },
+		{ "HighlightMoveable", new KeyCode[]{ KeyCode.Space} },
+		{ "Generator", new KeyCode[]{ KeyCode.Alpha1} },
+		{ "Mover", new KeyCode[]{ KeyCode.Alpha2} },
+		{ "RotatorCW", new KeyCode[]{ KeyCode.Alpha3} },
+		{ "RotatorCCW", new KeyCode[]{ KeyCode.Alpha4} },
+		{ "Push", new KeyCode[]{ KeyCode.Alpha5} },
+		{ "Slide", new KeyCode[]{ KeyCode.Alpha6} },
+		{ "Enemy", new KeyCode[]{ KeyCode.Alpha7} },
+		{ "Trash", new KeyCode[]{ KeyCode.Alpha8} },
+		{ "Immobile", new KeyCode[]{ KeyCode.Alpha9} },
+		{ "Placeable", new KeyCode[]{ KeyCode.Alpha0} },
+		{ "SelectTool", new KeyCode[]{ KeyCode.None} },
+		{ "DragTool", new KeyCode[]{ KeyCode.None } },
 	};
 
 	public static void SetControl(string controlName, Control control)
@@ -108,6 +121,12 @@ public static class ControlsManager
 			{
 				return new Control(c.Split(':')[1]);
 			}
+		}
+
+		if (!defaultControls.ContainsKey(controlName))
+		{
+			Debug.LogWarning("Control: " + controlName + " does not have a default control!");
+			return new Control(KeyCode.None);
 		}
 
 		var control = new Control(defaultControls[controlName]);
