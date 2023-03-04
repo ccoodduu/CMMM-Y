@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DebugUI : MonoBehaviour
 {
     float fps = 0;
-    float mspt = 0;
+    double mspt = 0;
     bool show = false;
 
     float smoothTime = 0;
@@ -33,7 +34,7 @@ public class DebugUI : MonoBehaviour
 
         if (show)
         {
-            windowRect.width = 120;
+            windowRect.width = 140;
             windowRect.height = 100;
             windowRect = GUI.Window(0, windowRect, DoMyWindow, "Debug");
         }
@@ -41,11 +42,10 @@ public class DebugUI : MonoBehaviour
 
     private void DoMyWindow(int windowId)
     {
-        GridManager.subTick = GUI.Toggle(new Rect(20, 100, 80, 20), GridManager.subTick, "ST");
-        GUI.Label(new Rect(20, 20, 80, 20), "FPS " + Mathf.Floor(fps));
-        GUI.Label(new Rect(20, 40, 80, 20), "MSPT " + Mathf.Floor(mspt) + "/" + GridManager.animationLength * 100);
-        GUI.Label(new Rect(20, 60, 80, 20), "TPS " + 1000 / mspt + "/" + 1 / GridManager.animationLength);
-        GridManager.animationLength = GUI.HorizontalSlider(new Rect(20, 80, 80, 20), GridManager.animationLength, .0f, 1);
+        GUI.Label(new Rect(20, 20, 100, 20), "FPS " + Mathf.Floor(fps));
+        GUI.Label(new Rect(20, 40, 100, 20), "MSPT " + Math.Floor(mspt) + "/" + Mathf.Floor(1000 / (1 / GridManager.animationLength)));
+        GUI.Label(new Rect(20, 60, 100, 20), "TPS " + Math.Floor(1000 / mspt) + "/" + Mathf.Floor(1 / GridManager.animationLength));
+        GridManager.animationLength = GUI.HorizontalSlider(new Rect(20, 80, 100, 20), GridManager.animationLength, .0f, 1);
         GUI.DragWindow(new Rect(0, 0, 100000, 100000));
     }
 }

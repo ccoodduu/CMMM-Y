@@ -20,7 +20,7 @@ public class GridManager : MonoBehaviour
 
 	public static bool hasSaved = true;
 
-	public static float MSPT;
+	public static double MSPT;
 
 	public GameObject[] cellPrefabs;
 
@@ -323,7 +323,7 @@ public class GridManager : MonoBehaviour
 			timeSinceLastUpdate = 0;
 			stepSimulation = false;
 			clean = false;
-			MSPT = System.DateTime.Now.Millisecond;
+			MSPT = (double)System.DateTime.Now.Ticks / 10000;
 			foreach (Cell cell in CellFunctions.cellList)
 			{
 				cell.oldPosition = cell.position;
@@ -381,7 +381,9 @@ public class GridManager : MonoBehaviour
 				if (mode == Mode_e.LEVEL)
 					nextButton.SetActive(true);
 			}
-			MSPT = System.DateTime.Now.Millisecond - MSPT;
+
+			MSPT = ((double)System.DateTime.Now.Ticks / 10000) - MSPT;
+			print(MSPT);
 		}
 	}
 }
