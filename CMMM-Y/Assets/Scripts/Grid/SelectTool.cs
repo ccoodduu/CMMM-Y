@@ -316,6 +316,11 @@ public class SelectTool : MonoBehaviour
 				RotateClipboard(copyOffset, true);
 			if (ControlsManager.GetControl("RotateCW").GetDown())
 				RotateClipboard(copyOffset, false);
+			if (ControlsManager.GetControl("Rotate180").GetDown())
+			{
+				RotateClipboard(copyOffset, false);
+				RotateClipboard(copyOffset, false);
+			}
 		}
 		else
 		{

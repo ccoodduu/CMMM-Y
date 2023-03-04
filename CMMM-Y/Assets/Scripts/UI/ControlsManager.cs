@@ -25,6 +25,7 @@ public static class ControlsManager
 		{ "FastPan", new KeyCode[]{ KeyCode.LeftControl} },
 		{ "RotateCW", new KeyCode[]{ KeyCode.E} },
 		{ "RotateCCW", new KeyCode[]{ KeyCode.Q} },
+		{ "Rotate180", new KeyCode[]{ KeyCode.R} },
 		{ "BeginSelect", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
 		{ "Select", new KeyCode[]{ KeyCode.Mouse0 } },
 		{ "CancelSelection", new KeyCode[]{ KeyCode.Mouse1 } },

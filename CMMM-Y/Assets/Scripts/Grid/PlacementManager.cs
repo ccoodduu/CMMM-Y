@@ -57,9 +57,13 @@ public class PlacementManager : MonoBehaviour
                 dir = (Direction_e)((int)dir + 1);
             }
         }
-        
+		if (ControlsManager.GetControl("Rotate180").GetDown() && GridManager.tool != Tool_e.SELECT)
+		{
+			animationTime = 0;
+			dir = (Direction_e)(((int)dir + 2) % 4);
+		}
 
-        foreach (Transform transform in buttons) {
+		foreach (Transform transform in buttons) {
             if(transform.GetComponent<EditorButtons>().animate)
                 transform.rotation = Quaternion.Lerp(Quaternion.Euler(0, 0, (int)oldDir * -90), Quaternion.Euler(0, 0, (int)dir * -90), animationTime / animationDuration);
         }
