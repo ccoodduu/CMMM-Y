@@ -8,6 +8,7 @@ public class TextureLoader : MonoBehaviour
 {
     public Sprite[] texturables;
     public static Dictionary<string, Sprite> textures = new Dictionary<string, Sprite>();
+    public string packFileDefaultContent;
 
     private static TextureLoader instance;
 
@@ -23,7 +24,12 @@ public class TextureLoader : MonoBehaviour
             Directory.CreateDirectory(Application.dataPath + "/texturepacks/Default");
         }
 
-        foreach (Sprite sprite in TextureLoader.instance.texturables)
+		if (!File.Exists(Application.dataPath + "/texturepacks/Default/pack.json"))
+		{
+			File.WriteAllText(Application.dataPath + "/texturepacks/Default/pack.json", instance.packFileDefaultContent);
+		}
+
+		foreach (Sprite sprite in TextureLoader.instance.texturables)
         {
             if (!File.Exists(Application.dataPath + "/texturepacks/Default/" + sprite.name + ".png"))
             {
