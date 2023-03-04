@@ -9,10 +9,11 @@ public class SettingsSlider : MonoBehaviour
 	public TMP_Text sliderValueText;
 	public string playerPrefString;
 	public string sliderType;
+	public float deafaultSliderValue;
 
 	void Start()
 	{
-		var value = PlayerPrefs.GetFloat(playerPrefString);
+		var value = PlayerPrefs.GetFloat(playerPrefString, deafaultSliderValue);
 
 		GetComponent<Slider>().value = value;
 		UpdateSlider(value);

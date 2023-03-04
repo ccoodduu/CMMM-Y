@@ -7,7 +7,7 @@ public class DraggableTileAlpha : MonoBehaviour
 {
     void Update()
     {
-        if (GridManager.clean && (PlayerPrefs.GetInt("AlwaysFade") == 1 || Input.GetKey(KeyCode.Space)))
+        if (GridManager.clean && (PlayerPrefs.GetInt("AlwaysFade") == 1 || ControlsManager.GetControl("HighlightMoveable").Get()))
         {
             for (int y = 0; y < CellFunctions.gridHeight; y++)
             {
@@ -16,7 +16,7 @@ public class DraggableTileAlpha : MonoBehaviour
                     if (GridManager.instance.tilemap.GetTile(new Vector3Int(x, y, 0)) != GridManager.instance.placebleTile)
                     {
                         if (CellFunctions.cellGrid[x, y] != null)
-                            CellFunctions.cellGrid[x, y].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, .5f);
+                            CellFunctions.cellGrid[x, y].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1 - PlayerPrefs.GetFloat("FadeStrength"));
                     }
                 }
             }
