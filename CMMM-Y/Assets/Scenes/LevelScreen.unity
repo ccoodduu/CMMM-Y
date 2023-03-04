@@ -1703,7 +1703,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 404558749}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2310,7 +2310,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 486249576}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2684,7 +2684,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 726879531}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3165,7 +3165,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 809996770}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3356,7 +3356,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 836680737}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4067,7 +4067,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1046223426}
-        m_MethodName: SaveString
+        m_MethodName: SaveLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4535,7 +4535,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1297628431}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5371,7 +5371,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1441991016}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5597,7 +5597,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1503047511}
-        m_MethodName: SaveString
+        m_MethodName: SaveLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5741,7 +5741,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1510357269}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5924,7 +5924,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1555977689}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6903,7 +6903,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1817291158}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7074,7 +7074,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1821162744}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7245,7 +7245,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1891788665}
-        m_MethodName: switchTool
+        m_MethodName: SwitchTool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
