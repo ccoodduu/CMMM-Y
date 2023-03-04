@@ -57,6 +57,9 @@ public static class ControlsManager
 		{ "PlaceCell", new KeyCode[]{ KeyCode.Mouse0 } },
 		{ "DragCell", new KeyCode[]{ KeyCode.Mouse0 } },
 		{ "DeleteCell", new KeyCode[]{ KeyCode.Mouse1 } },
+		{ "PlayPause", new KeyCode[]{ KeyCode.C } },
+		{ "Reset", new KeyCode[]{ KeyCode.X } },
+		{ "Step", new KeyCode[]{ KeyCode.V } },
 	};
 
 	public static void SetControl(string controlName, Control control)

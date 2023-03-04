@@ -13,7 +13,12 @@ public class ResetButton : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void Reset()
+	void Update()
+	{
+		if (ControlsManager.GetControl("Reset").GetDown()) Reset();
+	}
+
+	public void Reset()
     {
         AudioManager.playSounds = false;
         this.gameObject.SetActive(false);

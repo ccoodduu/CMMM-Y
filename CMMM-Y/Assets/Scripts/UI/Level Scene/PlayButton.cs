@@ -9,7 +9,12 @@ public class PlayButton : MonoBehaviour
     public Sprite playSprite;
     public Sprite pauseSprite;
 
-    public void Play() {
+	void Update()
+	{
+        if (ControlsManager.GetControl("PlayPause").GetDown()) Play();
+	}
+
+	public void Play() {
         if (GridManager.playSimulation)
         {
             GridManager.playSimulation = false;

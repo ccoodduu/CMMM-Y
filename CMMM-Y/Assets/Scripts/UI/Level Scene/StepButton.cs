@@ -9,7 +9,12 @@ public class StepButton : MonoBehaviour
     public Sprite pauseSprite;
     public GameObject resetButton;
 
-    public void wasClicked() {
+	void Update()
+	{
+		if (ControlsManager.GetControl("Step").GetDown()) Step();
+	}
+
+	public void Step() {
         if (GridManager.playSimulation)
         {
             GridManager.playSimulation = false;
