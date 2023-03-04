@@ -1,16 +1,24 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
+using TMPro;
 using UnityEngine;
 
 public class Save : MonoBehaviour
 {
-    public GameObject saveText;
+    public TMP_Text saveText;
 
     public void Awake()
     {
-        saveText.SetActive(false);
+		saveText.gameObject.SetActive(false);
     }
 
-    public void SaveLevel() {
+	void Update()
+	{
+		if (ControlsManager.GetControl("Save").GetDown()) SaveLevel();
+		if (ControlsManager.GetControl("SaveSelection").GetDown()) SaveSelection();
+	}
+
+	public void SaveLevel() {
 		SaveLevel(Level.FromCurrent());
     }
 
@@ -29,5 +37,23 @@ public class Save : MonoBehaviour
         
         GridManager.hasSaved = true;
         GUIUtility.systemCopyBuffer = save;
-    }
+
+		StartCoroutine(ShowThenFadeOut());
+	}
+
+	public IEnumerator ShowThenFadeOut()
+	{
+		saveText.gameObject.SetActive(true);
+
+		float counter = 0f;
+		while (counter < 3f)
+		{
+			counter += Time.deltaTime;
+			if (counter > 2f) saveText.alpha = Mathf.Lerp(1f, 0f, (counter - 2f) / 1f);
+			yield return null;
+		}
+
+		saveText.gameObject.SetActive(false);
+		saveText.alpha = 1f;
+	}
 }

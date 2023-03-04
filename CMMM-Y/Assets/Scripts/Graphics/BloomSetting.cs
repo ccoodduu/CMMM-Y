@@ -6,8 +6,6 @@ using UnityEngine.Rendering.Universal;
 
 public class BloomSetting : MonoBehaviour
 {
-
-
     void Start()
     {
         if (PlayerPrefs.GetInt("Bloom", 1) == 0)

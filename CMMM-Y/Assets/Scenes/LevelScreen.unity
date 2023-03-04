@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1100,7 +1100,6 @@ GameObject:
   - component: {fileID: 200002434}
   - component: {fileID: 200002433}
   - component: {fileID: 200002435}
-  - component: {fileID: 200002436}
   m_Layer: 0
   m_Name: select
   m_TagString: Untagged
@@ -1191,19 +1190,6 @@ MonoBehaviour:
   selectButton: {fileID: 836680734}
   moveButton: {fileID: 486249574}
   toolbox: {fileID: 424838181}
---- !u!114 &200002436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200002432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084822154f2f5004db2df7ac6cdffe40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveText: {fileID: 348597773}
 --- !u!1001 &288287995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3775,8 +3761,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 200002435}
-        m_MethodName: SaveCells
+      - m_Target: {fileID: 1030502458}
+        m_MethodName: SaveSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3909,6 +3895,7 @@ GameObject:
   - component: {fileID: 1030502456}
   - component: {fileID: 1030502455}
   - component: {fileID: 1030502457}
+  - component: {fileID: 1030502458}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -3970,6 +3957,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f2cacf89f108040af6abf32781fc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1030502458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030502454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 084822154f2f5004db2df7ac6cdffe40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveText: {fileID: 348597775}
 --- !u!1 &1046223418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3983,7 +3983,6 @@ GameObject:
   - component: {fileID: 1046223423}
   - component: {fileID: 1046223422}
   - component: {fileID: 1046223420}
-  - component: {fileID: 1046223426}
   - component: {fileID: 1046223425}
   m_Layer: 5
   m_Name: SaveButton
@@ -4066,7 +4065,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1046223426}
+      - m_Target: {fileID: 1030502458}
         m_MethodName: SaveLevel
         m_Mode: 1
         m_Arguments:
@@ -4137,19 +4136,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68018a1d6500f64cbda531dc8af3bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1046223426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046223418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084822154f2f5004db2df7ac6cdffe40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveText: {fileID: 348597773}
 --- !u!1001 &1072691671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5512,7 +5498,6 @@ GameObject:
   - component: {fileID: 1503047514}
   - component: {fileID: 1503047513}
   - component: {fileID: 1503047512}
-  - component: {fileID: 1503047511}
   - component: {fileID: 1503047515}
   m_Layer: 5
   m_Name: Save
@@ -5540,19 +5525,6 @@ RectTransform:
   m_AnchoredPosition: {x: -46.4, y: 40.002}
   m_SizeDelta: {x: 48, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1503047511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1503047509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084822154f2f5004db2df7ac6cdffe40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveText: {fileID: 348597773}
 --- !u!114 &1503047512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5596,7 +5568,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1503047511}
+      - m_Target: {fileID: 1030502458}
         m_MethodName: SaveLevel
         m_Mode: 1
         m_Arguments:

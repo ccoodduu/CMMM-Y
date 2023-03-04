@@ -60,6 +60,8 @@ public static class ControlsManager
 		{ "PlayPause", new KeyCode[]{ KeyCode.C } },
 		{ "Reset", new KeyCode[]{ KeyCode.X } },
 		{ "Step", new KeyCode[]{ KeyCode.V } },
+		{ "Save", new KeyCode[]{ KeyCode.F2 } },
+		{ "SaveSelection", new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 } },
 	};
 
 	public static void SetControl(string controlName, Control control)
