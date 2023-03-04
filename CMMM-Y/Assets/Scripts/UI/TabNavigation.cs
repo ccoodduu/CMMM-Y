@@ -26,7 +26,6 @@ public class TabNavigation : MonoBehaviour
 		allTabNavigators = UIContainer.GetComponentsInChildren<TabNavigationComponent>(false);
 		currentComponent = allTabNavigators[0];
 		currentIndex = currentComponent.GetFirstIndex();
-		SetSelected();
 	}
 
 	void Update()
