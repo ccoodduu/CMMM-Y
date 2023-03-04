@@ -15,17 +15,12 @@ public class Save : MonoBehaviour
 	void Update()
 	{
 		if (ControlsManager.GetControl("Save").GetDown()) SaveLevel();
-		if (ControlsManager.GetControl("SaveSelection").GetDown()) SaveSelection();
 	}
 
 	public void SaveLevel() {
 		SaveLevel(Level.FromCurrent());
     }
 
-	public void SaveSelection()
-	{
-		SaveLevel(Level.FromSelection());
-	}
 	public void SaveLevel(Vector2Int topLeft, Vector2Int bottomRight)
 	{
 		SaveLevel(Level.FromCurrent().Crop(topLeft, bottomRight));

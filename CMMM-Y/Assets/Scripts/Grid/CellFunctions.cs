@@ -29,7 +29,7 @@ public static class CellFunctions
     //HARD CODED VARIABLES
     //HARD CODED VARIABLES
 
-    //An disctionary defining the specialized ID's used in sorting, for tracked and 
+    //A dictionary defining the specialized ID's used in sorting, for tracked and 
     public static Dictionary<CellType_e, int> steppedCellIdDictionary = new Dictionary<CellType_e, int>();
     
     public static int gridWidth = 1;

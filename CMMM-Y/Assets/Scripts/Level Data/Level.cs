@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -18,11 +19,6 @@ public class Level
 		Cells = cells;
 		Placeable = placeable;
 		TutorialText = tutorialText;
-	}
-
-	public static Level FromSelection()
-	{
-		throw new NotImplementedException();
 	}
 
 	public static Level FromCurrent()
@@ -57,9 +53,44 @@ public class Level
 		return new Level("Unnamed", new Vector2Int(width, height), cells.ToArray(), placable, tutorialText);
 	}
 
-	public Level Crop(Vector2Int topLeft, Vector2Int buttomRight)
+	public Level Crop(Vector2Int topLeft, Vector2Int bottomRight)
 	{
-		throw new NotImplementedException();
+		var size = new Vector2Int(bottomRight.x - topLeft.x + 1, topLeft.y - bottomRight.y + 1);
+
+		var placeable = new bool[size.x * size.y];
+		var cells = new List<SavedCell>();
+
+		for (int i = 0; i < placeable.Length; i++)
+		{
+			var x = i % size.x;
+			var y = i / size.x;
+
+			var oldX = x + topLeft.x;
+			var oldY = y + bottomRight.y;
+
+			placeable[i] = Placeable[oldX + oldY * Size.x];
+		}
+
+		foreach (var cell in Cells)
+		{
+			if (cell.position.x < topLeft.x) continue;
+			if (cell.position.x > bottomRight.x) continue;
+			if (cell.position.y < bottomRight.y) continue;
+			if (cell.position.y > topLeft.y) continue;
+
+			var newPosition = new Vector2Int(cell.position.x - topLeft.x, cell.position.y - bottomRight.y);
+
+			Debug.Log(newPosition);
+
+			cells.Add(new SavedCell()
+			{
+				cellType = cell.cellType,
+				rotation = cell.rotation,
+				position = newPosition,
+			});
+		}
+
+		return new Level(Name, size, cells.ToArray(), placeable, TutorialText);
 	}
 
 	public void LoadToGrid()

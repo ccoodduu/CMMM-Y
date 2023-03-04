@@ -28,6 +28,8 @@ public class SelectTool : MonoBehaviour
 	public GameObject moveButton;
 	public GameObject toolbox;
 
+	public Save save;
+
 	Vector2Int initialPos;
 	Vector2Int copyOffset;
 	Vector2Int min;
@@ -164,10 +166,15 @@ public class SelectTool : MonoBehaviour
 		copyOffset = MousePos();
 		state = State_e.PREVIEW;
 	}
-
-	public void SaveCells()
+	public void SaveSelection()
 	{
-		GetComponent<Save>().SaveLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
+		save.SaveLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
+	}
+	public void Crop()
+	{
+		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)); ;
+		GridManager.loadString = new V3Format().Encode(level);
+		GridManager.instance.Reload();
 	}
 
 	void Update()
@@ -257,6 +264,14 @@ public class SelectTool : MonoBehaviour
 				else if (ControlsManager.GetControl("Cut").GetDown())
 				{
 					Cut();
+				}
+				else if (ControlsManager.GetControl("SaveSelection").GetDown())
+				{
+					SaveSelection();
+				}
+				else if (ControlsManager.GetControl("Crop").GetDown())
+				{
+					Crop();
 				}
 
 				else if (ControlsManager.GetControl("SelectionUp").GetDown())

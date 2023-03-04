@@ -116,9 +116,6 @@ public class GridManager : MonoBehaviour
 				tickedId++;
 			}
 		}
-
-		//GameObject.Find("TutorialText").GetComponent<TextMeshProUGUI>().text = "";
-
 	}
 
 	private void InitSteppedCellQueues()
@@ -176,6 +173,11 @@ public class GridManager : MonoBehaviour
 
 		initialEnemyCount = enemyCount;
 		tool = Tool_e.DRAG;
+	}
+
+	public void Reload()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
 	public Cell SpawnCell(CellType_e cellType, Vector2 position, Direction_e rotation, bool generated)

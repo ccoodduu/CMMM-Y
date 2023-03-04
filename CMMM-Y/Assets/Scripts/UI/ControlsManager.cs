@@ -33,6 +33,7 @@ public static class ControlsManager
 		{ "Copy", new KeyCode[]{ KeyCode.C} },
 		{ "Cut", new KeyCode[]{ KeyCode.X} },
 		{ "Delete", new KeyCode[]{ KeyCode.Delete} },
+		{ "Crop", new KeyCode[]{ KeyCode.B} },
 		{ "StackSelection", new KeyCode[]{ KeyCode.LeftControl} },
 		{ "SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
 		{ "SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
