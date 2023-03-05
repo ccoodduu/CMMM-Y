@@ -1,0 +1,10 @@
+V 1.0.0:
+Added two new Save formats: Emoji and Readable
+Overhauled nearly all UI to make it more consistent and fit the theme.
+Added options for changing all controls in the game.
+More shortcuts: Play/Pause, Step, Reset, Save, Rotate 180
+Added crop level feature.
+Better camera controller.
+More settings: Fade strength, Zoom sensitivity, Controls.
+Added ability to navigate most UI using Tab.
+And more!
