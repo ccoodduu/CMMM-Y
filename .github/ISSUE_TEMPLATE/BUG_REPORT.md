@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve the game
+about: Create a report to help me improve the mod
 labels: bug
 ---
 
