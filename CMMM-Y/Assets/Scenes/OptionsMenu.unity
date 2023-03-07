@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -9510,7 +9510,7 @@ PrefabInstance:
     - target: {fileID: 5896496046750980402, guid: 06fdb565bdf44de45854ff1fff4a88c3,
         type: 3}
       propertyPath: m_MaxValue
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5896496046750980402, guid: 06fdb565bdf44de45854ff1fff4a88c3,
         type: 3}
@@ -15660,8 +15660,8 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 0
-  m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 3
+  m_DecelerationRate: 0.1
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 994782991}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1371714558}
