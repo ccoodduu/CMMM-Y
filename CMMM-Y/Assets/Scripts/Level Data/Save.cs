@@ -18,11 +18,13 @@ public class Save : MonoBehaviour
 	}
 
 	public void SaveLevel() {
+		saveText.text = "Level copied to clipboard!";
 		SaveLevel(Level.FromCurrent());
     }
 
 	public void SaveLevel(Vector2Int topLeft, Vector2Int bottomRight)
 	{
+		saveText.text = "Selection copied to clipboard!";
 		SaveLevel(Level.FromCurrent().Crop(topLeft, bottomRight));
 	}
 
