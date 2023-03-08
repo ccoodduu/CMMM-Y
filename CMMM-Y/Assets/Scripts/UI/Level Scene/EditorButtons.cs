@@ -9,7 +9,14 @@ public class EditorButtons : MonoBehaviour
     public bool animate;
     public string controlName;
 
-    private void Update()
+	private void Start()
+	{
+		if (tool == Tool_e.PLACEMENT && GridManager.mode == Mode_e.VAULT_LEVEL)
+        {
+            this.gameObject.SetActive(false);
+        }
+	}
+	private void Update()
     {
         if (ControlsManager.GetControl(controlName).GetDown())
             SwitchTool();

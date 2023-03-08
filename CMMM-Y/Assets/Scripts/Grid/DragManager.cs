@@ -17,11 +17,14 @@ public class DragManager : MonoBehaviour
             return;
         }
 
-        if (GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0))
-            != GridManager.instance.placebleTile && GridManager.mode == Mode_e.LEVEL) {
+		var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0)) == GridManager.instance.placebleTile;
+
+		if (!isPlaceable && GridManager.mode == Mode_e.LEVEL ||
+			isPlaceable && GridManager.mode == Mode_e.VAULT_LEVEL) {
             CancelDrag();
             return;
         }
+
         AudioManager.i.PlaySound(GameAssets.i.place);
         if (CellFunctions.cellGrid[(int)mousePos.x, (int)mousePos.y] == null)
         {
@@ -55,8 +58,10 @@ public class DragManager : MonoBehaviour
         if (mousePos.x >= CellFunctions.gridWidth || mousePos.y >= CellFunctions.gridHeight)
             return;
 
-        if ((GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0))
-            != GridManager.instance.placebleTile && GridManager.mode == Mode_e.LEVEL))
+        var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0)) == GridManager.instance.placebleTile;
+
+		if (!isPlaceable && GridManager.mode == Mode_e.LEVEL ||
+			isPlaceable && GridManager.mode == Mode_e.VAULT_LEVEL)
         {
             CancelDrag();
             return;

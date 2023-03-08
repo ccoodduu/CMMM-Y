@@ -39,23 +39,16 @@ public class PlacementManager : MonoBehaviour
         if (ControlsManager.GetControl("RotateCCW").GetDown() && GridManager.tool != Tool_e.SELECT) {
             animationTime = 0;
             if ((int)dir == 0)
-            {
                 dir = (Direction_e)3;
-            }
-            else {
+            else 
                 dir = (Direction_e)((int)dir - 1);
-            }
         }
         if (ControlsManager.GetControl("RotateCW").GetDown() && GridManager.tool != Tool_e.SELECT) {
             animationTime = 0;
             if ((int)dir == 3)
-            {
                 dir = (Direction_e)0;
-            }
             else
-            {
                 dir = (Direction_e)((int)dir + 1);
-            }
         }
 		if (ControlsManager.GetControl("Rotate180").GetDown() && GridManager.tool != Tool_e.SELECT)
 		{
@@ -95,10 +88,18 @@ public class PlacementManager : MonoBehaviour
             if (GridManager.tool == Tool_e.DRAG || GridManager.tool == Tool_e.SELECT)
                 return;
 
+            var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x, y, 0)) == GridManager.instance.placebleTile;
+
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
+                return;
+
             if (GridManager.tool == Tool_e.PLACEMENT)
             {
-                if (!backgroundTileDebounce)
-                    backgroundTileToggle = GridManager.instance.tilemap.GetTile(new Vector3Int(x,y,0)) == GridManager.instance.placebleTile;
+                if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
+
+				if (!backgroundTileDebounce)
+                    backgroundTileToggle = isPlaceable;
                 backgroundTileDebounce = true;
                 GridManager.instance.tilemap.SetTile(new Vector3Int(x,y,0),
                     backgroundTileToggle ? GridManager.instance.backgroundTile : GridManager.instance.placebleTile
@@ -123,12 +124,19 @@ public class PlacementManager : MonoBehaviour
         {
             if (!GridManager.clean)
                 return;
+
             if (x < 0 || y < 0)
                 return;
+
             if (x >= CellFunctions.gridWidth || y >= CellFunctions.gridHeight)
                 return;
 
-            if (CellFunctions.cellGrid[x, y] != null)
+			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x, y, 0)) == GridManager.instance.placebleTile;
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
+				return;
+
+			if (CellFunctions.cellGrid[x, y] != null)
             {
                 AudioManager.i.PlaySound(GameAssets.i.destroy);
                 CellFunctions.cellGrid[x, y].Delete(true);

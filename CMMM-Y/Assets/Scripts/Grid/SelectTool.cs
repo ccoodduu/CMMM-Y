@@ -68,7 +68,9 @@ public class SelectTool : MonoBehaviour
 		{
 			for (int y = min.y; y <= max.y; y++)
 			{
-				if (CellFunctions.cellGrid[x, y] != null)
+				var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x,y, 0)) == GridManager.instance.placebleTile;
+
+				if (CellFunctions.cellGrid[x, y] != null && !(GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable))
 				{
 					selectedCells.Add(CellFunctions.cellGrid[x, y]);
 				}
@@ -84,6 +86,11 @@ public class SelectTool : MonoBehaviour
 		// careful, even if the cells aren't on the cell grid, it will set elements of cellGrid to null
 		foreach (Cell cell in selectedCells)
 		{
+			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)cell.position.x, (int)cell.position.y, 0)) == GridManager.instance.placebleTile;
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
+				continue;
+
 			cell.Delete(true);
 		}
 		selectedCells = new List<Cell>();
@@ -115,6 +122,12 @@ public class SelectTool : MonoBehaviour
 				continue;
 			if (cell.position.y >= CellFunctions.gridHeight || cell.position.y < 0)
 				continue;
+
+			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)cell.position.x, (int)cell.position.y, 0)) == GridManager.instance.placebleTile;
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
+				continue;
+
 			GridManager.instance.SpawnCell(cell.cellType, cell.position, (Direction_e)cell.rotation, false);
 		}
 		GridManager.hasSaved = false;
@@ -172,6 +185,7 @@ public class SelectTool : MonoBehaviour
 	}
 	public void Crop()
 	{
+		if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
 		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)); ;
 		GridManager.loadString = new V3Format().Encode(level);
 		GridManager.instance.Reload();
