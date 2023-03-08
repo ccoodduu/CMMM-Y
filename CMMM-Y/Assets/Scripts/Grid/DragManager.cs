@@ -18,7 +18,7 @@ public class DragManager : MonoBehaviour
         }
 
         if (GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0))
-            != GridManager.instance.placebleTile && GridManager.mode != Mode_e.EDITOR) {
+            != GridManager.instance.placebleTile && GridManager.mode == Mode_e.LEVEL) {
             CancelDrag();
             return;
         }
@@ -56,7 +56,7 @@ public class DragManager : MonoBehaviour
             return;
 
         if ((GridManager.instance.tilemap.GetTile(new Vector3Int((int)mousePos.x, (int)mousePos.y, 0))
-            != GridManager.instance.placebleTile && GridManager.mode != Mode_e.EDITOR))
+            != GridManager.instance.placebleTile && GridManager.mode == Mode_e.LEVEL))
         {
             CancelDrag();
             return;
@@ -84,7 +84,7 @@ public class DragManager : MonoBehaviour
             if (control.GetUp() && inDrag) CancelDrag();
 			return;
 		}
-        if ((GridManager.tool != Tool_e.DRAG && GridManager.mode == Mode_e.EDITOR))
+        if ((GridManager.tool != Tool_e.DRAG && GridManager.mode.IsEditor()))
         {
 			if (inDrag) CancelDrag();
             return;

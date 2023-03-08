@@ -6,7 +6,7 @@ public class HideEditorButtons : MonoBehaviour
 {
     public void Start()
     {
-        if (GridManager.mode != Mode_e.EDITOR)
+        if (!GridManager.mode.IsEditor())
             this.gameObject.SetActive(false);
     }
 }

@@ -54,4 +54,12 @@ public class ImportLevel : MonoBehaviour
 		GridManager.mode = Mode_e.EDITOR;
         SceneManager.LoadScene("LevelScreen");
     }
+
+    public void PlayVault()
+    {
+		GridManager.currentLevel = 999;
+		SetLoadString();
+		GridManager.mode = Mode_e.VAULT_LEVEL;
+		SceneManager.LoadScene("LevelScreen");
+	}
 }

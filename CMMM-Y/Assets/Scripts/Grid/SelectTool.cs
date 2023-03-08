@@ -181,7 +181,7 @@ public class SelectTool : MonoBehaviour
 	{
 		// if you select an area or if you use the paste hotkey
 		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown())
-			if (GridManager.mode == Mode_e.EDITOR)
+			if (GridManager.mode.IsEditor())
 				selectButton.GetComponent<EditorButtons>().SwitchTool();
 
 		//State Management
