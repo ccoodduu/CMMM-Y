@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ImportLevel : MonoBehaviour
 {
-    string convertString(string oldFormat)
+    private string ConvertString(string oldFormat)
     {
         string[] components = oldFormat.Split(';');
 
@@ -29,31 +29,29 @@ public class ImportLevel : MonoBehaviour
         return (string.Join(";", newComponents) + ";");
     }
 
+    public void SetLoadString()
+    {
+		if (GUIUtility.systemCopyBuffer.StartsWith("V"))
+		{
+			GridManager.loadString = GUIUtility.systemCopyBuffer;
+		}
+		else
+		{
+			GridManager.loadString = ConvertString(GUIUtility.systemCopyBuffer);
+		}
+	}
+
     public void Play() {
         GridManager.currentLevel = 999;
-        if (GUIUtility.systemCopyBuffer.StartsWith("V"))
-        {
-            GridManager.loadString = GUIUtility.systemCopyBuffer;
-        }
-        else {
-            GridManager.loadString = convertString(GUIUtility.systemCopyBuffer);
-        }
-
-        GridManager.mode = Mode_e.LEVEL;
+        SetLoadString();
+		GridManager.mode = Mode_e.LEVEL;
         SceneManager.LoadScene("LevelScreen");
     }
 
     public void Edit() {
         GridManager.currentLevel = 999;
-        if (GUIUtility.systemCopyBuffer.StartsWith("V"))
-        {
-            GridManager.loadString = GUIUtility.systemCopyBuffer;
-        }
-        else
-        {
-            GridManager.loadString = convertString(GUIUtility.systemCopyBuffer);
-        }
-        GridManager.mode = Mode_e.EDITOR;
+        SetLoadString();
+		GridManager.mode = Mode_e.EDITOR;
         SceneManager.LoadScene("LevelScreen");
     }
 }
