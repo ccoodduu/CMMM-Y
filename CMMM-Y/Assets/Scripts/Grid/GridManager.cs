@@ -385,7 +385,6 @@ public class GridManager : MonoBehaviour
 			}
 
 			MSPT = ((double)System.DateTime.Now.Ticks / 10000) - MSPT;
-			print(MSPT);
 		}
 	}
 }

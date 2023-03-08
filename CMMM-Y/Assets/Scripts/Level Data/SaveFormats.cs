@@ -627,8 +627,8 @@ public class V1Format : SaveFormat
 		var size = new Vector2Int(int.Parse(arguments[1]), int.Parse(arguments[2]));
 		var cells = new List<SavedCell>();
 		var placeable = new bool[size.x * size.y];
-		string tutorialText = arguments[5];
-		string name = arguments[6];
+		string tutorialText = arguments.Length >= 6 ? arguments[5] : "";
+		string name = arguments.Length >= 7 ? arguments[6] : "";
 
 		string[] placementCellLocationsStr = arguments[3].Split(',');
 		if (placementCellLocationsStr[0] != "")

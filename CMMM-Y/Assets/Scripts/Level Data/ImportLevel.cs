@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
+using TMPro;
 
 public class ImportLevel : MonoBehaviour
 {
-    private string ConvertString(string oldFormat)
+	public GameObject errorCard;
+
+	private string ConvertString(string oldFormat)
     {
         string[] components = oldFormat.Split(';');
 
@@ -29,28 +33,61 @@ public class ImportLevel : MonoBehaviour
         return (string.Join(";", newComponents) + ";");
     }
 
-    public void SetLoadString()
+    public bool SetLoadString()
     {
-		if (GUIUtility.systemCopyBuffer.StartsWith("V"))
+
+		var str = GUIUtility.systemCopyBuffer;
+		var formatName = str.Split(';')[0];
+		var format = FormatManager.formats.FirstOrDefault(f => f.FormatName.ToLower() == formatName.ToLower());
+
+		if (format != null)
 		{
-			GridManager.loadString = GUIUtility.systemCopyBuffer;
+			GridManager.loadString = str;
+			return true;
 		}
 		else
 		{
-			GridManager.loadString = ConvertString(GUIUtility.systemCopyBuffer);
+			try
+			{
+				GridManager.loadString = ConvertString(str);
+				return true;
+			}
+			catch
+			{
+				errorCard.GetComponent<CanvasGroup>().alpha = 1;
+				errorCard.GetComponentInChildren<TMP_Text>().text = "Your clipboard doesn't contain a valid level!";
+
+				CanvasGroup canvasGroup = errorCard.GetComponent<CanvasGroup>();
+
+				StartCoroutine(PauseThenFadeOut(canvasGroup, canvasGroup.alpha, 0));
+				return false;
+			}
 		}
 	}
 
-    public void Play() {
+	public IEnumerator PauseThenFadeOut(CanvasGroup canvGroup, float start, float end)
+	{
+		float counter = 0f;
+		while (counter < 3f)
+		{
+			counter += Time.deltaTime;
+			if (counter > 2f) canvGroup.alpha = Mathf.Lerp(start, end, (counter - 2f) / 1f);
+			yield return null;
+		}
+	}
+
+	public void Play() {
         GridManager.currentLevel = 999;
-        SetLoadString();
+        if (!SetLoadString()) return;
+
 		GridManager.mode = Mode_e.LEVEL;
         SceneManager.LoadScene("LevelScreen");
     }
 
     public void Edit() {
         GridManager.currentLevel = 999;
-        SetLoadString();
+		if (!SetLoadString()) return;
+
 		GridManager.mode = Mode_e.EDITOR;
         SceneManager.LoadScene("LevelScreen");
     }
@@ -58,7 +95,8 @@ public class ImportLevel : MonoBehaviour
     public void PlayVault()
     {
 		GridManager.currentLevel = 999;
-		SetLoadString();
+		if (!SetLoadString()) return;
+
 		GridManager.mode = Mode_e.VAULT_LEVEL;
 		SceneManager.LoadScene("LevelScreen");
 	}
