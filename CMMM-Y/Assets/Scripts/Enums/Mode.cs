@@ -6,6 +6,6 @@ public static class Extensions
 {
 	public static bool IsEditor(this Mode_e mode)
 	{
-		return mode is Mode_e.LEVEL || mode is Mode_e.VAULT_LEVEL;
+		return mode is Mode_e.EDITOR || mode is Mode_e.VAULT_LEVEL;
 	}
 }
