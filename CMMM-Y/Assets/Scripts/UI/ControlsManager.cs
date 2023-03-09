@@ -145,6 +145,34 @@ public static class ControlsManager
 		return new Control(defaultControls[controlName]);
 	}
 
+	public static Control[] GetAllControlsContainingKey(KeyCode key)
+	{
+		var controlStringArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
+
+		var controls = new List<Control>();
+		var names = new List<string>();
+		for (int i = 0; i < controlStringArray.Length; i++)
+		{
+			string c = controlStringArray[i];
+			if (c.Contains(((int)key) + ""))
+			{
+				string[] s = c.Split(':');
+				controls.Add(new Control(s[1]));
+				names.Add(s[0]);
+			}
+		}
+
+        foreach (var controlName in defaultControls.Keys)
+        {
+			if (defaultControls[controlName].Contains(key)) continue;
+			if (names.Contains(controlName)) continue;
+
+			controls.Add(new Control(defaultControls[controlName]));
+        }
+
+        return controls.ToArray();
+	}
+
 	public static bool IsDefault(string controlName)
 	{
 		var control = GetControl(controlName);
