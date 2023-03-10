@@ -78,6 +78,7 @@ public static class ControlsManager
 		{ "PlaceCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse0 }, false)},
 		{ "DragCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse0 }, false)},
 		{ "DeleteCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse1 }, false)},
+		{ "PickCell", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse2 }, false)},
 		{ "PlayPause", new ControlSetting(new KeyCode[]{ KeyCode.F5 }, false)},
 		{ "Reset", new ControlSetting(new KeyCode[]{ KeyCode.F6 }, false)},
 		{ "Step", new ControlSetting(new KeyCode[]{ KeyCode.F7 }, false)},
