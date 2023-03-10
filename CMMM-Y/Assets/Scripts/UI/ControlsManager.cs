@@ -4,6 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class ControlSetting
+{
+	public bool canOverlap;
+	public KeyCode[] defaultKeys;
+
+	public ControlSetting(KeyCode[] defaultKeys, bool canOverlap)
+	{
+		this.defaultKeys = defaultKeys;
+		this.canOverlap = canOverlap;
+	}
+}
+
 public static class ControlsManager
 {
 	public static string playerPrefsControls = "Controls";
@@ -15,53 +27,53 @@ public static class ControlsManager
 		return name;
 	}
 
-	public static readonly Dictionary<string, KeyCode[]> defaultControls = new Dictionary<string, KeyCode[]>()
+	public static readonly Dictionary<string, ControlSetting> allControls = new Dictionary<string, ControlSetting>()
 	{
-		{ "Up", new KeyCode[]{ KeyCode.W} },
-		{ "Down", new KeyCode[]{ KeyCode.S} },
-		{ "Left", new KeyCode[]{ KeyCode.A} },
-		{ "Right", new KeyCode[]{ KeyCode.D} },
-		{ "FastPan", new KeyCode[]{ KeyCode.LeftControl} },
-		{ "RotateCW", new KeyCode[]{ KeyCode.E} },
-		{ "RotateCCW", new KeyCode[]{ KeyCode.Q} },
-		{ "Rotate180", new KeyCode[]{ KeyCode.R} },
-		{ "BeginSelect", new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 } },
-		{ "Select", new KeyCode[]{ KeyCode.Mouse0 } },
-		{ "CancelSelection", new KeyCode[]{ KeyCode.Mouse1 } },
-		{ "Paste", new KeyCode[]{ KeyCode.V} },
-		{ "Copy", new KeyCode[]{ KeyCode.C} },
-		{ "Cut", new KeyCode[]{ KeyCode.X} },
-		{ "Delete", new KeyCode[]{ KeyCode.Delete} },
-		{ "Crop", new KeyCode[]{ KeyCode.B} },
-		{ "StackSelection", new KeyCode[]{ KeyCode.LeftControl} },
-		{ "SelectionUp", new KeyCode[]{ KeyCode.UpArrow} },
-		{ "SelectionDown", new KeyCode[]{ KeyCode.DownArrow} },
-		{ "SelectionLeft", new KeyCode[]{ KeyCode.LeftArrow} },
-		{ "SelectionRight", new KeyCode[]{ KeyCode.RightArrow} },
-		{ "Pan", new KeyCode[]{ KeyCode.Mouse2} },
-		{ "HideUI", new KeyCode[]{ KeyCode.F1} },
-		{ "Debug", new KeyCode[]{ KeyCode.F3} },
-		{ "HighlightMoveable", new KeyCode[]{ KeyCode.Space} },
-		{ "Generator", new KeyCode[]{ KeyCode.Alpha1} },
-		{ "Mover", new KeyCode[]{ KeyCode.Alpha2} },
-		{ "RotatorCW", new KeyCode[]{ KeyCode.Alpha3} },
-		{ "RotatorCCW", new KeyCode[]{ KeyCode.Alpha4} },
-		{ "Push", new KeyCode[]{ KeyCode.Alpha5} },
-		{ "Slide", new KeyCode[]{ KeyCode.Alpha6} },
-		{ "Enemy", new KeyCode[]{ KeyCode.Alpha7} },
-		{ "Trash", new KeyCode[]{ KeyCode.Alpha8} },
-		{ "Immobile", new KeyCode[]{ KeyCode.Alpha9} },
-		{ "Placeable", new KeyCode[]{ KeyCode.Alpha0} },
-		{ "SelectTool", new KeyCode[]{ KeyCode.None} },
-		{ "DragTool", new KeyCode[]{ KeyCode.None } },
-		{ "PlaceCell", new KeyCode[]{ KeyCode.Mouse0 } },
-		{ "DragCell", new KeyCode[]{ KeyCode.Mouse0 } },
-		{ "DeleteCell", new KeyCode[]{ KeyCode.Mouse1 } },
-		{ "PlayPause", new KeyCode[]{ KeyCode.F5 } },
-		{ "Reset", new KeyCode[]{ KeyCode.F6 } },
-		{ "Step", new KeyCode[]{ KeyCode.F7 } },
-		{ "Save", new KeyCode[]{ KeyCode.F2 } },
-		{ "SaveSelection", new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 } },
+		{ "Up", new ControlSetting(new KeyCode[]{ KeyCode.W}, false)},
+		{ "Down", new ControlSetting(new KeyCode[]{ KeyCode.S}, false)},
+		{ "Left", new ControlSetting(new KeyCode[]{ KeyCode.A}, false)},
+		{ "Right", new ControlSetting(new KeyCode[]{ KeyCode.D}, false)},
+		{ "FastPan", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl}, false)},
+		{ "RotateCW", new ControlSetting(new KeyCode[]{ KeyCode.E}, false)},
+		{ "RotateCCW", new ControlSetting(new KeyCode[]{ KeyCode.Q}, false)},
+		{ "Rotate180", new ControlSetting(new KeyCode[]{ KeyCode.R}, false)},
+		{ "BeginSelect", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Mouse0 }, false)},
+		{ "Select", new ControlSetting(new KeyCode[]{ KeyCode.Mouse0 }, true)},
+		{ "CancelSelection", new ControlSetting(new KeyCode[]{ KeyCode.Mouse1 }, false)},
+		{ "Paste", new ControlSetting(new KeyCode[]{ KeyCode.V}, false)},
+		{ "Copy", new ControlSetting(new KeyCode[]{ KeyCode.C}, false)},
+		{ "Cut", new ControlSetting(new KeyCode[]{ KeyCode.X}, false)},
+		{ "Delete", new ControlSetting(new KeyCode[]{ KeyCode.Delete}, false)},
+		{ "Crop", new ControlSetting(new KeyCode[]{ KeyCode.B}, false)},
+		{ "StackSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl}, false)},
+		{ "SelectionUp", new ControlSetting(new KeyCode[]{ KeyCode.UpArrow}, false)},
+		{ "SelectionDown", new ControlSetting(new KeyCode[]{ KeyCode.DownArrow}, false)},
+		{ "SelectionLeft", new ControlSetting(new KeyCode[]{ KeyCode.LeftArrow}, false)},
+		{ "SelectionRight", new ControlSetting(new KeyCode[]{ KeyCode.RightArrow}, false)},
+		{ "Pan", new ControlSetting(new KeyCode[]{ KeyCode.Mouse2}, false)},
+		{ "HideUI", new ControlSetting(new KeyCode[]{ KeyCode.F1}, false)},
+		{ "Debug", new ControlSetting(new KeyCode[]{ KeyCode.F3}, false)},
+		{ "HighlightMoveable", new ControlSetting(new KeyCode[]{ KeyCode.Space}, false)},
+		{ "Generator", new ControlSetting(new KeyCode[]{ KeyCode.Alpha1}, false)},
+		{ "Mover", new ControlSetting(new KeyCode[]{ KeyCode.Alpha2}, false)},
+		{ "RotatorCW", new ControlSetting(new KeyCode[]{ KeyCode.Alpha3}, false)},
+		{ "RotatorCCW", new ControlSetting(new KeyCode[]{ KeyCode.Alpha4}, false)},
+		{ "Push", new ControlSetting(new KeyCode[]{ KeyCode.Alpha5}, false)},
+		{ "Slide", new ControlSetting(new KeyCode[]{ KeyCode.Alpha6}, false)},
+		{ "Enemy", new ControlSetting(new KeyCode[]{ KeyCode.Alpha7}, false)},
+		{ "Trash", new ControlSetting(new KeyCode[]{ KeyCode.Alpha8}, false)},
+		{ "Immobile", new ControlSetting(new KeyCode[]{ KeyCode.Alpha9}, false)},
+		{ "Placeable", new ControlSetting(new KeyCode[]{ KeyCode.Alpha0}, false)},
+		{ "SelectTool", new ControlSetting(new KeyCode[]{ KeyCode.None}, false)},
+		{ "DragTool", new ControlSetting(new KeyCode[]{ KeyCode.None }, false)},
+		{ "PlaceCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse0 }, false)},
+		{ "DragCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse0 }, false)},
+		{ "DeleteCell", new ControlSetting(new KeyCode[]{ KeyCode.Mouse1 }, false)},
+		{ "PlayPause", new ControlSetting(new KeyCode[]{ KeyCode.F5 }, false)},
+		{ "Reset", new ControlSetting(new KeyCode[]{ KeyCode.F6 }, false)},
+		{ "Step", new ControlSetting(new KeyCode[]{ KeyCode.F7 }, false)},
+		{ "Save", new ControlSetting(new KeyCode[]{ KeyCode.F2 }, false)},
+		{ "SaveSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 }, false)},
 	};
 
 	public static void SetControl(string controlName, Control control)
@@ -97,13 +109,13 @@ public static class ControlsManager
 		{
 			var list = control.Keycodes.ToList();
 			list.RemoveAt(index);
-			newControl = new Control(list.ToArray());
+			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
 		}
 		else
 		{
 			var list = control.Keycodes.ToList();
 			list[index] = key;
-			newControl = new Control(list.ToArray());
+			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
 		}
 
 		SetControl(controlName, newControl);
@@ -116,7 +128,7 @@ public static class ControlsManager
 		var list = control.Keycodes.ToList();
 		list.Add(key);
 
-		Control newControl = new Control(list.ToArray());
+		Control newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
 
 		SetControl(controlName, newControl);
 	}
@@ -130,19 +142,19 @@ public static class ControlsManager
 			string c = controlArray[i];
 			if (c.StartsWith(controlName + ":"))
 			{
-				return new Control(c.Split(':')[1]);
+				return new Control(c.Split(':')[1], allControls[controlName].canOverlap);
 			}
 		}
 
-		if (!defaultControls.ContainsKey(controlName))
+		if (!allControls.ContainsKey(controlName))
 		{
 			Debug.LogWarning("Control: " + controlName + " does not have a default control!");
-			return new Control(KeyCode.None);
+			return new Control(KeyCode.None, false);
 		}
 
-		var control = new Control(defaultControls[controlName]);
+		var control = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap);
 		SetControl(controlName, control);
-		return new Control(defaultControls[controlName]);
+		return control;
 	}
 
 	public static Control[] GetAllControlsContainingKey(KeyCode key)
@@ -157,26 +169,26 @@ public static class ControlsManager
 			if (c.Contains(((int)key) + ""))
 			{
 				string[] s = c.Split(':');
-				controls.Add(new Control(s[1]));
+				controls.Add(new Control(s[1], allControls[s[0]].canOverlap));
 				names.Add(s[0]);
 			}
 		}
 
-        foreach (var controlName in defaultControls.Keys)
-        {
-			if (defaultControls[controlName].Contains(key)) continue;
+		foreach (var controlName in allControls.Keys)
+		{
+			if (allControls[controlName].defaultKeys.Contains(key)) continue;
 			if (names.Contains(controlName)) continue;
 
-			controls.Add(new Control(defaultControls[controlName]));
-        }
+			controls.Add(new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap));
+		}
 
-        return controls.ToArray();
+		return controls.ToArray();
 	}
 
 	public static bool IsDefault(string controlName)
 	{
 		var control = GetControl(controlName);
-		var defaultControl = new Control(defaultControls[controlName]);
+		var defaultControl = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap);
 
 		return control.ToSaveString() == defaultControl.ToSaveString();
 	}
@@ -211,21 +223,25 @@ public static class ControlsManager
 public class Control
 {
 	public KeyCode[] Keycodes { get; }
+	public bool CanOverlap { get; }
 
-	public Control(KeyCode[] keycodes)
+	public Control(KeyCode[] keycodes, bool canOverlap)
 	{
 		this.Keycodes = keycodes;
+		this.CanOverlap = canOverlap;
 	}
 
-	public Control(KeyCode keycodes)
+	public Control(KeyCode keycode, bool canOverlap)
 	{
-		this.Keycodes = new KeyCode[] { keycodes };
+		this.Keycodes = new KeyCode[] { keycode };
+		this.CanOverlap = canOverlap;
 	}
 
-	public Control(string control)
+	public Control(string control, bool canOverlap)
 	{
 		var keys = control.Split('&');
 		this.Keycodes = keys.Select((key) => (KeyCode)int.Parse(key)).ToArray();
+		this.CanOverlap = canOverlap;
 	}
 
 	public string ToSaveString()
@@ -233,8 +249,25 @@ public class Control
 		return string.Join("&", Keycodes.Select(key => ((int)key).ToString()));
 	}
 
+	private bool Overlaps()
+	{
+		if (CanOverlap) return false;
+
+		foreach (var key in this.Keycodes)
+		{
+			foreach (var control in ControlsManager.GetAllControlsContainingKey(key))
+			{
+				if (control.Keycodes.Length > this.Keycodes.Length && !control.CanOverlap && control.Get()) return true;
+			}
+		}
+		
+		return false;
+	}
+
 	public bool Get()
 	{
+		if (Overlaps()) return false;
+
 		foreach (KeyCode keyCode in Keycodes)
 		{
 			if (!Input.GetKey(keyCode)) return false;
@@ -244,6 +277,8 @@ public class Control
 
 	public bool GetDown()
 	{
+		if (Overlaps()) return false;
+
 		foreach (KeyCode keyCode in Keycodes)
 		{
 			if (!Input.GetKey(keyCode)) return false;
@@ -257,6 +292,8 @@ public class Control
 
 	public bool GetUp()
 	{
+		if (Overlaps()) return false;
+
 		bool isReleased = false;
 		foreach (KeyCode keyCode in Keycodes)
 		{

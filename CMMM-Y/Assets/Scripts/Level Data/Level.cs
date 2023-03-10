@@ -80,8 +80,6 @@ public class Level
 
 			var newPosition = new Vector2Int(cell.position.x - topLeft.x, cell.position.y - bottomRight.y);
 
-			Debug.Log(newPosition);
-
 			cells.Add(new SavedCell()
 			{
 				cellType = cell.cellType,
