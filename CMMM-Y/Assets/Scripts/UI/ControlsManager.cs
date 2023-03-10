@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class ControlSetting
@@ -23,7 +24,15 @@ public static class ControlsManager
 	public static string GetDisplayName(KeyCode keyCode)
 	{
 		var name = keyCode.ToString();
+
 		if (name.StartsWith("Alpha")) name = name.Substring(5);
+		if (name == "Mouse0") name = "LMB";
+		if (name == "Mouse1") name = "RMB";
+		if (name == "Mouse2") name = "MMB";
+
+		// Add spaces
+		name = Regex.Replace(Regex.Replace(name, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
+
 		return name;
 	}
 
@@ -260,7 +269,7 @@ public class Control
 				if (control.Keycodes.Length > this.Keycodes.Length && !control.CanOverlap && control.Get()) return true;
 			}
 		}
-		
+
 		return false;
 	}
 
