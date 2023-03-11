@@ -22,6 +22,31 @@ public static class ControlsManager
 {
 	public static string playerPrefsControls = "Controls";
 
+	private static Dictionary<string, Control> cache = new Dictionary<string, Control>();
+
+	private static void RegenerateCache()
+	{
+		cache.Clear();
+
+		var controlStringArray = PlayerPrefs.GetString(playerPrefsControls).Split(new char[]{ ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+		for (int i = 0; i < controlStringArray.Length; i++)
+		{
+			var control = controlStringArray[i].Split(':');
+
+			var name = control[0];
+
+			cache.Add(name, new Control(controlStringArray[i], allControls[name].canOverlap));
+		}
+
+		foreach (var name in allControls.Keys)
+		{
+			if (cache.ContainsKey(name)) continue;
+
+			cache.Add(name, new Control(allControls[name].defaultKeys, allControls[name].canOverlap, name));
+		}
+	}
+
 	public static string GetDisplayName(KeyCode keyCode)
 	{
 		var name = keyCode.ToString();
@@ -109,7 +134,10 @@ public static class ControlsManager
 			controlList.Add(controlName + ":" + control.ToSaveString());
 			newControls = string.Join(",", controlList);
 		}
+
 		PlayerPrefs.SetString(playerPrefsControls, newControls);
+
+		RegenerateCache();
 	}
 
 	public static void SetKeyForControl(string controlName, int index, KeyCode key)
@@ -146,57 +174,22 @@ public static class ControlsManager
 
 	public static Control GetControl(string controlName)
 	{
-		var controlArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
-
-		for (int i = 0; i < controlArray.Length; i++)
-		{
-			string c = controlArray[i];
-			if (c.StartsWith(controlName + ":"))
-			{
-				return new Control(c, allControls[controlName].canOverlap);
-			}
-		}
-
-		if (!allControls.ContainsKey(controlName))
-		{
-			Debug.LogWarning("Control: " + controlName + " does not have a default control!");
-			return new Control(KeyCode.None, false, controlName);
-		}
-
-		var control = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap, controlName);
-		SetControl(controlName, control);
-		return control;
+		if (cache.Count == 0) RegenerateCache();
+		return cache[controlName];
 	}
 
 	public static Control[] GetAllControlsContainingKey(KeyCode key)
 	{
-		var controlStringArray = PlayerPrefs.GetString(playerPrefsControls).Split(',');
+		if (cache.Count == 0) RegenerateCache();
 
 		var controls = new List<Control>();
-		var names = new List<string>();
-		for (int i = 0; i < controlStringArray.Length; i++)
+
+		foreach (var control in cache.Values)
 		{
-			var control = controlStringArray[i].Split(':');
-
-			var name = control[0];
-			var keys = control[1];
-
-			foreach (var k in keys.Split('&'))
+			if (control.Keycodes.Contains(key))
 			{
-				if ((KeyCode)int.Parse(k) == key)
-				{
-					controls.Add(new Control(controlStringArray[i], allControls[name].canOverlap));
-					names.Add(name);
-				}
+				controls.Add(control);
 			}
-		}
-
-		foreach (var controlName in allControls.Keys)
-		{
-			if (!allControls[controlName].defaultKeys.Contains(key)) continue;
-			if (names.Contains(controlName)) continue;
-
-			controls.Add(new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap, controlName));
 		}
 
 		return controls.ToArray();
@@ -213,6 +206,8 @@ public static class ControlsManager
 	public static void ResetAll()
 	{
 		PlayerPrefs.SetString(playerPrefsControls, "");
+
+		RegenerateCache();
 	}
 
 	public static void Reset(string controlName)
@@ -234,6 +229,8 @@ public static class ControlsManager
 		}
 
 		PlayerPrefs.SetString(playerPrefsControls, newControls);
+
+		RegenerateCache();
 	}
 }
 
