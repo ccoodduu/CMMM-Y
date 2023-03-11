@@ -123,7 +123,7 @@ public static class ControlsManager
 			string c = controlArray[i];
 			if (c.StartsWith(controlName + ":"))
 			{
-				controlArray[i] = controlName + ":" + control.ToSaveString();
+				controlArray[i] = control.ToSaveString();
 				newControls = string.Join(",", controlArray);
 				break;
 			}
@@ -131,7 +131,7 @@ public static class ControlsManager
 		if (newControls == "")
 		{
 			var controlList = controlArray.ToList();
-			controlList.Add(controlName + ":" + control.ToSaveString());
+			controlList.Add(control.ToSaveString());
 			newControls = string.Join(",", controlList);
 		}
 
@@ -266,7 +266,7 @@ public class Control
 
 	public string ToSaveString()
 	{
-		return string.Join("&", Keycodes.Select(key => ((int)key).ToString()));
+		return Name + ":" + string.Join("&", Keycodes.Select(key => ((int)key).ToString()));
 	}
 
 	private bool Overlaps()
