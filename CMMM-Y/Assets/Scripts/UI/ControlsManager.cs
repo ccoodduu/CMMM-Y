@@ -267,7 +267,7 @@ public class Control
 		{
 			foreach (var control in ControlsManager.GetAllControlsContainingKey(key))
 			{
-				if (control.Keycodes.Length > this.Keycodes.Length && !control.CanOverlap && control.Get()) return true;
+				if (control.Keycodes.Length > this.Keycodes.Length && !control.CanOverlap && control.Get(false)) return true;
 			}
 		}
 
@@ -276,7 +276,12 @@ public class Control
 
 	public bool Get()
 	{
-		if (Overlaps()) return false;
+		return Get(true);
+	}
+
+	public bool Get(bool checkForOverlap)
+	{
+		if (checkForOverlap && Overlaps()) return false;
 
 		foreach (KeyCode keyCode in Keycodes)
 		{
