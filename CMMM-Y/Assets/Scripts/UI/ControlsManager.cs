@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -119,13 +120,13 @@ public static class ControlsManager
 		{
 			var list = control.Keycodes.ToList();
 			list.RemoveAt(index);
-			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
+			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap, controlName);
 		}
 		else
 		{
 			var list = control.Keycodes.ToList();
 			list[index] = key;
-			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
+			newControl = new Control(list.ToArray(), allControls[controlName].canOverlap, controlName);
 		}
 
 		SetControl(controlName, newControl);
@@ -138,7 +139,7 @@ public static class ControlsManager
 		var list = control.Keycodes.ToList();
 		list.Add(key);
 
-		Control newControl = new Control(list.ToArray(), allControls[controlName].canOverlap);
+		Control newControl = new Control(list.ToArray(), allControls[controlName].canOverlap, controlName);
 
 		SetControl(controlName, newControl);
 	}
@@ -152,17 +153,17 @@ public static class ControlsManager
 			string c = controlArray[i];
 			if (c.StartsWith(controlName + ":"))
 			{
-				return new Control(c.Split(':')[1], allControls[controlName].canOverlap);
+				return new Control(c, allControls[controlName].canOverlap);
 			}
 		}
 
 		if (!allControls.ContainsKey(controlName))
 		{
 			Debug.LogWarning("Control: " + controlName + " does not have a default control!");
-			return new Control(KeyCode.None, false);
+			return new Control(KeyCode.None, false, controlName);
 		}
 
-		var control = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap);
+		var control = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap, controlName);
 		SetControl(controlName, control);
 		return control;
 	}
@@ -175,21 +176,27 @@ public static class ControlsManager
 		var names = new List<string>();
 		for (int i = 0; i < controlStringArray.Length; i++)
 		{
-			string c = controlStringArray[i];
-			if (c.Contains(((int)key) + ""))
+			var control = controlStringArray[i].Split(':');
+
+			var name = control[0];
+			var keys = control[1];
+
+			foreach (var k in keys.Split('&'))
 			{
-				string[] s = c.Split(':');
-				controls.Add(new Control(s[1], allControls[s[0]].canOverlap));
-				names.Add(s[0]);
+				if ((KeyCode)int.Parse(k) == key)
+				{
+					controls.Add(new Control(controlStringArray[i], allControls[name].canOverlap));
+					names.Add(name);
+				}
 			}
 		}
 
 		foreach (var controlName in allControls.Keys)
 		{
-			if (allControls[controlName].defaultKeys.Contains(key)) continue;
+			if (!allControls[controlName].defaultKeys.Contains(key)) continue;
 			if (names.Contains(controlName)) continue;
 
-			controls.Add(new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap));
+			controls.Add(new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap, controlName));
 		}
 
 		return controls.ToArray();
@@ -198,7 +205,7 @@ public static class ControlsManager
 	public static bool IsDefault(string controlName)
 	{
 		var control = GetControl(controlName);
-		var defaultControl = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap);
+		var defaultControl = new Control(allControls[controlName].defaultKeys, allControls[controlName].canOverlap, controlName);
 
 		return control.ToSaveString() == defaultControl.ToSaveString();
 	}
@@ -234,24 +241,30 @@ public class Control
 {
 	public KeyCode[] Keycodes { get; }
 	public bool CanOverlap { get; }
+	public string Name { get; }
 
-	public Control(KeyCode[] keycodes, bool canOverlap)
+	public Control(KeyCode[] keycodes, bool canOverlap, string name)
 	{
 		this.Keycodes = keycodes;
 		this.CanOverlap = canOverlap;
+		Name = name;
 	}
 
-	public Control(KeyCode keycode, bool canOverlap)
+	public Control(KeyCode keycode, bool canOverlap, string name)
 	{
 		this.Keycodes = new KeyCode[] { keycode };
 		this.CanOverlap = canOverlap;
+		this.Name = name;
 	}
 
 	public Control(string control, bool canOverlap)
 	{
-		var keys = control.Split('&');
+		var s = control.Split(':');
+		var keys = s[1].Split('&');
+
 		this.Keycodes = keys.Select((key) => (KeyCode)int.Parse(key)).ToArray();
 		this.CanOverlap = canOverlap;
+		this.Name = s[0];
 	}
 
 	public string ToSaveString()
@@ -267,6 +280,7 @@ public class Control
 		{
 			foreach (var control in ControlsManager.GetAllControlsContainingKey(key))
 			{
+				if (control.Name == Name) continue;
 				if (control.Keycodes.Length > this.Keycodes.Length && !control.CanOverlap && control.Get(false)) return true;
 			}
 		}
