@@ -64,7 +64,7 @@ public class CameraPan : MonoBehaviour
 
 	private void Pan()
 	{
-		var speed = (ControlsManager.GetControl("FastPan").Get() ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * 4f * Time.deltaTime;
+		var speed = (ControlsManager.GetControl("FastPan").Get() ? 2f : 1f) * PlayerPrefs.GetFloat("MovementSpeed", 1f) * Time.deltaTime * orthographicSize;
 
 		if (ControlsManager.GetControl("Up").Get()) position += Vector2.up * speed;
 		if (ControlsManager.GetControl("Down").Get()) position += Vector2.down * speed;
