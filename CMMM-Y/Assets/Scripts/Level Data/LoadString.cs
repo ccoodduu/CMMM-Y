@@ -8,13 +8,14 @@ namespace load
 {
 	public static class LoadString
 	{
+		public static bool makeCellsStatic;
 		public static bool Load(string str)
 		{
 			var formatName = str.Split(';')[0];
 			var format = FormatManager.formats.First(f => f.FormatName.ToLower() == formatName.ToLower());
 			var level = format.Decode(str);
 
-			if (GridManager.mode == Mode_e.VAULT_LEVEL)
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && makeCellsStatic)
 			{
 				foreach (var cell in level.Cells)
 				{

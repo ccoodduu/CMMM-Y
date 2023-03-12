@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using TMPro;
+using load;
 
 public class ImportLevel : MonoBehaviour
 {
@@ -92,9 +93,9 @@ public class ImportLevel : MonoBehaviour
         SceneManager.LoadScene("LevelScreen");
     }
 
-    public void PlayVault()
+    public void PlayVault(bool makeCellsStatic)
     {
-		/// TODO: Add popup to choose between importing for the first time vs continuing editing
+		LoadString.makeCellsStatic = makeCellsStatic;
 
 		GridManager.currentLevel = 999;
 		if (!SetLoadString()) return;
