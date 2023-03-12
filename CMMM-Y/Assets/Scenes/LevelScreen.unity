@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1400,7 +1400,6 @@ GameObject:
   - component: {fileID: 305722282}
   - component: {fileID: 305722285}
   - component: {fileID: 305722284}
-  - component: {fileID: 305722283}
   m_Layer: 5
   m_Name: ExitConfirmation
   m_TagString: Untagged
@@ -1431,18 +1430,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &305722283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 305722281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a7d2bd98a36a234f89e33437216b669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &305722284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4852,7 +4839,6 @@ GameObject:
   - component: {fileID: 1311121542}
   - component: {fileID: 1311121544}
   - component: {fileID: 1311121543}
-  - component: {fileID: 1311121545}
   m_Layer: 5
   m_Name: MenuScreen
   m_TagString: Untagged
@@ -4922,18 +4908,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311121541}
   m_CullTransparentMesh: 0
---- !u!114 &1311121545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311121541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a7d2bd98a36a234f89e33437216b669, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1329595545 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7088292149909188087, guid: 75c05fdf9e1908c4db1fc4968339291b,
