@@ -3514,6 +3514,7 @@ GameObject:
   - component: {fileID: 913402539}
   - component: {fileID: 913402538}
   - component: {fileID: 913402537}
+  - component: {fileID: 913402540}
   m_Layer: 5
   m_Name: crop
   m_TagString: Untagged
@@ -3631,6 +3632,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913402535}
   m_CullTransparentMesh: 0
+--- !u!114 &913402540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913402535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45f37c3f5c21954c88c7a40995e97c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mode: 2
 --- !u!1 &956809089 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3173369288890881847, guid: 9273d5d0597bf2140b8c3adc702726fe,
