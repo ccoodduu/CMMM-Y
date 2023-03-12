@@ -32,7 +32,7 @@ public class Generator : TrackedCell
             return false;
         if (this.position.x + offsetX >= CellFunctions.gridWidth || this.position.y + offsetY >= CellFunctions.gridHeight)
             return false;
-        //If we don't have a refrence cell return
+        //If we don't have a reference cell return
         if (CellFunctions.cellGrid[(int)this.position.x - offsetX, (int)this.position.y - offsetY] == null)
             return false;
         return true;
@@ -40,7 +40,7 @@ public class Generator : TrackedCell
 
     public override void Step()
     {
-        //Subract to find refrence, add to find target
+        //Subtract to find reference, add to find target
         int offsetX = 0;
         int offsetY = 0;
 
@@ -69,7 +69,7 @@ public class Generator : TrackedCell
         if (this.position.x + offsetX >= CellFunctions.gridWidth || this.position.y + offsetY >= CellFunctions.gridHeight)
             return;
 
-        //If we don't have a refrence cell return
+        //If we don't have a reference cell return
         if (CellFunctions.cellGrid[(int)this.position.x - offsetX, (int)this.position.y - offsetY] == null)
             return;
         //If there is a cell in our way push it :3
@@ -83,7 +83,7 @@ public class Generator : TrackedCell
                 return;
         }
 
-        AudioManager.i.PlaySound(GameAssets.i.place);
+        AudioManager.instance.PlaySound(GameAssets.instance.place);
         Cell refrenceCell = CellFunctions.cellGrid[(int)this.position.x - offsetX, (int)this.position.y - offsetY];
         Cell newCell = GridManager.instance.SpawnCell(
             refrenceCell.cellType,

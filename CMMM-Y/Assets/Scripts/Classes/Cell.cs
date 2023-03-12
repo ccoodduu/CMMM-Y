@@ -19,7 +19,7 @@ public class Cell : MonoBehaviour
     LinkedListNode<Cell> cellListNode;
     LinkedListNode<Cell> generatedCellListNode;
 
-    //Suppresed cells should act like base cells for 1 generation.
+    //Suppressed cells should act like base cells for 1 generation.
     public bool suppresed = false;
     public bool deleted = false;
     public bool generated = false;

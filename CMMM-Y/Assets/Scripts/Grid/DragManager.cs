@@ -25,7 +25,7 @@ public class DragManager : MonoBehaviour
             return;
         }
 
-        AudioManager.i.PlaySound(GameAssets.i.place);
+        AudioManager.instance.PlaySound(GameAssets.instance.place);
         if (CellFunctions.cellGrid[(int)mousePos.x, (int)mousePos.y] == null)
         {
             selectedCell.SetPosition((int)mousePos.x, (int)mousePos.y);

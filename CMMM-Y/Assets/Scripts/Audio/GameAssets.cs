@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameAssets : MonoBehaviour
 {
-    public static GameAssets i;
+    public static GameAssets instance;
     static bool debounce;
 
 
@@ -16,7 +16,7 @@ public class GameAssets : MonoBehaviour
         }
         debounce = true;
         DontDestroyOnLoad(gameObject);
-        i = this;
+        instance = this;
     }
 
     public AudioClip place;

@@ -27,7 +27,7 @@ public class Enemy : Cell
             this.Delete(true);
         else this.Delete(false);
 
-        AudioManager.i.PlaySound(GameAssets.i.destroy);
+        AudioManager.instance.PlaySound(GameAssets.instance.destroy);
         Instantiate(deathParticals, this.gameObject.transform.position, Quaternion.identity);
 
         return (true, true);

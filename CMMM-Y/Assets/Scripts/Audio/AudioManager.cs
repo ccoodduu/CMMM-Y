@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager i;
+    public static AudioManager instance;
     public static bool playSounds = true;
     AudioSource source;
     static bool debounce;
@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
         debounce = true;
         DontDestroyOnLoad(gameObject);
 
-        i = this;
+        instance = this;
         source = GetComponent<AudioSource>();
     }
 

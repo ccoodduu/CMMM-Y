@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //input validation for level width and height settings
-//unity input field already has a setting to limit imputs to integers, but it also includes the '-' char
+//unity input field already has a setting to limit inputs to integers, but it also includes the '-' char
 
 public class NoNegativity : MonoBehaviour
 {

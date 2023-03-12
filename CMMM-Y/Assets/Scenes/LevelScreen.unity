@@ -2604,7 +2604,7 @@ GameObject:
   - component: {fileID: 726879532}
   - component: {fileID: 726879533}
   m_Layer: 5
-  m_Name: CW Rotater
+  m_Name: CWROTATOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3078,7 +3078,7 @@ GameObject:
   - component: {fileID: 809996766}
   - component: {fileID: 809996771}
   m_Layer: 5
-  m_Name: CCW Rotater
+  m_Name: CCWROTATOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

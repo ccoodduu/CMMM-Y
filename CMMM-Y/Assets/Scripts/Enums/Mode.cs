@@ -15,8 +15,8 @@ public static class Extensions
 		switch (cell)
 		{
 			case CellType_e.GENERATOR: return Tool_e.GENERATOR;
-			case CellType_e.CWROTATER: return Tool_e.CWROTATER;
-			case CellType_e.CCWROTATER: return Tool_e.CCWROTATER;
+			case CellType_e.CWROTATOR: return Tool_e.CWROTATOR;
+			case CellType_e.CCWROTATOR: return Tool_e.CCWROTATOR;
 			case CellType_e.MOVER: return Tool_e.MOVER;
 			case CellType_e.SLIDE: return Tool_e.SLIDE;
 			case CellType_e.BLOCK: return Tool_e.BLOCK;

@@ -122,7 +122,7 @@ public class PlacementManager : MonoBehaviour
 				else return;
 			}
 
-			AudioManager.i.PlaySound(GameAssets.i.place);
+			AudioManager.instance.PlaySound(GameAssets.instance.place);
 			Cell cell = GridManager.instance.SpawnCell((CellType_e)GridManager.tool, new Vector2(x, y), dir, false);
 			GridManager.hasSaved = false;
 		}
@@ -145,7 +145,7 @@ public class PlacementManager : MonoBehaviour
 
 			if (CellFunctions.cellGrid[x, y] != null)
 			{
-				AudioManager.i.PlaySound(GameAssets.i.destroy);
+				AudioManager.instance.PlaySound(GameAssets.instance.destroy);
 				CellFunctions.cellGrid[x, y].Delete(true);
 				GridManager.hasSaved = false;
 			}

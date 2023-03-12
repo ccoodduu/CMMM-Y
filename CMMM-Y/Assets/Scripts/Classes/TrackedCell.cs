@@ -31,7 +31,7 @@ public class TrackedCell : Cell
         CellFunctions.trackedCellPositionUpdateQueue[CellFunctions.GetSteppedCellId(cellType), (int)this.GetDirection()].AddLast(trackedCellNode);
     }
 
-    //Base.Step() should always be called first in derived classes to mantain suppressed functionality
+    //Base.Step() should always be called first in derived classes to maintain suppressed functionality
     public virtual void Step()
     {
     }
@@ -65,7 +65,7 @@ public class TrackedCell : Cell
     }
 
     /// <summary>
-    /// Might cause issues with rotation animation if used in active sim.
+    /// Might cause issues with rotation animation if used in active simulation.
     /// </summary>
     /// <param name="dir"></param>
 

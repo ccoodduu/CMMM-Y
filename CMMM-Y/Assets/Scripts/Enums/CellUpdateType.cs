@@ -3,7 +3,7 @@
 //TICKED
 //  Contains step function update order is random.
 //TRACKED
-//  Contains step function update order is by direction then distince from edge oppisite cells facing.
+//  Contains step function update order is by direction then distance from edge opposite cells facing.
 public enum CellUpdateType_e { 
     BASE, TICKED, TRACKED
 }

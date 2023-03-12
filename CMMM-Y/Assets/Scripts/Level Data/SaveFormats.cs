@@ -61,8 +61,8 @@ public class EmojiFormat : SaveFormat
 						case ":push:": cell = new SavedCell() { cellType = CellType_e.BLOCK, rotation = 0, position = position }; break;
 						case ":enemy:": cell = new SavedCell() { cellType = CellType_e.ENEMY, rotation = 0, position = position }; break;
 						case ":trash:": cell = new SavedCell() { cellType = CellType_e.TRASH, rotation = 0, position = position }; break;
-						case ":rotator_cw:": cell = new SavedCell() { cellType = CellType_e.CWROTATER, rotation = 0, position = position }; break;
-						case ":rotator_ccw:": cell = new SavedCell() { cellType = CellType_e.CCWROTATER, rotation = 0, position = position }; break;
+						case ":rotator_cw:": cell = new SavedCell() { cellType = CellType_e.CWROTATOR, rotation = 0, position = position }; break;
+						case ":rotator_ccw:": cell = new SavedCell() { cellType = CellType_e.CCWROTATOR, rotation = 0, position = position }; break;
 
 						default: throw new ArgumentException("Not a Cell Machine emoji");
 					}
@@ -95,10 +95,10 @@ public class EmojiFormat : SaveFormat
 						case CellType_e.GENERATOR:
 							output.Append(generatorEmojis[cell.rotation]);
 							break;
-						case CellType_e.CWROTATER:
+						case CellType_e.CWROTATOR:
 							output.Append(":rotator_cw:");
 							break;
-						case CellType_e.CCWROTATER:
+						case CellType_e.CCWROTATOR:
 							output.Append(":rotator_ccw:");
 							break;
 						case CellType_e.MOVER:
@@ -178,8 +178,8 @@ public class ReadableFormat : SaveFormat
 						case '+': cell = new SavedCell() { cellType = CellType_e.BLOCK, rotation = 0, position = position }; break;
 						case 'e': cell = new SavedCell() { cellType = CellType_e.ENEMY, rotation = 0, position = position }; break;
 						case 'x': cell = new SavedCell() { cellType = CellType_e.TRASH, rotation = 0, position = position }; break;
-						case 'r': cell = new SavedCell() { cellType = CellType_e.CWROTATER, rotation = 0, position = position }; break;
-						case 'l': cell = new SavedCell() { cellType = CellType_e.CCWROTATER, rotation = 0, position = position }; break;
+						case 'r': cell = new SavedCell() { cellType = CellType_e.CWROTATOR, rotation = 0, position = position }; break;
+						case 'l': cell = new SavedCell() { cellType = CellType_e.CCWROTATOR, rotation = 0, position = position }; break;
 
 						default: throw new ArgumentException("Not a valid char");
 					}
@@ -209,10 +209,10 @@ public class ReadableFormat : SaveFormat
 						case CellType_e.GENERATOR:
 							output.Append("1234"[cell.rotation]);
 							break;
-						case CellType_e.CWROTATER:
+						case CellType_e.CWROTATOR:
 							output.Append("r");
 							break;
-						case CellType_e.CCWROTATER:
+						case CellType_e.CCWROTATOR:
 							output.Append("l");
 							break;
 						case CellType_e.MOVER:

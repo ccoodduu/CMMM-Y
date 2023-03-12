@@ -158,11 +158,11 @@ public class SelectTool : MonoBehaviour
 		}
 	}
 
-	// functions that are ment to be called with hotkeys and buttons
+	// functions that are meant to be called with hotkeys and buttons
 
 	public void Delete()
 	{
-		AudioManager.i.PlaySound(GameAssets.i.destroy);
+		AudioManager.instance.PlaySound(GameAssets.instance.destroy);
 		DeleteSelected();
 		state = State_e.IDLE;
 	}
@@ -336,7 +336,7 @@ public class SelectTool : MonoBehaviour
 
 			if (ControlsManager.GetControl("PlaceCell").GetDown() && !EventSystem.current.IsPointerOverGameObject())
 			{
-				AudioManager.i.PlaySound(GameAssets.i.place);
+				AudioManager.instance.PlaySound(GameAssets.instance.place);
 				PasteClipboard();
 				state = State_e.IDLE;
 			}

@@ -10,12 +10,12 @@ public static class CellFunctions
     //HARD CODED VARIABLES
     //HARD CODED VARIABLES
     public static Direction_e[] directionUpdateOrder = { Direction_e.RIGHT, Direction_e.LEFT, Direction_e.UP, Direction_e.DOWN };
-    public static CellType_e[] cellUpdateOrder = { CellType_e.GENERATOR, CellType_e.CWROTATER, CellType_e.CCWROTATER, CellType_e.MOVER};
+    public static CellType_e[] cellUpdateOrder = { CellType_e.GENERATOR, CellType_e.CWROTATOR, CellType_e.CCWROTATOR, CellType_e.MOVER};
     public static Dictionary<CellType_e, CellUpdateType_e> cellUpdateTypeDictionary = new Dictionary<CellType_e, CellUpdateType_e>
     {
         [CellType_e.GENERATOR] = CellUpdateType_e.TRACKED,
-        [CellType_e.CWROTATER] = CellUpdateType_e.TICKED,
-        [CellType_e.CCWROTATER] = CellUpdateType_e.TICKED,
+        [CellType_e.CWROTATOR] = CellUpdateType_e.TICKED,
+        [CellType_e.CCWROTATOR] = CellUpdateType_e.TICKED,
         [CellType_e.MOVER] = CellUpdateType_e.TRACKED,
         [CellType_e.SLIDE] = CellUpdateType_e.BASE,
         [CellType_e.BLOCK] = CellUpdateType_e.BASE,
@@ -48,7 +48,7 @@ public static class CellFunctions
     public static LinkedList<Cell>[] tickedCellList;
     
     //Cells that need to be updated but in a specific order (Depending on direction).
-    //trackedCells[TrackedCell ID][Direction, Distince];
+    //trackedCells[TrackedCell ID][Direction, Distance];
     //public static LinkedList<Cell>[][,] trackedCells;
     // changed to [,][]
     // the jagged array is 2 dimensional

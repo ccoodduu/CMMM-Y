@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CCWRotater : TickedCell
+public class CCWRotator : TickedCell
 {
     protected int rotationAmount = -1;
 

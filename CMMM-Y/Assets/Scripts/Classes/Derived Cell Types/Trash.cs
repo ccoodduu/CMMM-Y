@@ -8,7 +8,7 @@ public class Trash : Cell
     {
         if (bias > 0)
         {
-            AudioManager.i.PlaySound(GameAssets.i.destroy);
+            AudioManager.instance.PlaySound(GameAssets.instance.destroy);
             return (true, true);
         }
         else return (false, false);

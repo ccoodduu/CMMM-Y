@@ -1,7 +1,7 @@
 ﻿public enum Tool_e {
     GENERATOR,
-    CWROTATER,
-    CCWROTATER,
+    CWROTATOR,
+    CCWROTATOR,
     MOVER,
     SLIDE,
     BLOCK,

@@ -21,7 +21,7 @@ public class MusicManager : MonoBehaviour
 		instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Init volumes
+        // Initialize volumes
         if (!PlayerPrefs.HasKey("Music Volume"))
         {
             PlayerPrefs.SetFloat("Music Volume", 1f);
