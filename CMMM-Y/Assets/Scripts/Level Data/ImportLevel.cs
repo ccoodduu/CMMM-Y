@@ -94,6 +94,8 @@ public class ImportLevel : MonoBehaviour
 
     public void PlayVault()
     {
+		/// TODO: Add popup to choose between importing for the first time vs continuing editing
+
 		GridManager.currentLevel = 999;
 		if (!SetLoadString()) return;
 

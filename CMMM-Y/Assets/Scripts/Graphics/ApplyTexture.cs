@@ -7,15 +7,18 @@ public class ApplyTexture : MonoBehaviour
 {
     void Start()
     {
-        if(GetComponent<SpriteRenderer>() != null)
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
         {
-            if (TextureLoader.textures.ContainsKey(GetComponent<SpriteRenderer>().sprite.name))
-            GetComponent<SpriteRenderer>().sprite = TextureLoader.textures[GetComponent<SpriteRenderer>().sprite.name];
+            if (TextureLoader.textures.ContainsKey(spriteRenderer.sprite.name))
+                spriteRenderer.sprite = TextureLoader.textures[spriteRenderer.sprite.name];
         }
-        if (GetComponent<Image>() != null)
+
+        var image = GetComponent<Image>();
+        if (image != null)
         {
-            if (TextureLoader.textures.ContainsKey(GetComponent<Image>().sprite.name))
-                GetComponent<Image>().sprite = TextureLoader.textures[GetComponent<Image>().sprite.name];
+            if (TextureLoader.textures.ContainsKey(image.sprite.name))
+                image.sprite = TextureLoader.textures[image.sprite.name];
         }
     }
 }
