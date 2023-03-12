@@ -5,21 +5,8 @@ using UnityEngine.UI;
 
 public class SubtickToggle : MonoBehaviour
 {
-    Toggle m_Toggle;
-
-    void Start()
+    public void ToggleValueChanged(bool isOn)
     {
-        m_Toggle = GetComponent<Toggle>();
-        m_Toggle.onValueChanged.AddListener(delegate {
-            ToggleValueChanged(m_Toggle);
-        });
-
-        m_Toggle.isOn = GridManager.subTick;
-    }
-
-    //Output the new state of the Toggle into Text
-    void ToggleValueChanged(Toggle change)
-    {
-        GridManager.subTick = m_Toggle.isOn;
+        GridManager.subTick = isOn;
     }
 }
