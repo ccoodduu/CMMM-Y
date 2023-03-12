@@ -1,5 +1,14 @@
+V 1.1.0:
+Added a Import Level scene.
+Added a Vault playmode. (Can't interact with cells on placeable tiles)
+Added a Delete All Data button.
+Added a Pick-Cell shortcut, like Minecraft middleclick.
+Camera speed is now related to your zoom.
+Fixed performance issues with the new control system.
+And other small changes.
+
 V 1.0.0:
-Added two new Save formats: Emoji and Readable
+Added two new Save formats: Emoji and Readable.
 Overhauled nearly all UI to make it more consistent and fit the theme.
 Added options for changing all controls in the game.
 More shortcuts: Play/Pause, Step, Reset, Save, Rotate 180
