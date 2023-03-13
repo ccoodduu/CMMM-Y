@@ -10,6 +10,15 @@ A QoL mod for Cell Machine Mystic Mod
 - [Get the latest version of the mod here.](https://ccoodduu.itch.io/cell-machine-mystic-mod-y)
 
 ## Changelog
+V 1.1.0:
+ - Added a Import Level scene.
+ - Added a Vault playmode. (Can't interact with cells on placeable tiles)
+ - Added a Delete All Data button.
+ - Added a Pick-Cell shortcut, like Minecraft middleclick.
+ - Camera speed is now related to your zoom.
+ - Fixed performance issues with the new control system.
+ - And other small changes.
+
 V 1.0.0:
  - Added two new Save formats: Emoji and Readable
  - Overhauled nearly all UI to make it more consistent and fit the theme.
