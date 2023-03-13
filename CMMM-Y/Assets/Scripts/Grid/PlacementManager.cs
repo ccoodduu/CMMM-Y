@@ -76,6 +76,7 @@ public class PlacementManager : MonoBehaviour
 		int x = Mathf.FloorToInt(worldPoint.x + .5f);
 		int y = Mathf.FloorToInt(worldPoint.y + .5f);
 
+		/// TODO: Don't activate multiple times on same tile
 		if (ControlsManager.GetControl("PlaceCell").Get())
 		{
 
@@ -113,9 +114,12 @@ public class PlacementManager : MonoBehaviour
 				return;
 			}
 
+			ActionManager.DoAction(new PlaceCell(new Vector2Int(x,y), (CellType_e)GridManager.tool, dir));
+			return;
+
 			if (CellFunctions.cellGrid[x, y] != null)
 			{
-				if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].GetDirection() != (Direction_e)dir)
+				if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].GetDirection() != dir)
 				{
 					CellFunctions.cellGrid[x, y].Delete(true);
 				}
