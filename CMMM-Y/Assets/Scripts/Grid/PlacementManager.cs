@@ -114,7 +114,7 @@ public class PlacementManager : MonoBehaviour
 				return;
 			}
 
-			ActionManager.DoAction(new PlaceCell(new Vector2Int(x,y), (CellType_e)GridManager.tool, dir));
+			ActionManager.instance.DoAction(new PlaceCell(new Vector2Int(x,y), (CellType_e)GridManager.tool, dir));
 			return;
 
 			if (CellFunctions.cellGrid[x, y] != null)
@@ -131,8 +131,11 @@ public class PlacementManager : MonoBehaviour
 			GridManager.hasSaved = false;
 		}
 
-		if (ControlsManager.GetControl("DeleteCell").Get() && GridManager.tool != Tool_e.SELECT)
+		if (ControlsManager.GetControl("DeleteCell").Get())
 		{
+			if (GridManager.tool == Tool_e.SELECT)
+				return;
+
 			if (!GridManager.clean)
 				return;
 

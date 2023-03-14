@@ -5,9 +5,9 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlaceCell : Action
 {
-	private Vector2Int position;
-	private CellType_e cellType;
-	private Direction_e rotation;
+	private readonly Vector2Int position;
+	private readonly CellType_e cellType;
+	private readonly Direction_e rotation;
 
 	private SavedCell? previousCell = null;
 
@@ -24,16 +24,12 @@ public class PlaceCell : Action
 
 		if (currentCell != null)
 		{
-			if (currentCell.cellType != cellType || currentCell.GetDirection() != rotation)
+			previousCell = new SavedCell()
 			{
-				previousCell = new SavedCell() { 
-					cellType = currentCell.cellType,
-					position = new Vector2Int((int)currentCell.position.x, (int)currentCell.position.y),
-					rotation = currentCell.rotation,
-				};
-				currentCell.Delete(true);
-			}
-			else return;
+				cellType = currentCell.cellType,
+				position = new Vector2Int((int)currentCell.position.x, (int)currentCell.position.y),
+				rotation = currentCell.rotation,
+			};
 		}
 
 		GridManager.instance.SpawnCell(cellType, new Vector2(position.x, position.y), rotation, false);

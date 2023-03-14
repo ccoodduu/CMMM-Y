@@ -110,6 +110,8 @@ public static class ControlsManager
 		{ "Step", new ControlSetting(new KeyCode[]{ KeyCode.F7 }, false)},
 		{ "Save", new ControlSetting(new KeyCode[]{ KeyCode.F2 }, false)},
 		{ "SaveSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 }, false)},
+		{ "Undo", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Z }, false)},
+		{ "Redo", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Y }, false)},
 	};
 
 	public static void SetControl(string controlName, Control control)
