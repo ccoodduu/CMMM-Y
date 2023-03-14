@@ -26,24 +26,12 @@ public class DragManager : MonoBehaviour
         }
 
         AudioManager.instance.PlaySound(GameAssets.instance.place);
-        if (CellFunctions.cellGrid[(int)mousePos.x, (int)mousePos.y] == null)
-        {
-            selectedCell.SetPosition((int)mousePos.x, (int)mousePos.y);
-            inDrag = false;
-            selectedCell.animate = true;
-            selectedCell.spawnPosition = selectedCell.position;
-        }
-        else {
-            Cell cell = CellFunctions.cellGrid[(int)mousePos.x, (int)mousePos.y];
-            CellFunctions.cellGrid[(int)mousePos.x, (int)mousePos.y].SetPosition(selectedCell.position);
-            selectedCell.position = new Vector2((int)mousePos.x, (int)mousePos.y);
-            selectedCell.SetPosition((int)mousePos.x, (int)mousePos.y);
-            selectedCell.animate = true;
-            inDrag = false;
-            cell.spawnPosition = cell.position;
-            selectedCell.spawnPosition = selectedCell.position;
-        }
-        GridManager.hasSaved = false;
+
+        ActionManager.instance.DoAction(new DragCell(new Vector2Int((int)selectedCell.position.x, (int)selectedCell.position.y), new Vector2Int((int)mousePos.x, (int)mousePos.y)));
+
+		selectedCell.animate = true;
+		inDrag = false;
+		GridManager.hasSaved = false;
     }
 
     public void CancelDrag() {

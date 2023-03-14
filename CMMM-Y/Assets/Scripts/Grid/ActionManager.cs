@@ -9,7 +9,18 @@ public class ActionManager : MonoBehaviour
 	public static ActionManager instance;
 
 	private readonly List<Action> actions = new List<Action>();
-	private int currentActionIndex = -1;
+
+	private int cai;
+	private int CurrentActionIndex
+	{
+		get => cai;
+		set
+		{
+			if (value <= -1) cai = -1;
+			else if (value >= actions.Count) cai = actions.Count - 1;
+			else cai = value;
+		}
+	}
 
 	private void Start()
 	{
@@ -26,30 +37,32 @@ public class ActionManager : MonoBehaviour
 	{
 		action.Execute();
 
-		if (actions.Count > 0) actions.RemoveRange(currentActionIndex + 1, actions.Count - (currentActionIndex + 1));
+		if (actions.Count > 0) actions.RemoveRange(CurrentActionIndex + 1, actions.Count - CurrentActionIndex - 1);
 
 		actions.Add(action);
-		currentActionIndex++;
+		CurrentActionIndex++;
 
 		GridManager.hasSaved = false;
 	}
 
 	public void Undo()
 	{
-		if (currentActionIndex <= -1) return;
+		if (actions.Count == 0) return;
+		if (CurrentActionIndex == -1) return;
 
-		actions[currentActionIndex].Undo();
-		currentActionIndex--;
+		actions[CurrentActionIndex].Undo();
+		CurrentActionIndex--;
 
 		GridManager.hasSaved = false;
 	}
 
 	public void Redo()
 	{
-		if (currentActionIndex >= actions.Count) return;
+		if (actions.Count == 0) return;
+		if (CurrentActionIndex == actions.Count - 1) return;
 
-		currentActionIndex++;
-		actions[currentActionIndex].Execute();
+		CurrentActionIndex++;
+		actions[CurrentActionIndex].Execute();
 
 		GridManager.hasSaved = false;
 	}
