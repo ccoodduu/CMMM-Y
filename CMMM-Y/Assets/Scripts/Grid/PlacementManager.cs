@@ -19,7 +19,7 @@ public class PlacementManager : MonoBehaviour
 
 	public Transform[] buttons;
 
-	private List<Vector2Int> justPlacedAt = new List<Vector2Int>();
+	private readonly List<Vector2Int> justPlacedAt = new List<Vector2Int>();
 
 	private void Awake()
 	{
@@ -121,21 +121,9 @@ public class PlacementManager : MonoBehaviour
 
 			justPlacedAt.Add(position);
 
-			ActionManager.instance.DoAction(new PlaceCell(position, (CellType_e)GridManager.tool, dir));
-			return;
-
-			if (CellFunctions.cellGrid[x, y] != null)
-			{
-				if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].GetDirection() != dir)
-				{
-					CellFunctions.cellGrid[x, y].Delete(true);
-				}
-				else return;
-			}
-
 			AudioManager.instance.PlaySound(GameAssets.instance.place);
-			Cell cell = GridManager.instance.SpawnCell((CellType_e)GridManager.tool, new Vector2(x, y), dir, false);
-			GridManager.hasSaved = false;
+
+			ActionManager.instance.DoAction(new PlaceCell(position, (CellType_e)GridManager.tool, dir));
 		}
 		else if (ControlsManager.GetControl("DeleteCell").Get())
 		{
@@ -159,14 +147,14 @@ public class PlacementManager : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				return;
 
-			if (CellFunctions.cellGrid[x, y] != null)
-			{
-				justPlacedAt.Add(position);
+			if (CellFunctions.cellGrid[x, y] == null)
+				return;
 
-				AudioManager.instance.PlaySound(GameAssets.instance.destroy);
-				CellFunctions.cellGrid[x, y].Delete(true);
-				GridManager.hasSaved = false;
-			}
+			justPlacedAt.Add(position);
+
+			AudioManager.instance.PlaySound(GameAssets.instance.destroy);
+
+			ActionManager.instance.DoAction(new DeleteCell(position));
 		}
 
 		if (ControlsManager.GetControl("PickCell").GetDown())

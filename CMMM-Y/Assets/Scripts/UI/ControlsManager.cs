@@ -22,7 +22,7 @@ public static class ControlsManager
 {
 	public static string playerPrefsControls = "Controls";
 
-	private static Dictionary<string, Control> cache = new Dictionary<string, Control>();
+	private static readonly Dictionary<string, Control> cache = new Dictionary<string, Control>();
 
 	private static void RegenerateCache()
 	{

@@ -36,7 +36,7 @@ public class ActionManager : MonoBehaviour
 
 	public void Undo()
 	{
-		if (currentActionIndex == -1) return;
+		if (currentActionIndex <= -1) return;
 
 		actions[currentActionIndex].Undo();
 		currentActionIndex--;
