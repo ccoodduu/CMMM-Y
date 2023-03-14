@@ -19,6 +19,8 @@ public class PlacementManager : MonoBehaviour
 
 	public Transform[] buttons;
 
+	private List<Vector2Int> justPlacedAt = new List<Vector2Int>();
+
 	private void Awake()
 	{
 		instance = this;
@@ -76,9 +78,12 @@ public class PlacementManager : MonoBehaviour
 		int x = Mathf.FloorToInt(worldPoint.x + .5f);
 		int y = Mathf.FloorToInt(worldPoint.y + .5f);
 
-		/// TODO: Don't activate multiple times on same tile
+		var position = new Vector2Int(x, y);
+
 		if (ControlsManager.GetControl("PlaceCell").Get())
 		{
+			if (justPlacedAt.Contains(position))
+				return;
 
 			if (!GridManager.clean)
 				return;
@@ -114,7 +119,9 @@ public class PlacementManager : MonoBehaviour
 				return;
 			}
 
-			ActionManager.instance.DoAction(new PlaceCell(new Vector2Int(x,y), (CellType_e)GridManager.tool, dir));
+			justPlacedAt.Add(position);
+
+			ActionManager.instance.DoAction(new PlaceCell(position, (CellType_e)GridManager.tool, dir));
 			return;
 
 			if (CellFunctions.cellGrid[x, y] != null)
@@ -130,9 +137,11 @@ public class PlacementManager : MonoBehaviour
 			Cell cell = GridManager.instance.SpawnCell((CellType_e)GridManager.tool, new Vector2(x, y), dir, false);
 			GridManager.hasSaved = false;
 		}
-
-		if (ControlsManager.GetControl("DeleteCell").Get())
+		else if (ControlsManager.GetControl("DeleteCell").Get())
 		{
+			if (justPlacedAt.Contains(position))
+				return;
+
 			if (GridManager.tool == Tool_e.SELECT)
 				return;
 
@@ -152,6 +161,8 @@ public class PlacementManager : MonoBehaviour
 
 			if (CellFunctions.cellGrid[x, y] != null)
 			{
+				justPlacedAt.Add(position);
+
 				AudioManager.instance.PlaySound(GameAssets.instance.destroy);
 				CellFunctions.cellGrid[x, y].Delete(true);
 				GridManager.hasSaved = false;
@@ -193,6 +204,11 @@ public class PlacementManager : MonoBehaviour
 		if (ControlsManager.GetControl("PlaceCell").GetUp())
 		{
 			backgroundTileDebounce = false;
+		}
+
+		if (ControlsManager.GetControl("PlaceCell").GetUp() || ControlsManager.GetControl("DeleteCell").GetUp())
+		{
+			justPlacedAt.Clear();
 		}
 	}
 }
