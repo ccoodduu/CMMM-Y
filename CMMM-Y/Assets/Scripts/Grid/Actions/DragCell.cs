@@ -37,6 +37,22 @@ public class DragCell : Action
 
 	public override void Undo()
 	{
-		/// TODO: Implement this :)
+		var selectedCell = CellFunctions.cellGrid[to.x, to.y];
+		var cellAtPosition = CellFunctions.cellGrid[from.x, from.y];
+
+		if (cellAtPosition == null)
+		{
+			selectedCell.SetPosition(from);
+			selectedCell.spawnPosition = selectedCell.position;
+		}
+		else
+		{
+			cellAtPosition.SetPosition(to);
+			selectedCell.position = from; // Set position already so SetPosition() doesn't overwrite the other cell
+			selectedCell.SetPosition(from);
+
+			cellAtPosition.spawnPosition = cellAtPosition.position;
+			selectedCell.spawnPosition = selectedCell.position;
+		}
 	}
 }
