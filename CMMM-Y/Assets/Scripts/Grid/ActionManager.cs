@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActionManager : MonoBehaviour
 {
@@ -24,11 +25,19 @@ public class ActionManager : MonoBehaviour
 
 	private void Start()
 	{
+		if (instance != null)
+		{
+			Destroy(this.gameObject);
+			return;
+		}
+		DontDestroyOnLoad(this);
 		instance = this;
 	}
 
 	private void Update()
 	{
+		if (SceneManager.GetActiveScene().name != "LevelScreen") Destroy(this.gameObject);
+
 		if (ControlsManager.GetControl("Undo").GetDown()) Undo();
 		if (ControlsManager.GetControl("Redo").GetDown()) Redo();
 	}

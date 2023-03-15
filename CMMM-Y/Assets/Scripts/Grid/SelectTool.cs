@@ -186,7 +186,11 @@ public class SelectTool : MonoBehaviour
 	public void Crop()
 	{
 		if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
-		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)); ;
+
+		ActionManager.instance.DoAction(new CropLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)));
+
+		return;
+		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
 		GridManager.loadString = new V3Format().Encode(level);
 		GridManager.instance.Reload();
 	}
