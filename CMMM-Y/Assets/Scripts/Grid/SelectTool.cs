@@ -68,7 +68,7 @@ public class SelectTool : MonoBehaviour
 		{
 			for (int y = min.y; y <= max.y; y++)
 			{
-				var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x,y, 0)) == GridManager.instance.placebleTile;
+				var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x, y, 0)) == GridManager.instance.placebleTile;
 
 				if (CellFunctions.cellGrid[x, y] != null && !(GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable))
 				{
@@ -84,6 +84,8 @@ public class SelectTool : MonoBehaviour
 	void DeleteSelected()
 	{
 		// careful, even if the cells aren't on the cell grid, it will set elements of cellGrid to null
+		var cells = new List<SavedCell>();
+
 		foreach (Cell cell in selectedCells)
 		{
 			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)cell.position.x, (int)cell.position.y, 0)) == GridManager.instance.placebleTile;
@@ -91,8 +93,18 @@ public class SelectTool : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				continue;
 
-			cell.Delete(true);
+			cells.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = new Vector2Int((int)cell.position.x, (int)cell.position.y),
+				cellType = cell.cellType
+			});
 		}
+
+		ActionManager.instance.DoAction(new DeleteSelection(cells.ToArray()));
+
+		//AudioManager.instance.PlaySound(GameAssets.instance.destroy);
+
 		selectedCells = new List<Cell>();
 	}
 
