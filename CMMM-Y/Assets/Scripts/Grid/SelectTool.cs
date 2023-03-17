@@ -103,7 +103,7 @@ public class SelectTool : MonoBehaviour
 
 		ActionManager.instance.DoAction(new DeleteSelection(cells.ToArray()));
 
-		//AudioManager.instance.PlaySound(GameAssets.instance.destroy);
+		AudioManager.instance.PlaySound(GameAssets.instance.destroy);
 
 		selectedCells = new List<Cell>();
 	}
@@ -128,6 +128,8 @@ public class SelectTool : MonoBehaviour
 
 	void PasteClipboard()
 	{
+		var cells = new List<SavedCell>();
+
 		foreach (Cell cell in clipboardCells)
 		{
 			if (cell.position.x >= CellFunctions.gridWidth || cell.position.x < 0)
@@ -140,9 +142,17 @@ public class SelectTool : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				continue;
 
-			GridManager.instance.SpawnCell(cell.cellType, cell.position, (Direction_e)cell.rotation, false);
+			cells.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = new Vector2Int((int)cell.position.x, (int)cell.position.y),
+				cellType = cell.cellType
+			});
 		}
-		GridManager.hasSaved = false;
+
+		ActionManager.instance.DoAction(new PlaceSelection(cells.ToArray()));
+
+		AudioManager.instance.PlaySound(GameAssets.instance.place);
 	}
 
 	void Stack(Vector2Int offset, bool cut)
@@ -200,11 +210,6 @@ public class SelectTool : MonoBehaviour
 		if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
 
 		ActionManager.instance.DoAction(new CropLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)));
-
-		return;
-		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y));
-		GridManager.loadString = new V3Format().Encode(level);
-		GridManager.instance.Reload();
 	}
 
 	void Update()
