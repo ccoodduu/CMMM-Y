@@ -63,6 +63,8 @@ public class ActionManager : MonoBehaviour
 		CurrentActionIndex--;
 
 		GridManager.hasSaved = false;
+
+		SelectTool.instance.state = SelectTool.State_e.IDLE; 
 	}
 
 	public void Redo()
@@ -74,5 +76,7 @@ public class ActionManager : MonoBehaviour
 		actions[CurrentActionIndex].Execute();
 
 		GridManager.hasSaved = false;
+
+		SelectTool.instance.state = SelectTool.State_e.IDLE;
 	}
 }

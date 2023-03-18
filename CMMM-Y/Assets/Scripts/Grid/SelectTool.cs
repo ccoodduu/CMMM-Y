@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SelectTool : MonoBehaviour
 {
+	public static SelectTool instance;
 	public enum State_e
 	{
 		IDLE,
@@ -42,6 +43,8 @@ public class SelectTool : MonoBehaviour
 		clipboardCells = new List<Cell>();
 		previewCells = new List<Cell>();
 		state = State_e.IDLE;
+
+		instance = this;
 	}
 
 
@@ -155,13 +158,39 @@ public class SelectTool : MonoBehaviour
 		AudioManager.instance.PlaySound(GameAssets.instance.place);
 	}
 
-	void Stack(Vector2Int offset, bool cut)
+	void MoveSelection(Vector2Int offset, bool stack)
 	{
-		CopySelected(offset);
-		if (cut)
-			DeleteSelected();
-		PasteClipboard();
-		Select(min + offset, max + offset);
+		var cellsToMove = new List<SavedCell>();
+
+		var newMin = min + offset;
+		var newMax = max + offset;
+
+		if (newMax.x >= CellFunctions.gridWidth || newMin.x < 0) return;
+		if (newMax.y >= CellFunctions.gridHeight || newMin.y < 0) return;
+
+		foreach (var cell in selectedCells)
+		{
+			var position = new Vector2Int((int)cell.position.x, (int)cell.position.y);
+			var newPosition = position + offset;
+
+			if (newPosition.x >= CellFunctions.gridWidth || newPosition.x < 0) return;
+			if (newPosition.y >= CellFunctions.gridHeight || newPosition.y < 0) return;
+
+			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(newPosition.x, newPosition.y, 0)) == GridManager.instance.placebleTile;
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable) return;
+
+			cellsToMove.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = position,
+				cellType = cell.cellType
+			});
+		}
+
+		ActionManager.instance.DoAction(new MoveSelection(offset, cellsToMove.ToArray(), stack));
+
+		Select(newMin, newMax);
 		CopySelected(MousePos() - (min + max) / 2);
 		copyOffset = MousePos();
 	}
@@ -279,7 +308,7 @@ public class SelectTool : MonoBehaviour
 			}
 			else
 			{
-				//area has been 
+				//area has been selected
 				var doStackSelection = ControlsManager.GetControl("StackSelection").Get();
 
 				if (PlayerPrefs.GetInt("Selection Toolbox", 1) != 0)
@@ -312,29 +341,25 @@ public class SelectTool : MonoBehaviour
 				else if (ControlsManager.GetControl("SelectionUp").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(0, doStackSelection ? (max.y + 1) - min.y : 1);
-					if (max.y + offset.y < CellFunctions.gridHeight)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionDown").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(0, doStackSelection ? min.y - (max.y + 1) : -1);
-					if (min.y + offset.y >= 0)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionRight").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(doStackSelection ? (max.x + 1) - min.x : 1, 0);
-					if (max.x + offset.x < CellFunctions.gridHeight)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionLeft").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(doStackSelection ? min.x - (max.x + 1) : -1, 0);
-					if (min.x + offset.x >= 0)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 			}
 
