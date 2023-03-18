@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5313,7 +5313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1904.4237}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &681885920
@@ -19040,16 +19040,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2726065520012870594, guid: 1afbdae5a73f8e84b87f28a70339d794,
-        type: 3}
-      propertyPath: m_Size
-      value: 0.26872185
-      objectReference: {fileID: 0}
-    - target: {fileID: 2726065520012870594, guid: 1afbdae5a73f8e84b87f28a70339d794,
-        type: 3}
-      propertyPath: m_Value
-      value: 0.31000006
       objectReference: {fileID: 0}
     - target: {fileID: 2726065520605141808, guid: 1afbdae5a73f8e84b87f28a70339d794,
         type: 3}
