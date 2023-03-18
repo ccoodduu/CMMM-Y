@@ -48,20 +48,27 @@ public class SelectTool : MonoBehaviour
 	}
 
 
-	Vector2Int MousePos()
+	private Vector2Int MousePos()
 	{
 		Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 		return Vector2Int.RoundToInt((Vector2)worldPoint);
 	}
 
-	Vector2Int ClampedMousePos()
+	private Vector2Int ClampedMousePos()
 	{
 		Vector2Int pos = MousePos();
 		pos.Clamp(Vector2Int.zero, new Vector2Int(CellFunctions.gridWidth - 1, CellFunctions.gridHeight - 1));
 		return pos;
 	}
+	private void SetToolboxPos()
+	{
+		if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 1)
+			toolboxPos = (Vector3)((Vector2)min - new Vector2(0.5f, 0.5f));
+		else if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 2)
+			toolboxPos = (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+	}
 
-	void Select(Vector2Int cornerA, Vector2Int cornerB)
+	public void Select(Vector2Int cornerA, Vector2Int cornerB)
 	{
 		min = Vector2Int.Min(cornerA, cornerB);
 		max = Vector2Int.Max(cornerA, cornerB);
@@ -84,7 +91,7 @@ public class SelectTool : MonoBehaviour
 		sprRend.size = (Vector2)(Vector2Int.one + max - min);
 	}
 
-	void DeleteSelected()
+	private void DeleteSelected()
 	{
 		// careful, even if the cells aren't on the cell grid, it will set elements of cellGrid to null
 		var cells = new List<SavedCell>();
@@ -111,7 +118,7 @@ public class SelectTool : MonoBehaviour
 		selectedCells = new List<Cell>();
 	}
 
-	void CopySelected(Vector2Int reference)
+	private void CopySelected(Vector2Int reference)
 	{
 		foreach (Cell cell in clipboardCells)
 		{
@@ -129,7 +136,7 @@ public class SelectTool : MonoBehaviour
 		}
 	}
 
-	void PasteClipboard()
+	private void PasteClipboard()
 	{
 		var cells = new List<SavedCell>();
 
@@ -158,7 +165,7 @@ public class SelectTool : MonoBehaviour
 		AudioManager.instance.PlaySound(GameAssets.instance.place);
 	}
 
-	void MoveSelection(Vector2Int offset, bool stack)
+	private void MoveSelection(Vector2Int offset, bool stack)
 	{
 		var cellsToMove = new List<SavedCell>();
 
@@ -195,7 +202,7 @@ public class SelectTool : MonoBehaviour
 		copyOffset = MousePos();
 	}
 
-	void RotateClipboard(Vector2Int pivot, bool counterClockwise)
+	private void RotateClipboard(Vector2Int pivot, bool counterClockwise)
 	{
 		int rotDir = counterClockwise ? 1 : -1;
 		foreach (Cell cell in clipboardCells)
@@ -244,7 +251,7 @@ public class SelectTool : MonoBehaviour
 	void Update()
 	{
 		// if you select an area or if you use the paste hotkey
-		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown())
+		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown() || ControlsManager.GetControl("SelectAll").GetDown())
 			if (GridManager.mode.IsEditor())
 				selectButton.GetComponent<EditorButtons>().SwitchTool();
 
@@ -287,6 +294,15 @@ public class SelectTool : MonoBehaviour
 				cell.GetComponent<SpriteRenderer>().material = basicMat;
 		}
 
+		if (ControlsManager.GetControl("SelectAll").GetDown())
+		{
+			state = State_e.SELECT;
+			sprRend.enabled = true;
+			toolbox.SetActive(false);
+			Select(Vector2Int.zero, new Vector2Int(CellFunctions.gridWidth - 1, CellFunctions.gridHeight - 1));
+			SetToolboxPos();
+		}
+
 		if (state == State_e.SELECT)
 		{
 			if (ControlsManager.GetControl("Select").Get())
@@ -300,10 +316,7 @@ public class SelectTool : MonoBehaviour
 					}
 					toolbox.SetActive(false);
 					Select(initialPos, ClampedMousePos());
-					if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 1)
-						toolboxPos = (Vector3)((Vector2)min - new Vector2(0.5f, 0.5f));
-					else if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 2)
-						toolboxPos = (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+					SetToolboxPos();
 				}
 			}
 			else

@@ -80,6 +80,7 @@ public static class ControlsManager
 		{ "Cut", new ControlSetting(new KeyCode[]{ KeyCode.X}, false)},
 		{ "Delete", new ControlSetting(new KeyCode[]{ KeyCode.Delete}, false)},
 		{ "Crop", new ControlSetting(new KeyCode[]{ KeyCode.B}, false)},
+		{ "SelectAll", new ControlSetting(new KeyCode[] { KeyCode.LeftControl, KeyCode.A}, false)},
 		{ "StackSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl}, false)},
 		{ "SelectionUp", new ControlSetting(new KeyCode[]{ KeyCode.UpArrow}, false)},
 		{ "SelectionDown", new ControlSetting(new KeyCode[]{ KeyCode.DownArrow}, false)},
