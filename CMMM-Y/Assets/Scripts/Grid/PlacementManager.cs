@@ -14,7 +14,7 @@ public class PlacementManager : MonoBehaviour
 	float animationTime = 0;
 	readonly float animationDuration = .1f;
 
-	bool backgroundTileToggle = false;
+	bool placePlaceable = false;
 	bool backgroundTileDebounce = false;
 
 	public Transform[] buttons;
@@ -111,11 +111,11 @@ public class PlacementManager : MonoBehaviour
 				if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
 
 				if (!backgroundTileDebounce)
-					backgroundTileToggle = isPlaceable;
+					placePlaceable = !isPlaceable;
 				backgroundTileDebounce = true;
-				GridManager.instance.tilemap.SetTile(new Vector3Int(x, y, 0),
-					backgroundTileToggle ? GridManager.instance.backgroundTile : GridManager.instance.placebleTile
-					);
+
+				if (placePlaceable != isPlaceable) ActionManager.instance.DoAction(new PlacePlaceable(position, placePlaceable));
+
 				return;
 			}
 
