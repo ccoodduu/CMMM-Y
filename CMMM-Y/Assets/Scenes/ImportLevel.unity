@@ -788,6 +788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 1500377823}
+  closeOnKey: 0
+  openOnKey: 0
 --- !u!1001 &934267109
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2363,6 +2365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 1500377823}
+  closeOnKey: 27
+  openOnKey: 0
 --- !u!114 &1764960743 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,

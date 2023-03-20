@@ -1666,8 +1666,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 1311121541}
-  closeOnKey: 0
-  openOnKey: 0
+  closeOnKey: 27
+  openOnKey: 27
 --- !u!1 &305722281
 GameObject:
   m_ObjectHideFlags: 0

@@ -5764,6 +5764,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 1449456793}
+  closeOnKey: 27
+  openOnKey: 0
 --- !u!1001 &802016903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11009,6 +11011,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   window: {fileID: 1449456793}
+  closeOnKey: 0
+  openOnKey: 0
 --- !u!114 &1210750692
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class MenuWindowButton : MonoBehaviour
 	private void Update()
 	{
 		if (!window.active && Input.GetKeyDown(openOnKey)) Open();
-		if (window.active && Input.GetKeyDown(closeOnKey)) Close();
+		else if (window.active && Input.GetKeyDown(closeOnKey)) Close();
 	}
 	public void Open()
     {
