@@ -20,7 +20,7 @@ public class ControlSetting
 
 public static class ControlsManager
 {
-	public static string playerPrefsControls = "Controls";
+	public static readonly string playerPrefsControls = "Controls";
 
 	private static readonly Dictionary<string, Control> cache = new Dictionary<string, Control>();
 
@@ -61,6 +61,8 @@ public static class ControlsManager
 
 		return name;
 	}
+
+	public static bool disableInputs;
 
 	public static readonly Dictionary<string, ControlSetting> allControls = new Dictionary<string, ControlSetting>()
 	{
@@ -296,6 +298,8 @@ public class Control
 
 	public bool Get(bool checkForOverlap)
 	{
+		if (ControlsManager.disableInputs) return false;
+
 		if (checkForOverlap && Overlaps()) return false;
 
 		foreach (KeyCode keyCode in Keycodes)
@@ -307,6 +311,8 @@ public class Control
 
 	public bool GetDown()
 	{
+		if (ControlsManager.disableInputs) return false;
+
 		if (Overlaps()) return false;
 
 		foreach (KeyCode keyCode in Keycodes)
@@ -322,6 +328,8 @@ public class Control
 
 	public bool GetUp()
 	{
+		if (ControlsManager.disableInputs) return false; 
+
 		if (Overlaps()) return false;
 
 		bool isReleased = false;
