@@ -245,7 +245,7 @@ public class SelectTool : MonoBehaviour
 	{
 		if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
 
-		ActionManager.instance.DoAction(new CropLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)));
+		ActionManager.instance.DoAction((Action)new ResizeLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)));
 	}
 
 	void Update()

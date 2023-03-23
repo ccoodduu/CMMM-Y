@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CropLevel : Action
+public class ResizeLevel : Action
 {
 	private Level levelBefore;
 	private Level levelAfter;
 
-	public CropLevel(Vector2Int topLeft, Vector2Int bottomRight)
+	public ResizeLevel(Vector2Int topLeft, Vector2Int bottomRight)
 	{
 		levelBefore = Level.FromCurrent();
-		levelAfter = levelBefore.Crop(topLeft, bottomRight);
+		levelAfter = levelBefore.Resize(topLeft, bottomRight);
 	}
 
 	public override void Execute()

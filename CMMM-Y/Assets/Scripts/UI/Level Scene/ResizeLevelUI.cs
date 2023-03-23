@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ResizeLevel : MonoBehaviour
+public class ResizeLevelUI : MonoBehaviour
 {
 	public TMP_InputField upInput;
 	public TMP_InputField downInput;
@@ -38,7 +38,7 @@ public class ResizeLevel : MonoBehaviour
 		var topLeft = new Vector2Int(-left, CellFunctions.gridHeight + up - 1);
 		var bottomRight = new Vector2Int(CellFunctions.gridWidth + right - 1, -down);
 
-		ActionManager.instance.DoAction(new CropLevel(topLeft, bottomRight));
+		ActionManager.instance.DoAction((Action)new ResizeLevel(topLeft, bottomRight));
 	}
 
 	private Vector2Int GetNewSize()
