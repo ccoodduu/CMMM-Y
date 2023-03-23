@@ -68,7 +68,7 @@ public class Level
 			var oldX = x + topLeft.x;
 			var oldY = y + bottomRight.y;
 
-			placeable[i] = Placeable[oldX + oldY * Size.x];
+			placeable[i] = (oldX < 0 || oldY < 0 || oldX >= Size.x || oldY >= Size.y) ? false : Placeable[oldX + oldY * Size.x];
 		}
 
 		foreach (var cell in Cells)
