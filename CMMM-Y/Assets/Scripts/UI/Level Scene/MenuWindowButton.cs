@@ -11,8 +11,8 @@ public class MenuWindowButton : MonoBehaviour
 
 	private void Update()
 	{
-		if (!window.active && Input.GetKeyDown(openOnKey)) Open();
-		else if (window.active && Input.GetKeyDown(closeOnKey)) Close();
+		if (!window.activeSelf && Input.GetKeyDown(openOnKey)) Open();
+		else if (window.activeSelf && Input.GetKeyDown(closeOnKey)) Close();
 	}
 	public void Open()
     {

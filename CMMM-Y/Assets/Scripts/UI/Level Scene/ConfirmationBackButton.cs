@@ -9,7 +9,7 @@ public class ConfirmationBackButton : MonoBehaviour
 
 	private void Update()
 	{
-			if (confirmation.active && Input.GetKeyDown(KeyCode.Escape)) Clicked();
+			if (confirmation.activeSelf && Input.GetKeyDown(KeyCode.Escape)) Clicked();
 	}
 
 	public void Clicked() {

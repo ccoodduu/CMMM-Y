@@ -19,6 +19,6 @@ public class ResizeLevelWindowButton : MonoBehaviour
 	{
 		if (!GridManager.clean) return;
 		
-		window.SetActive(window.active);
+		window.SetActive(true);
 	}
 }
