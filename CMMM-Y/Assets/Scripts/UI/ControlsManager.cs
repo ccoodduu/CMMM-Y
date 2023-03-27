@@ -62,7 +62,7 @@ public static class ControlsManager
 		return name;
 	}
 
-	public static bool disableInputs;
+	public static bool disableInputs = false;
 
 	public static readonly Dictionary<string, ControlSetting> allControls = new Dictionary<string, ControlSetting>()
 	{

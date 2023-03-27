@@ -31,14 +31,15 @@ public class PopupWindow : MonoBehaviour
 	public void Open()
 	{
 		if (IsOpen) return;
-		if (disableInPlaymode) return;
+		if (disableInPlaymode && !GridManager.clean) return;
+
 		foreach (var popupWindow in disableOnPopups)
 		{
 			if (popupWindow.IsOpen) return;
 		}
 
 		if (disableInputs) ControlsManager.disableInputs = true;
-		if (pauseSimulation) GameObject.FindWithTag("PlayButton").GetComponent<PlayButton>().Play(false);
+		if (pauseSimulation && !GridManager.clean) GameObject.FindWithTag("PlayButton").GetComponent<PlayButton>().Play(false);
 
 
 		if (closeAllOnOpen)
