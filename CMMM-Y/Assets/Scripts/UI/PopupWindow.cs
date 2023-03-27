@@ -8,6 +8,9 @@ public class PopupWindow : MonoBehaviour
 	public bool disableInputs;
 	public bool pauseSimulation;
 	public bool disableInPlaymode;
+	[Header("Keybinds")]
+	public KeyCode openOnKey;
+	public KeyCode closeOnKey;
 	[Header("Linked Popups")]
 	public bool closeAllOnOpen;
 	public List<PopupWindow> closeWindowsOnOpen = new List<PopupWindow>();
@@ -28,14 +31,24 @@ public class PopupWindow : MonoBehaviour
 		else Open();
 	}
 
-	public void Open()
+	public void CloseFromButton()
 	{
-		if (IsOpen) return;
-		if (disableInPlaymode && !GridManager.clean) return;
+		Close();
+	}
+
+	public void OpenFromButton()
+	{
+		Open();
+	}
+
+	public bool Open()
+	{
+		if (IsOpen) return false;
+		if (disableInPlaymode && !GridManager.clean) return false;
 
 		foreach (var popupWindow in disableOnPopups)
 		{
-			if (popupWindow.IsOpen) return;
+			if (popupWindow.IsOpen) return false;
 		}
 
 		if (disableInputs) ControlsManager.disableInputs = true;
@@ -57,11 +70,13 @@ public class PopupWindow : MonoBehaviour
 			}
 		}
 		gameObject.SetActive(true);
+
+		return true;
 	}
 
-	public void Close()
+	public bool Close()
 	{
-		if (!IsOpen) return;
+		if (!IsOpen) return false;
 
 		foreach (var popupWindow in closeWindowsOnClose)
 		{
@@ -72,9 +87,11 @@ public class PopupWindow : MonoBehaviour
 
 		foreach (var popupWindow in Resources.FindObjectsOfTypeAll<PopupWindow>())
 		{
-			if (popupWindow.IsOpen && popupWindow.disableInputs) return;
+			if (popupWindow.IsOpen && popupWindow.disableInputs) return true;
 		}
 
 		ControlsManager.disableInputs = false;
+
+		return true;
 	}
 }

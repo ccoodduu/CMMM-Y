@@ -217,7 +217,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 42534982}
-        m_MethodName: Open
+        m_MethodName: OpenFromButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -389,6 +389,8 @@ MonoBehaviour:
   disableInputs: 1
   pauseSimulation: 0
   disableInPlaymode: 1
+  openOnKey: 0
+  closeOnKey: 0
   closeAllOnOpen: 1
   closeWindowsOnOpen: []
   closeWindowsOnClose: []
@@ -1119,7 +1121,7 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: CloseFromButton
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
@@ -1795,7 +1797,7 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Open
+      value: OpenFromButton
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
@@ -1887,6 +1889,8 @@ MonoBehaviour:
   disableInputs: 0
   pauseSimulation: 0
   disableInPlaymode: 0
+  openOnKey: 0
+  closeOnKey: 0
   closeAllOnOpen: 0
   closeWindowsOnOpen: []
   closeWindowsOnClose:
@@ -3114,6 +3118,8 @@ MonoBehaviour:
   disableInputs: 1
   pauseSimulation: 1
   disableInPlaymode: 0
+  openOnKey: 0
+  closeOnKey: 0
   closeAllOnOpen: 1
   closeWindowsOnOpen: []
   closeWindowsOnClose: []
@@ -3462,7 +3468,7 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: CloseFromButton
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
@@ -4994,6 +5000,7 @@ GameObject:
   - component: {fileID: 1030502455}
   - component: {fileID: 1030502457}
   - component: {fileID: 1030502458}
+  - component: {fileID: 1030502459}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -5068,6 +5075,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveText: {fileID: 348597775}
+--- !u!114 &1030502459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030502454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4cbd1622718c934ebc101b446905b82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popups: []
 --- !u!1 &1046223418
 GameObject:
   m_ObjectHideFlags: 0
@@ -6023,6 +6043,8 @@ MonoBehaviour:
   disableInputs: 1
   pauseSimulation: 1
   disableInPlaymode: 0
+  openOnKey: 27
+  closeOnKey: 27
   closeAllOnOpen: 1
   closeWindowsOnOpen: []
   closeWindowsOnClose:
@@ -6459,7 +6481,7 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: CloseFromButton
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
@@ -6636,7 +6658,7 @@ PrefabInstance:
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: CloseFromButton
       objectReference: {fileID: 0}
     - target: {fileID: 3173369288890881845, guid: 9273d5d0597bf2140b8c3adc702726fe,
         type: 3}
@@ -9385,7 +9407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 702181118}
-        m_MethodName: Open
+        m_MethodName: OpenFromButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
