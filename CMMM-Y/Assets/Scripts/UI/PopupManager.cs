@@ -5,8 +5,11 @@ using UnityEngine;
 public class PopupManager : MonoBehaviour
 {
 	public PopupWindow[] popups;
+
+	public static PopupManager instance;
 	void Start()
 	{
+		instance = this;
 		popups = Resources.FindObjectsOfTypeAll<PopupWindow>();
 	}
 

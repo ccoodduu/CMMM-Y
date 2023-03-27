@@ -57,7 +57,7 @@ public class PopupWindow : MonoBehaviour
 
 		if (closeAllOnOpen)
 		{
-			foreach (var popupWindow in Resources.FindObjectsOfTypeAll<PopupWindow>())
+			foreach (var popupWindow in PopupManager.instance.popups)
 			{
 				popupWindow.Close();
 			}
@@ -85,7 +85,7 @@ public class PopupWindow : MonoBehaviour
 
 		gameObject.SetActive(false);
 
-		foreach (var popupWindow in Resources.FindObjectsOfTypeAll<PopupWindow>())
+		foreach (var popupWindow in PopupManager.instance.popups)
 		{
 			if (popupWindow.IsOpen && popupWindow.disableInputs) return true;
 		}
