@@ -38,7 +38,7 @@ public class PopupWindow : MonoBehaviour
 		}
 
 		if (disableInputs) ControlsManager.disableInputs = true;
-		if (pauseSimulation) GameObject.FindWithTag("PlayButton").GetComponent<PlayButton>().Play(false);
+		if (pauseSimulation && !GridManager.clean) GameObject.FindWithTag("PlayButton").GetComponent<PlayButton>().Play(false);
 
 
 		if (closeAllOnOpen)

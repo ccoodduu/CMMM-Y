@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
-public class ResizeLevelWindowButton : MonoBehaviour
+public class ResizeLevelShortcut : MonoBehaviour
 {
-	public GameObject window;
+	public PopupWindow window;
 
 	private void Update()
 	{
 		if (ControlsManager.GetControl("ResizeLevel").GetDown())
 		{
-			Clicked();
+			window.Open();
 		}
-	}
-
-	public void Clicked()
-	{
-		if (!GridManager.clean) return;
-		
-		window.SetActive(true);
 	}
 }
