@@ -15,15 +15,20 @@ public class PopupManager : MonoBehaviour
 
 	void Update()
 	{
-        foreach (var popup in popups)
-        {
-			bool succeded = false;
-			if (Input.GetKeyDown(popup.openOnKey)) 
-			{ 
-				succeded = popup.Open(); 
+		foreach (var popup in popups)
+		{
+			if (Input.GetKeyDown(popup.closeOnKey))
+			{
+				if (popup.Close()) return;
 			}
-
-			if (!succeded && Input.GetKeyDown(popup.closeOnKey)) popup.Close();
 		}
-    }
+
+		foreach (var popup in popups)
+        {
+			if (Input.GetKeyDown(popup.openOnKey)) 
+			{
+				if (popup.Open()) return;
+			}
+		}
+	}
 }
