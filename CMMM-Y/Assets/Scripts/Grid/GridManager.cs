@@ -173,6 +173,7 @@ public class GridManager : MonoBehaviour
 
 		initialEnemyCount = enemyCount;
 		tool = Tool_e.DRAG;
+		ControlsManager.disableInputs = false;
 	}
 
 	public void Reload()
