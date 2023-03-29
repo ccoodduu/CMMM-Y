@@ -14,7 +14,7 @@ public class TabNavigation : MonoBehaviour
 	private int currentIndex;
 	private TabNavigationComponent currentComponent;
 
-	private int cycleIndex;
+	public int cycleIndex;
 	public Selectable[] cycle;
 	public bool doCycle;
 
@@ -52,6 +52,9 @@ public class TabNavigation : MonoBehaviour
 					{
 						cycleIndex = Array.IndexOf(cycle, selectable);
 						found = true;
+					} else
+					{
+						cycleIndex = 0;
 					}
 				}
 				else

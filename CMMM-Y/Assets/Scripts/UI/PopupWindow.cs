@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PopupWindow : MonoBehaviour
 {
@@ -11,6 +13,9 @@ public class PopupWindow : MonoBehaviour
 	[Header("Keybinds")]
 	public KeyCode openOnKey;
 	public KeyCode closeOnKey;
+	[Header("Tab Navigation")]
+	public bool useTabNavigation;
+	public Selectable[] tabNavigationCycle;
 	[Header("Linked Popups")]
 	public bool closeAllOnOpen;
 	public List<PopupWindow> closeWindowsOnOpen = new List<PopupWindow>();
@@ -54,6 +59,16 @@ public class PopupWindow : MonoBehaviour
 		if (disableInputs) ControlsManager.disableInputs = true;
 		if (pauseSimulation && !GridManager.clean) GameObject.FindWithTag("PlayButton").GetComponent<PlayButton>().Play(false);
 
+		if (useTabNavigation)
+		{
+			var tabNavigation = EventSystem.current.gameObject.GetComponent<TabNavigation>();
+
+			tabNavigation.doCycle = true;
+			tabNavigation.cycleIndex = 0;
+			tabNavigation.cycle = tabNavigationCycle;
+
+			EventSystem.current.SetSelectedGameObject(null, new BaseEventData(EventSystem.current));
+		}
 
 		if (closeAllOnOpen)
 		{
@@ -84,6 +99,13 @@ public class PopupWindow : MonoBehaviour
 		}
 
 		gameObject.SetActive(false);
+
+		if (useTabNavigation)
+		{
+			var tabNavigation = EventSystem.current.gameObject.GetComponent<TabNavigation>();
+
+			tabNavigation.doCycle = false;
+		}
 
 		foreach (var popupWindow in PopupManager.instance.popups)
 		{
