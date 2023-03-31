@@ -28,6 +28,14 @@ public class TabNavigation : MonoBehaviour
 		currentIndex = currentComponent.GetFirstIndex();
 	}
 
+	public void ReInitialize()
+	{
+		allTabNavigators = UIContainer.GetComponentsInChildren<TabNavigationComponent>(false);
+		currentComponent = allTabNavigators[0];
+		currentIndex = currentComponent.GetFirstIndex();
+		SetSelected();
+	}
+
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Tab))

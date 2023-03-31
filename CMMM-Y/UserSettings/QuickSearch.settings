@@ -16,7 +16,7 @@ filters = {
 	asset = true
 }
 scopes = {
-	"last_search.AB59B443" = "Assembly Def"
+	"last_search.AB59B443" = "Script exe"
 }
 providers = {
 	asset = {
