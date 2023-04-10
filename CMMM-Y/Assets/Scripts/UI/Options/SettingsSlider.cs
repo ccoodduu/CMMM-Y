@@ -10,6 +10,10 @@ public class SettingsSlider : MonoBehaviour
 	public string playerPrefString;
 	public string sliderType;
 	public float deafaultSliderValue;
+	public AudioClip previewAudioClip;
+
+	private AudioSource audioSource;
+	private bool awake;
 
 	public AudioClip previewAudioClip;
 
