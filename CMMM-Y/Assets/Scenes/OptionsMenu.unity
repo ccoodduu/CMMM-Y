@@ -19303,6 +19303,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6627173048708986676, guid: 06fdb565bdf44de45854ff1fff4a88c3,
         type: 3}
+      propertyPath: previewAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b8889cd690128014f94ce430f564e8f5, type: 3}
+    - target: {fileID: 6627173048708986676, guid: 06fdb565bdf44de45854ff1fff4a88c3,
+        type: 3}
       propertyPath: deafaultSliderValue
       value: 1
       objectReference: {fileID: 0}
