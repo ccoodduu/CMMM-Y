@@ -6857,9 +6857,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1838100682339955750, guid: 1534a4233e7f4ce47a69c25cab174fa0,
         type: 3}
+      propertyPath: previewAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: b8889cd690128014f94ce430f564e8f5, type: 3}
+    - target: {fileID: 1838100682339955750, guid: 1534a4233e7f4ce47a69c25cab174fa0,
+        type: 3}
       propertyPath: playerPrefString
       value: FX Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 1838100682339955750, guid: 1534a4233e7f4ce47a69c25cab174fa0,
+        type: 3}
+      propertyPath: previewAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b8889cd690128014f94ce430f564e8f5, type: 3}
     - target: {fileID: 3672715642896320332, guid: 1534a4233e7f4ce47a69c25cab174fa0,
         type: 3}
       propertyPath: m_hasFontAssetChanged
