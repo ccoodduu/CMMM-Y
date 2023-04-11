@@ -25,7 +25,7 @@ public class Save : MonoBehaviour
 	public void SaveLevel(Vector2Int topLeft, Vector2Int bottomRight)
 	{
 		saveText.text = "Selection copied to clipboard!";
-		SaveLevel(Level.FromCurrent().Crop(topLeft, bottomRight));
+		SaveLevel(Level.FromCurrent().Resize(topLeft, bottomRight));
 	}
 
 	private void SaveLevel(Level level)

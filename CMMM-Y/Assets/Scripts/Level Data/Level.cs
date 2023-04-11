@@ -53,7 +53,7 @@ public class Level
 		return new Level("Unnamed", new Vector2Int(width, height), cells.ToArray(), placable, tutorialText);
 	}
 
-	public Level Crop(Vector2Int topLeft, Vector2Int bottomRight)
+	public Level Resize(Vector2Int topLeft, Vector2Int bottomRight)
 	{
 		var size = new Vector2Int(bottomRight.x - topLeft.x + 1, topLeft.y - bottomRight.y + 1);
 
@@ -68,7 +68,7 @@ public class Level
 			var oldX = x + topLeft.x;
 			var oldY = y + bottomRight.y;
 
-			placeable[i] = Placeable[oldX + oldY * Size.x];
+			placeable[i] = (oldX < 0 || oldY < 0 || oldX >= Size.x || oldY >= Size.y) ? false : Placeable[oldX + oldY * Size.x];
 		}
 
 		foreach (var cell in Cells)

@@ -5,7 +5,16 @@ using UnityEngine;
 public class MenuWindowButton : MonoBehaviour
 {
     public GameObject window;
-    public void Open()
+
+	public KeyCode closeOnKey;
+	public KeyCode openOnKey;
+
+	private void Update()
+	{
+		if (!window.activeSelf && Input.GetKeyDown(openOnKey)) Open();
+		else if (window.activeSelf && Input.GetKeyDown(closeOnKey)) Close();
+	}
+	public void Open()
     {
         GridManager.playSimulation = false;
 		window.SetActive(true);

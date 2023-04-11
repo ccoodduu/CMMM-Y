@@ -20,9 +20,9 @@ public class ControlSetting
 
 public static class ControlsManager
 {
-	public static string playerPrefsControls = "Controls";
+	public static readonly string playerPrefsControls = "Controls";
 
-	private static Dictionary<string, Control> cache = new Dictionary<string, Control>();
+	private static readonly Dictionary<string, Control> cache = new Dictionary<string, Control>();
 
 	private static void RegenerateCache()
 	{
@@ -62,6 +62,8 @@ public static class ControlsManager
 		return name;
 	}
 
+	public static bool disableInputs = false;
+
 	public static readonly Dictionary<string, ControlSetting> allControls = new Dictionary<string, ControlSetting>()
 	{
 		{ "Up", new ControlSetting(new KeyCode[]{ KeyCode.W}, false)},
@@ -80,6 +82,7 @@ public static class ControlsManager
 		{ "Cut", new ControlSetting(new KeyCode[]{ KeyCode.X}, false)},
 		{ "Delete", new ControlSetting(new KeyCode[]{ KeyCode.Delete}, false)},
 		{ "Crop", new ControlSetting(new KeyCode[]{ KeyCode.B}, false)},
+		{ "SelectAll", new ControlSetting(new KeyCode[] { KeyCode.LeftControl, KeyCode.A}, false)},
 		{ "StackSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl}, false)},
 		{ "SelectionUp", new ControlSetting(new KeyCode[]{ KeyCode.UpArrow}, false)},
 		{ "SelectionDown", new ControlSetting(new KeyCode[]{ KeyCode.DownArrow}, false)},
@@ -110,6 +113,9 @@ public static class ControlsManager
 		{ "Step", new ControlSetting(new KeyCode[]{ KeyCode.F7 }, false)},
 		{ "Save", new ControlSetting(new KeyCode[]{ KeyCode.F2 }, false)},
 		{ "SaveSelection", new ControlSetting(new KeyCode[]{ KeyCode.LeftShift, KeyCode.F2 }, false)},
+		{ "Undo", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Z }, false)},
+		{ "Redo", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.Y }, false)},
+		{ "ResizeLevel", new ControlSetting(new KeyCode[]{ KeyCode.LeftControl, KeyCode.R}, false)},
 	};
 
 	public static void SetControl(string controlName, Control control)
@@ -292,6 +298,8 @@ public class Control
 
 	public bool Get(bool checkForOverlap)
 	{
+		if (ControlsManager.disableInputs) return false;
+
 		if (checkForOverlap && Overlaps()) return false;
 
 		foreach (KeyCode keyCode in Keycodes)
@@ -303,6 +311,8 @@ public class Control
 
 	public bool GetDown()
 	{
+		if (ControlsManager.disableInputs) return false;
+
 		if (Overlaps()) return false;
 
 		foreach (KeyCode keyCode in Keycodes)
@@ -318,6 +328,8 @@ public class Control
 
 	public bool GetUp()
 	{
+		if (ControlsManager.disableInputs) return false; 
+
 		if (Overlaps()) return false;
 
 		bool isReleased = false;

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SelectTool : MonoBehaviour
 {
+	public static SelectTool instance;
 	public enum State_e
 	{
 		IDLE,
@@ -42,23 +43,32 @@ public class SelectTool : MonoBehaviour
 		clipboardCells = new List<Cell>();
 		previewCells = new List<Cell>();
 		state = State_e.IDLE;
+
+		instance = this;
 	}
 
 
-	Vector2Int MousePos()
+	private Vector2Int MousePos()
 	{
 		Vector3 worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
 		return Vector2Int.RoundToInt((Vector2)worldPoint);
 	}
 
-	Vector2Int ClampedMousePos()
+	private Vector2Int ClampedMousePos()
 	{
 		Vector2Int pos = MousePos();
 		pos.Clamp(Vector2Int.zero, new Vector2Int(CellFunctions.gridWidth - 1, CellFunctions.gridHeight - 1));
 		return pos;
 	}
+	private void SetToolboxPos()
+	{
+		if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 1)
+			toolboxPos = (Vector3)((Vector2)min - new Vector2(0.5f, 0.5f));
+		else if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 2)
+			toolboxPos = (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+	}
 
-	void Select(Vector2Int cornerA, Vector2Int cornerB)
+	public void Select(Vector2Int cornerA, Vector2Int cornerB)
 	{
 		min = Vector2Int.Min(cornerA, cornerB);
 		max = Vector2Int.Max(cornerA, cornerB);
@@ -68,7 +78,7 @@ public class SelectTool : MonoBehaviour
 		{
 			for (int y = min.y; y <= max.y; y++)
 			{
-				var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x,y, 0)) == GridManager.instance.placebleTile;
+				var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(x, y, 0)) == GridManager.instance.placebleTile;
 
 				if (CellFunctions.cellGrid[x, y] != null && !(GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable))
 				{
@@ -81,9 +91,11 @@ public class SelectTool : MonoBehaviour
 		sprRend.size = (Vector2)(Vector2Int.one + max - min);
 	}
 
-	void DeleteSelected()
+	private void DeleteSelected()
 	{
 		// careful, even if the cells aren't on the cell grid, it will set elements of cellGrid to null
+		var cells = new List<SavedCell>();
+
 		foreach (Cell cell in selectedCells)
 		{
 			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int((int)cell.position.x, (int)cell.position.y, 0)) == GridManager.instance.placebleTile;
@@ -91,12 +103,22 @@ public class SelectTool : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				continue;
 
-			cell.Delete(true);
+			cells.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = new Vector2Int((int)cell.position.x, (int)cell.position.y),
+				cellType = cell.cellType
+			});
 		}
+
+		ActionManager.instance.DoAction(new DeleteSelection(cells.ToArray()));
+
+		AudioManager.instance.PlaySound(GameAssets.instance.destroy);
+
 		selectedCells = new List<Cell>();
 	}
 
-	void CopySelected(Vector2Int reference)
+	private void CopySelected(Vector2Int reference)
 	{
 		foreach (Cell cell in clipboardCells)
 		{
@@ -114,8 +136,10 @@ public class SelectTool : MonoBehaviour
 		}
 	}
 
-	void PasteClipboard()
+	private void PasteClipboard()
 	{
+		var cells = new List<SavedCell>();
+
 		foreach (Cell cell in clipboardCells)
 		{
 			if (cell.position.x >= CellFunctions.gridWidth || cell.position.x < 0)
@@ -128,23 +152,57 @@ public class SelectTool : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				continue;
 
-			GridManager.instance.SpawnCell(cell.cellType, cell.position, (Direction_e)cell.rotation, false);
+			cells.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = new Vector2Int((int)cell.position.x, (int)cell.position.y),
+				cellType = cell.cellType
+			});
 		}
-		GridManager.hasSaved = false;
+
+		ActionManager.instance.DoAction(new PlaceSelection(cells.ToArray()));
+
+		AudioManager.instance.PlaySound(GameAssets.instance.place);
 	}
 
-	void Stack(Vector2Int offset, bool cut)
+	private void MoveSelection(Vector2Int offset, bool stack)
 	{
-		CopySelected(offset);
-		if (cut)
-			DeleteSelected();
-		PasteClipboard();
-		Select(min + offset, max + offset);
+		var cellsToMove = new List<SavedCell>();
+
+		var newMin = min + offset;
+		var newMax = max + offset;
+
+		if (newMax.x >= CellFunctions.gridWidth || newMin.x < 0) return;
+		if (newMax.y >= CellFunctions.gridHeight || newMin.y < 0) return;
+
+		foreach (var cell in selectedCells)
+		{
+			var position = new Vector2Int((int)cell.position.x, (int)cell.position.y);
+			var newPosition = position + offset;
+
+			if (newPosition.x >= CellFunctions.gridWidth || newPosition.x < 0) return;
+			if (newPosition.y >= CellFunctions.gridHeight || newPosition.y < 0) return;
+
+			var isPlaceable = GridManager.instance.tilemap.GetTile(new Vector3Int(newPosition.x, newPosition.y, 0)) == GridManager.instance.placebleTile;
+
+			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable) return;
+
+			cellsToMove.Add(new SavedCell()
+			{
+				rotation = cell.rotation,
+				position = position,
+				cellType = cell.cellType
+			});
+		}
+
+		ActionManager.instance.DoAction(new MoveSelection(offset, cellsToMove.ToArray(), stack));
+
+		Select(newMin, newMax);
 		CopySelected(MousePos() - (min + max) / 2);
 		copyOffset = MousePos();
 	}
 
-	void RotateClipboard(Vector2Int pivot, bool counterClockwise)
+	private void RotateClipboard(Vector2Int pivot, bool counterClockwise)
 	{
 		int rotDir = counterClockwise ? 1 : -1;
 		foreach (Cell cell in clipboardCells)
@@ -186,15 +244,14 @@ public class SelectTool : MonoBehaviour
 	public void Crop()
 	{
 		if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
-		var level = Level.FromCurrent().Crop(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)); ;
-		GridManager.loadString = new V3Format().Encode(level);
-		GridManager.instance.Reload();
+
+		ActionManager.instance.DoAction((Action)new ResizeLevel(new Vector2Int(min.x, max.y), new Vector2Int(max.x, min.y)));
 	}
 
 	void Update()
 	{
 		// if you select an area or if you use the paste hotkey
-		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown())
+		if (ControlsManager.GetControl("BeginSelect").GetDown() || ControlsManager.GetControl("Paste").GetDown() || ControlsManager.GetControl("SelectAll").GetDown())
 			if (GridManager.mode.IsEditor())
 				selectButton.GetComponent<EditorButtons>().SwitchTool();
 
@@ -237,6 +294,15 @@ public class SelectTool : MonoBehaviour
 				cell.GetComponent<SpriteRenderer>().material = basicMat;
 		}
 
+		if (ControlsManager.GetControl("SelectAll").GetDown())
+		{
+			state = State_e.SELECT;
+			sprRend.enabled = true;
+			toolbox.SetActive(false);
+			Select(Vector2Int.zero, new Vector2Int(CellFunctions.gridWidth - 1, CellFunctions.gridHeight - 1));
+			SetToolboxPos();
+		}
+
 		if (state == State_e.SELECT)
 		{
 			if (ControlsManager.GetControl("Select").Get())
@@ -250,15 +316,12 @@ public class SelectTool : MonoBehaviour
 					}
 					toolbox.SetActive(false);
 					Select(initialPos, ClampedMousePos());
-					if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 1)
-						toolboxPos = (Vector3)((Vector2)min - new Vector2(0.5f, 0.5f));
-					else if (PlayerPrefs.GetInt("Selection Toolbox", 1) == 2)
-						toolboxPos = (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+					SetToolboxPos();
 				}
 			}
 			else
 			{
-				//area has been 
+				//area has been selected
 				var doStackSelection = ControlsManager.GetControl("StackSelection").Get();
 
 				if (PlayerPrefs.GetInt("Selection Toolbox", 1) != 0)
@@ -291,29 +354,25 @@ public class SelectTool : MonoBehaviour
 				else if (ControlsManager.GetControl("SelectionUp").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(0, doStackSelection ? (max.y + 1) - min.y : 1);
-					if (max.y + offset.y < CellFunctions.gridHeight)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionDown").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(0, doStackSelection ? min.y - (max.y + 1) : -1);
-					if (min.y + offset.y >= 0)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionRight").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(doStackSelection ? (max.x + 1) - min.x : 1, 0);
-					if (max.x + offset.x < CellFunctions.gridHeight)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 
 				else if (ControlsManager.GetControl("SelectionLeft").GetDown())
 				{
 					Vector2Int offset = new Vector2Int(doStackSelection ? min.x - (max.x + 1) : -1, 0);
-					if (min.x + offset.x >= 0)
-						Stack(offset, !doStackSelection);
+					MoveSelection(offset, doStackSelection);
 				}
 			}
 

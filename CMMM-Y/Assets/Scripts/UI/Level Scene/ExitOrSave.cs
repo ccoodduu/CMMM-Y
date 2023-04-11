@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ExitOrSave : MonoBehaviour
 {
-    public GameObject confirmationScreen;
+    public PopupWindow confirmationPopup;
 
     public void Clicked() {
         if (GridManager.hasSaved || GridManager.mode == Mode_e.LEVEL)
@@ -13,7 +13,7 @@ public class ExitOrSave : MonoBehaviour
             SceneManager.LoadScene(0);
         }
         else {
-            confirmationScreen.SetActive(true);
+            confirmationPopup.Open();
         }
     }
 }

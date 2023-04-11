@@ -14,10 +14,12 @@ public class PlacementManager : MonoBehaviour
 	float animationTime = 0;
 	readonly float animationDuration = .1f;
 
-	bool backgroundTileToggle = false;
+	bool placePlaceable = false;
 	bool backgroundTileDebounce = false;
 
 	public Transform[] buttons;
+
+	private readonly List<Vector2Int> justPlacedAt = new List<Vector2Int>();
 
 	private void Awake()
 	{
@@ -76,8 +78,12 @@ public class PlacementManager : MonoBehaviour
 		int x = Mathf.FloorToInt(worldPoint.x + .5f);
 		int y = Mathf.FloorToInt(worldPoint.y + .5f);
 
+		var position = new Vector2Int(x, y);
+
 		if (ControlsManager.GetControl("PlaceCell").Get())
 		{
+			if (justPlacedAt.Contains(position))
+				return;
 
 			if (!GridManager.clean)
 				return;
@@ -105,30 +111,28 @@ public class PlacementManager : MonoBehaviour
 				if (GridManager.mode == Mode_e.VAULT_LEVEL) return;
 
 				if (!backgroundTileDebounce)
-					backgroundTileToggle = isPlaceable;
+					placePlaceable = !isPlaceable;
 				backgroundTileDebounce = true;
-				GridManager.instance.tilemap.SetTile(new Vector3Int(x, y, 0),
-					backgroundTileToggle ? GridManager.instance.backgroundTile : GridManager.instance.placebleTile
-					);
+
+				if (placePlaceable != isPlaceable) ActionManager.instance.DoAction(new PlacePlaceable(position, placePlaceable));
+
 				return;
 			}
 
-			if (CellFunctions.cellGrid[x, y] != null)
-			{
-				if (CellFunctions.cellGrid[x, y].cellType != (CellType_e)GridManager.tool || CellFunctions.cellGrid[x, y].GetDirection() != (Direction_e)dir)
-				{
-					CellFunctions.cellGrid[x, y].Delete(true);
-				}
-				else return;
-			}
+			justPlacedAt.Add(position);
 
 			AudioManager.instance.PlaySound(GameAssets.instance.place);
-			Cell cell = GridManager.instance.SpawnCell((CellType_e)GridManager.tool, new Vector2(x, y), dir, false);
-			GridManager.hasSaved = false;
-		}
 
-		if (ControlsManager.GetControl("DeleteCell").Get() && GridManager.tool != Tool_e.SELECT)
+			ActionManager.instance.DoAction(new PlaceCell(position, (CellType_e)GridManager.tool, dir));
+		}
+		else if (ControlsManager.GetControl("DeleteCell").Get())
 		{
+			if (justPlacedAt.Contains(position))
+				return;
+
+			if (GridManager.tool == Tool_e.SELECT)
+				return;
+
 			if (!GridManager.clean)
 				return;
 
@@ -143,12 +147,14 @@ public class PlacementManager : MonoBehaviour
 			if (GridManager.mode == Mode_e.VAULT_LEVEL && isPlaceable)
 				return;
 
-			if (CellFunctions.cellGrid[x, y] != null)
-			{
-				AudioManager.instance.PlaySound(GameAssets.instance.destroy);
-				CellFunctions.cellGrid[x, y].Delete(true);
-				GridManager.hasSaved = false;
-			}
+			if (CellFunctions.cellGrid[x, y] == null)
+				return;
+
+			justPlacedAt.Add(position);
+
+			AudioManager.instance.PlaySound(GameAssets.instance.destroy);
+
+			ActionManager.instance.DoAction(new DeleteCell(position));
 		}
 
 		if (ControlsManager.GetControl("PickCell").GetDown())
@@ -186,6 +192,11 @@ public class PlacementManager : MonoBehaviour
 		if (ControlsManager.GetControl("PlaceCell").GetUp())
 		{
 			backgroundTileDebounce = false;
+		}
+
+		if (ControlsManager.GetControl("PlaceCell").GetUp() || ControlsManager.GetControl("DeleteCell").GetUp())
+		{
+			justPlacedAt.Clear();
 		}
 	}
 }
