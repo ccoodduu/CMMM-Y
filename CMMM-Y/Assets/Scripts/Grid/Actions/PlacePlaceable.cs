@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PlacePlaceable : Action
 {
