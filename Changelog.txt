@@ -1,3 +1,12 @@
+V 1.2.0:
+Added Undo for all actions.
+Added Resize Level to any size not just crop.
+Fixed some Tab Navigation issues.
+Added a better popup system for popups.
+Added Tab Navigation for popups.
+Opening and closing of Menu with ESC.
+Added a sound preview for the FX Volume slider.
+
 V 1.1.0:
 Added a Import Level scene.
 Added a Vault playmode. (Can't interact with cells on placeable tiles)
